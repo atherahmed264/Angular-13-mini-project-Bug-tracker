@@ -1,1 +1,51 @@
-<p>login works!</p>
+<div class="image">
+    <div class="row">
+        <div class="col-md d-flex justify-content-start p-4">
+            <div class="lead mx-4 white"> <p> Click to View Issue Details without Logging In</p></div>
+            <button class="btn btn-light" title="Click to view without logging in">View Issues</button>
+        </div>    
+    </div>
+<div class="pb-5">
+<div class="card mx-5">
+    <div class="card-header d-flex justify-content-center">
+        <h4>
+            LOGIN
+        </h4>
+    </div>
+    <div class="card-body">
+        
+        <form [formGroup]="form" (ngSubmit)="submitForm()" class="form-group" >
+            <div class="row d-flex justify-content-center mt-5">
+                <div class="col-md-2 ">
+                    <label for="username">Username :</label>
+                </div>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" formControlName="username">
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center mt-5">
+                <div class="col-md-2">
+                    <label for="pass">Password :</label>
+                </div>
+                <div class="col-md-5">
+                    <input type="password" class="form-control" formControlName="password">
+                    <a href="#" class="d-flex justify-content-end mt-3"> Forgot Password ? </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-5">
+                    
+                </div>
+            </div>   
+            <div class="d-flex justify-content-center mt-5">
+                <button class="btn btn-primary mx-4" type="submit">SIGN IN</button>
+            
+                <button class="btn btn-success mx-4" type="button">SIGN UP</button>
+            </div>
+            <p class="d-flex justify-content-center mt-4 mb-3 lead">Click Signup if you dont have a existing account</p>      
+        </form>
+    </div>
+</div>
+</div>
+</div>

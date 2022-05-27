@@ -1,1 +1,116 @@
-<p>sign-up works!</p>
+<div class="card grad">
+    <div class="card-header">
+        <h4 class="display-4">Sign Up For Free !</h4>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="signupForm" (ngSubmit)="signUp()" class="form-group p-5">
+            <div class="row mb-5">
+                <div class="col-md-2 p-0">
+                    <label for="firstn " class="fst">First Name </label>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" name="firstn" id="firstn" class="form-control " 
+                    formControlName="firstName" placeholder="First Name" >
+                    <span class="p-0" *ngIf="signupForm.get('firstName').invalid && signupForm.get('firstName').touched">
+                        Enter Valid Name
+                    </span>
+                </div>
+                <div class="col-md-2">
+                    <label for="lastn" class="lst">Last Name </label>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" id="lastn" name="lastn" class="form-control" 
+                    formControlName="lastName" placeholder="Last Name">
+                    <span class="p-0" *ngIf="signupForm.get('lastName').invalid && signupForm.get('lastName').touched">
+                        Enter Valid Last Name
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-md-2 p-0">
+                    <label for="country" class="fst">Country </label>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" id="country" name="country" 
+                    formControlName="Country" placeholder="Country">
+                    <span class="p-0" *ngIf="signupForm.get('Country').invalid && signupForm.get('Country').touched">
+                        Enter Valid Country Name
+                    </span>
+                </div>
+                <div class="col-md-2">
+                    <label for="mobile" class="lst">Mobile No </label>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" id="mobile" name="mobile" class="form-control" 
+                    formControlName="Mobile" placeholder="Mobile number">
+                    <span class="p-0" *ngIf="signupForm.get('Mobile').invalid && signupForm.get('Mobile').touched">
+                        Enter valid Mobile no
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-md-2">
+                    <label for="email" class="m">Email Address </label>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="email" name="email" 
+                    formControlName="email" placeholder="Email Address">
+                    <span class="p-0" *ngIf="signupForm.get('email').invalid && signupForm.get('email').touched">
+                        Enter Valid email adress
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-md-2">
+                    <label for="usern" class="m" >Create Username </label>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" id="usern" name="usern" 
+                    formControlName="username" placeholder="Username">
+                    <span class="p-0" *ngIf="signupForm.get('username').invalid && signupForm.get('username').touched">
+                        Enter username with atleast 6 characters
+                    </span>
+                    <span>
+
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-md-2">
+                    <label for="pass" class="m" >Create Password </label>
+                </div>
+                <div class="col-md-3">
+                    <input type="password" class="form-control" id="pass" name="pass" 
+                    formControlName="password" placeholder="Password" (click)="pass=true;">
+                    <span class="p-0" *ngIf="signupForm.get('password').invalid && signupForm.get('password').touched">
+                        password should be atleast 6 characters 
+                    </span>
+                </div>
+                <div class="col-md-3" *ngIf="pass"><p >Password must be atleast 6 chars including special characters</p></div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-md-2">
+                    <label for="passretype" class="m" >Retype Password </label>
+                </div>
+                <div class="col-md-3">
+                    <input type="password" class="form-control" id="passretype" name="passretype" 
+                    formControlName="retypepass" placeholder="Type Password Again">
+                    <span class="p-0" *ngIf="signupForm.get('retypepass').invalid && signupForm.get('retypepass').touched">
+                        password should be atleast 6 characters 
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-5 d-flex justify-content-center">
+                <div class="col-md-2">
+                    <button class="btn btn-light m" type="submit">Register</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

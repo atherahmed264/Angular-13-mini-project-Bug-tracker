@@ -1,5 +1,22 @@
 {
-    "users": {
-        
+  "users": [
+    {
+      "Name": "Ather Ahmed",
+      "Email": "atherfar@gmail.com",
+      "Mobile": "7397434614",
+      "Country": "India",
+      "Username": "atherahm",
+      "Password": "atherather123",
+      "id": 1
+    },
+    {
+      "Name": "ather ahmed",
+      "Email": "atherfar@gmail.com",
+      "Mobile": "07397434614",
+      "Country": "India",
+      "Username": "atherahm123",
+      "Password": "atherather123",
+      "id": 2
     }
+  ]
 }

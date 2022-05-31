@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ServerComms } from '../Services/server-comms.component';
 
 @Component({
   selector: 'app-homepage',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomepageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service:ServerComms) { }
 
   ngOnInit(): void {
+    this.service.loggedin$.subscribe(res => console.log(res));
   }
 
 }

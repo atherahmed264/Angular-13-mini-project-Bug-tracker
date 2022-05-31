@@ -103,6 +103,9 @@
                     <span class="p-0" *ngIf="signupForm.get('retypepass').invalid && signupForm.get('retypepass').touched">
                         password should be atleast 6 characters 
                     </span>
+                    <span *ngIf="passbool" class="p-0">
+                        Passwords didnt Match
+                    </span>
                 </div>
             </div>
 

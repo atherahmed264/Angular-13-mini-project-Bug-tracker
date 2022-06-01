@@ -10,6 +10,11 @@ import { FooterComponent } from './footer/footer.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { AddEditIssueComponent } from './add-edit-issue/add-edit-issue.component';
+import { ViewComponentComponent } from './view-component/view-component.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { firstletterCapital } from './Pipes/capitalLetter.pipe';
+import { SearchInput } from './Pipes/search.pipe';
 
 
 @NgModule({
@@ -20,6 +25,11 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     HomepageComponent,
     LoginComponent,
     SignUpComponent,
+    AddEditIssueComponent,
+    ViewComponentComponent,
+    LandingPageComponent,
+    firstletterCapital,
+    SearchInput
   
   ],
   imports: [

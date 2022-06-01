@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable,BehaviorSubject } from "rxjs";
+import { Observable,BehaviorSubject, retry } from "rxjs";
+import { issue } from "../Models/issues.model";
 
 import { User } from "../Models/usermodel";
 @Injectable({
@@ -11,7 +12,8 @@ export class ServerComms {
 
     loggedin$ = new BehaviorSubject<String|undefined>('');
     data!:User[];
-    users:string = 'http://localhost:3000/users' 
+    users:string = 'http://localhost:3000/users';
+    issue:string = 'http://localhost:3000/issues' 
 
     createAccount(body:User):Observable<any>{
         return this.http.post(this.users, body);
@@ -24,5 +26,22 @@ export class ServerComms {
             this.data = res;
             console.log(this.data);
         })
+    }
+
+    addissues(body:issue): Observable<any>{
+        return this.http.post(this.issue,body);
+    }
+    getissues() : Observable<any>{
+        return this.http.get(this.issue);
+    }
+    getissuebyID(str:any) : Observable<any>{
+        return this.http.get(`http://localhost:3000/issues/${str}`);
+    }
+    editissue(id:any,body:any){
+        return this.http.put(`${this.issue}/${id}`,body);
+    }
+
+    callnext(name:String){
+        this.loggedin$.next(name);
     }
 }

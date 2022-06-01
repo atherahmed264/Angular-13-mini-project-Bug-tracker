@@ -1,1 +1,44 @@
-<p>homepage works!</p>
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-md-10 ">
+            <p class="display-4">Welcome , {{ Username ? Username : 'Guest' }}</p>
+        </div>
+        <div class="col-md-2 mt-3">
+            <button (click)="gotToaddIssue()" class="btn btn-success">Add Issue + </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 d-flex justify-content-end">
+            <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchinput">
+        </div>
+        <div class="d-flex justify-content-end col-md-5">
+            <button class="btn btn-dark mx-5" (click)="sort('o')">Sort by Older</button>
+            <button class="btn btn-dark " (click)="sort('l')">Sort by Latest</button>
+        </div>
+    </div>
+    <div *ngIf="issues;else spinner" class="row mt-4">
+        <div class="col-md-6" *ngFor="let issue of (issues | search:searchinput) ; let i = index">
+            <div class="card mb-4">
+                <div class="card-header">
+                    {{issue.description | capital}}
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li> Severity : {{ issue.severity}} </li>
+                        <li> Issue Status : {{ issue.status}} </li>
+                        <li> Issue raised Date : {{ issue.date | date}}</li>
+                        <div class="d-flex justify-content-end">
+                            <a role="button" [routerLink]="['/view',i+1]" class="btn btn-info btn-sm"> View </a> 
+                        </div>    
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <ng-template #spinner >
+        <div class="spinner-border d-flex justify-content-center" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </ng-template>
+</div>

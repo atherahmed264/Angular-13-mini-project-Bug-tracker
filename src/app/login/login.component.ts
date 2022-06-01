@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { User } from '../Models/usermodel';
 import { ServerComms } from '../Services/server-comms.component';
 
@@ -14,6 +15,7 @@ export class LoginComponent implements OnInit {
   constructor(private route:Router, private service:ServerComms) { }
   form!:FormGroup;
   data!:User[];
+  wrongcred:boolean = false;
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -24,15 +26,19 @@ export class LoginComponent implements OnInit {
   }
 
   submitForm(){
-    console.log(this.form.get('username')?.value,this.form.get('password')?.value);
+    console.log(this.form);
     console.log(this.service.data);
     this.data = this.service.data
     if(this.form.valid){
       let user = this.data.find(el => el.Username == this.form.value.username && el.Password == this.form.value.password);
       console.log(user);
-      this.service.loggedin$.next(user?.Username);
+      if(user){
+      this.service.callnext(user?.Username);
       this.route.navigate(['/home'])
-      
+      }
+      else{
+        this.wrongcred = true;
+      }
     }
     else{
       alert('Wrong Username or Password')

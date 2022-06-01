@@ -1,0 +1,47 @@
+<div class="container mb-5">
+    <div>
+        <h2 style="color: rgb(87, 87, 189);" class="mt-4">Add Issue</h2>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="onsubmit()" class="form-group" >
+        <div class="row mt-4">
+            <div class="col-md-2">
+                <label for="issue"> Issue Description </label>
+            </div>
+            <div class="col-md-5">
+                <input type="text" class="form-control" name="issue"
+                formControlName="issue" >
+                <span class="alert alert-danger p-1 mt-2" role="alert" *ngIf="form.get('issue').invalid && form.get('issue').touched">
+                Please enter a valid issue characters must be more than 5</span>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-2">
+                <label for="select">Select Severity</label>
+            </div>
+            <div class="col-md-5 select">
+                <select name="select" id="select" class="form-select"
+                formControlName="select">
+                    <option value=""> --Select--</option>
+                    <option *ngFor="let select of options" value="{{select}}">{{select}}</option>
+                </select>
+                <span class="alert alert-danger p-1" role="alert" *ngIf="form.get('select').invalid && form.get('select').touched">
+                Please select any option</span>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-2">
+                <label for="radio">Select Status</label>
+            </div>
+            <div *ngFor="let rad of radio" class="col-md-2">
+                <input type="radio" class="form-check-input" name="radio" value="{{rad}}"
+                formControlName="radio">
+                <label for="radio">{{rad}}</label>
+            </div>
+            <span class="alert alert-danger" role="alert" *ngIf="form.get('radio').invalid && form.get('radio').touched">
+                please select any option</span>
+        </div>
+        <div class="mt-4">
+            <button style="margin-left:670px;" class="btn btn-primary mt-4 mb-5" type="submit" [disabled]="form.invalid" >Submit</button>
+        </div>
+    </form>
+</div>

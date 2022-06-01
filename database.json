@@ -18,5 +18,77 @@
       "Password": "atherather123",
       "id": 2
     }
+  ],
+  "issues": [
+    {
+      "description": "home page not loading properly",
+      "severity": "Minor",
+      "status": "Open",
+      "date": "2022-06-01T11:51:43.432Z",
+      "id": 1
+    },
+    {
+      "description": "product list not responsive",
+      "severity": "Minor",
+      "status": "In Progress",
+      "date": "2022-06-01T11:54:07.065Z",
+      "id": 2
+    },
+    {
+      "description": "images not loading",
+      "severity": "Critical",
+      "status": "Closed",
+      "date": "2022-06-01T11:22:47.485Z",
+      "id": 3
+    },
+    {
+      "description": "Cart not loading",
+      "severity": "Critical",
+      "status": "Open",
+      "date": "2022-06-01T09:17:15.525Z",
+      "id": 4
+    },
+    {
+      "description": "product details not accessible in mobile",
+      "severity": "Major",
+      "status": "In Progress",
+      "date": "2022-06-01T15:53:48.041Z",
+      "id": 5
+    },
+    {
+      "description": "items in cart getting duplicated",
+      "severity": "Critical",
+      "status": "In Progress",
+      "date": "2022-06-01T18:10:27.782Z",
+      "id": 6
+    },
+    {
+      "description": "items not getting deleted from wishlist",
+      "severity": "Minor",
+      "status": "Closed",
+      "date": "2022-06-01T15:55:04.322Z",
+      "id": 7
+    },
+    {
+      "description": "the payment functionality is missing",
+      "severity": "Critical",
+      "status": "In Progress",
+      "date": "2022-06-01T15:56:32.455Z",
+      "id": 8
+    },
+    {
+      "description": "heading is wrongly displayed",
+      "severity": "Major",
+      "status": "Open",
+      "date": "2022-06-01T15:57:07.532Z",
+      "id": 9
+    },
+    {
+      "description": "application crashing on clicking delete",
+      "severity": "Critical",
+      "status": "In Progress",
+      "date": "2022-06-01T15:57:43.411Z",
+      "id": 10
+    }
   ]
 }

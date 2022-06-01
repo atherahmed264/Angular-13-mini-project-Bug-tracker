@@ -5,4 +5,5 @@ export interface User {
     Country : String,
     Username : String,
     Password : String,
+    id?:number,
 }

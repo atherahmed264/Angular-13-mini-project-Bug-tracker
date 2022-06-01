@@ -1,0 +1,21 @@
+.card:hover{
+    cursor:pointer ;
+    transform: scale(1.1);
+}
+.centered {
+    position: absolute;
+    top: 30%;
+    left: 45%;
+}
+.add{
+    background-image: radial-gradient( circle farthest-corner at 22.4% 21.7%, rgba(4,189,228,1) 0%, rgba(2,83,185,1) 100.2% );
+    color: white;
+}
+.view{
+    background-image: linear-gradient(to right, #8e2de2, #4a00e0);
+    color: white;
+}
+.edit{
+    background-image: linear-gradient(to right, #ff6e7f, #bfe9ff);
+    color: white;
+}

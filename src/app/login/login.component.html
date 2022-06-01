@@ -15,13 +15,16 @@
     <div class="card-body">
         
         <form [formGroup]="form" (ngSubmit)="submitForm()" class="form-group" >
+            <span *ngIf="wrongcred" class="row d-flex justify-content-center p-0">
+                <span class="col-md-7 alert alert-danger p-1 d-flex justify-content-center">Wrong Username or Password</span>
+            </span>
             <div class="row d-flex justify-content-center mt-5">
                 <div class="col-md-2 ">
                     <label for="username">Username :</label>
                 </div>
                 <div class="col-md-5">
                     <input type="text" class="form-control" formControlName="username">
-                    <span class="p-0" *ngIf="form.get('username')?.invalid">Enter Username</span>
+                    <span class="p-0" *ngIf="form.get('username')?.invalid && form.get('username')?.touched">Enter Username</span>
                 </div>
             </div>
             <div class="row d-flex justify-content-center mt-5">
@@ -30,7 +33,7 @@
                 </div>
                 <div class="col-md-5">
                     <input type="password" class="form-control" formControlName="password">
-                    <span class="p-0" *ngIf="form.get('password')?.invalid">Enter Password</span>
+                    <span class="p-0" *ngIf="form.get('password')?.invalid && form.get('password')?.touched">Enter Password</span>
                     <a href="#" class="d-flex justify-content-end mt-3"> Forgot Password ? </a>
                 </div>
             </div>

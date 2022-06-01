@@ -1,0 +1,67 @@
+<div class="card">
+    <div class="card-header d-flex justify-content-center">
+        <p class="display-6"> Viewing Details </p>
+    </div>
+    <div class="card-body ">
+        <div class="row mb-4">
+            <div class="col-md-9 d-flex justify-content-end">
+                <button class="btn btn-primary" (click)="editMode=!editMode"> {{ editMode ? 'Cancel' : 'Edit' }}</button>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center mt-4">
+            <div class="col-md-2 ">
+                <label for="name">Issue Description</label>
+            </div>
+            <div class="col-md-5">
+                <input type="text" id="name" class="form-control" name="name" [disabled]="!editMode" [(ngModel)]="name">
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center mt-4">
+            <div class="col-md-2 ">
+                <label for="severity">Issue Severity</label>
+            </div>
+            <div *ngIf="!editMode" class="col-md-5">
+                <input type="text" id="severity" class="form-control" name="severity" disabled [(ngModel)]="severe">
+            </div>
+            <div *ngIf="editMode" class="col-md-5 select">
+                <select name="select" id="select" class="form-select" [(ngModel)]="severe">
+                    <option value=""> --Select--</option>
+                    <option *ngFor="let select of options" value="{{select}}">{{select}}</option>
+                </select>
+            </div>
+            
+        </div>
+        <div *ngIf="!editMode" class="row d-flex justify-content-center mt-4">
+            <div class="col-md-2">
+                <label for="status">Issue Status</label>
+            </div>
+            <div class="col-md-5">
+                <input type="text" id="status" class="form-control" name="status" disabled [(ngModel)]="status">
+            </div>
+        </div>
+        <div *ngIf="editMode" class="row d-flex justify-content-center mt-4">
+            <div class="col-md-2 label">
+                <label for="status">Issue Status</label>
+            </div>
+            <ng-container *ngIf="editMode">
+                <div *ngFor="let rad of radio" class="col-md-1 side ">
+                    <label for="status">{{rad}}</label>
+                    <input type="radio" class="form-check-input" id="status" name="status" value="{{rad}}" [(ngModel)]="status">
+                </div>
+            </ng-container>
+        </div>
+        <div *ngIf="!editMode" class="row d-flex justify-content-center mt-4">
+            <div class="col-md-2 ">
+                <label for="date">Created Date</label>
+            </div>
+            <div class="col-md-5">
+                <input type="text" id="date" class="form-control" name="date" disabled value="{{date | date}}">
+            </div>
+        </div>
+        <div *ngIf="editMode" class="row mb-4 mt-4">
+            <div class="col-md-9 d-flex justify-content-end">
+                <button class="btn btn-primary" (click)="edit()"> Save </button>
+            </div>
+        </div>
+    </div>
+</div>

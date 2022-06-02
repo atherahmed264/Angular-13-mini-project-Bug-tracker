@@ -41,6 +41,7 @@ onsubmit(){
       severity: this.getvalue()?.select,
       status: this.getvalue()?.radio,
       date: new Date(),
+      count:0
     }
     this.form.reset();
     this.service.addissues(this.postBody).subscribe();

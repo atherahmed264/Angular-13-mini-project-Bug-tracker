@@ -4,4 +4,5 @@ export interface issue {
     status:String,
     date:Date,
     id?:number,
+    count?:number,
 }

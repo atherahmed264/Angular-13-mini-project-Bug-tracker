@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
+import { NgChartsModule } from 'ng2-charts';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -37,7 +38,8 @@ import { SearchInput } from './Pipes/search.pipe';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -13,9 +13,9 @@ const routes: Routes = [
   { path:'' ,           component : LoginComponent },
   { path:'signup' ,     component : SignUpComponent},
   { path:'home' ,       component : HomepageComponent},
-  { path:'addissue',    component : AddEditIssueComponent },
-  { path: 'view/:id',   component : ViewComponentComponent},
-  { path: 'landing',    component : LandingPageComponent},
+  { path:'addissue',    component : AddEditIssueComponent , canActivate:[AuthGuard] },
+  { path: 'view/:id',   component : ViewComponentComponent , canActivate:[AuthGuard]},
+  { path: 'landing',    component : LandingPageComponent , canActivate:[AuthGuard]},
 ];
 
 @NgModule({

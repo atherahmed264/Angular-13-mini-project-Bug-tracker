@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DatasetController } from 'chart.js';
+
 import { issue } from '../Models/issues.model';
 import { ServerComms } from '../Services/server-comms.component';
 
@@ -17,6 +17,7 @@ export class HomepageComponent implements OnInit {
   issues!:issue[]
   viewenable:boolean = false;
   searchinput!:string;
+  body:any;
 
   ngOnInit(): void {
     this.service.loggedin$.subscribe(res => this.Username = res);
@@ -44,4 +45,14 @@ export class HomepageComponent implements OnInit {
       })
     }
   }
+
+  count(id:number,count:number){
+    let c;
+    count ? c = count + 1 : count == 0 ? c = count + 1 : c = 0;
+    this.body = {
+      count : c,
+    };
+    this.service.patchissue(this.body,id).subscribe();
+  }
+  
 }

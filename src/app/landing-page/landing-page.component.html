@@ -8,7 +8,7 @@
         <div class="carousel-inner">
           <div class="carousel-item active">
             <img src="https://wowslider.com/sliders/demo-77/data1/images/road220058.jpg" class="d-block w-100" alt="...">
-            <div class="centered"> <h3>Welcome</h3> </div>
+            <div class="centered d-flex justify-content-center"> <h3 class="display-5">Welcome {{ user  }}</h3> </div>
             <div class="carousel-caption d-none d-md-block">
             </div>
           </div>
@@ -37,7 +37,7 @@
         </button>
       </div>
 </div>
-<div class="container mt-3">
+<div class="container mt-3 mb-5">
     <div class="row">
         <div class="col-md-4">
             <div class="card" (click)="route('home')" >
@@ -67,4 +67,18 @@
             </div>
         </div>
     </div>
+</div>
+<div class="conatiner">
+   <div class="row d-flex justify-content-center">
+     <p class="col-md-9 display-6"> Issues Views Comparison</p>
+     <div class="col-md-9">
+       <canvas baseChart
+       [datasets]="barChartData"
+       [labels]="barChartLabels"
+       [options]="barChartOptions"
+       [legend]="barChartLegend"
+       chartType= 'bar'>  
+       </canvas>
+     </div>
+   </div> 
 </div>

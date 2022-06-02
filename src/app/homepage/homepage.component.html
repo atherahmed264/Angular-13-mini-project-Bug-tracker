@@ -18,7 +18,7 @@
     </div>
     <div *ngIf="issues;else spinner" class="row mt-4">
         <div class="col-md-6" *ngFor="let issue of (issues | search:searchinput) ; let i = index">
-            <div class="card mb-4">
+            <div class="card mb-4 shadow p-3 bg-white rounded">
                 <div class="card-header">
                     {{issue.description | capital}}
                 </div>
@@ -28,7 +28,8 @@
                         <li> Issue Status : {{ issue.status}} </li>
                         <li> Issue raised Date : {{ issue.date | date}}</li>
                         <div class="d-flex justify-content-end">
-                            <a role="button" [routerLink]="['/view',i+1]" class="btn btn-info btn-sm"> View </a> 
+                            <a role="button" [routerLink]="['/view',issue.id]" (click)="count(issue.id,issue.count)" 
+                            class="mx-2 btn btn-info btn-sm" style="color:white"> View </a>
                         </div>    
                     </ul>
                 </div>

@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
       console.log(user);
       if(user){
       this.service.callnext(user?.Username);
-      this.route.navigate(['/home'])
+      this.route.navigate(['/landing'])
       }
       else{
         this.wrongcred = true;

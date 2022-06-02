@@ -14,11 +14,14 @@ export class HeaderComponent implements OnInit {
 
     this.service.loggedin$.subscribe( res => {
       this.data = res;
-      if(this.data) this.login = true;
-      else this.login = false;
+      this.login = this.data ? true : false;
     } );
 
   }
   data!:any;
   login!:boolean
+
+  logout(){
+    this.service.loggedin$.next('');
+  }
 }

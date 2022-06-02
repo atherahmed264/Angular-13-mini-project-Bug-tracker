@@ -18,7 +18,13 @@
               <a class="nav-link" aria-current="page" routerLink="/landing">Home</a>
             </li>
             <li *ngIf="login" class="nav-item">
-              <a class="nav-link" routerLink="" (click)="login=false" >Logout</a>
+              <a class="nav-link" routerLink="" (click)="login=false;logout()" >Logout</a>
+            </li>
+            <li *ngIf="!login" class="nav-item">
+              <a routerLink="" class="nav-link"> Sign in </a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/home" class="nav-link">View Issues</a>
             </li>
           </ul>
         </div>

@@ -27,7 +27,6 @@ export class ServerComms {
             console.log(this.data);
         })
     }
-
     addissues(body:issue): Observable<any>{
         return this.http.post(this.issue,body);
     }
@@ -35,13 +34,18 @@ export class ServerComms {
         return this.http.get(this.issue);
     }
     getissuebyID(str:any) : Observable<any>{
-        return this.http.get(`http://localhost:3000/issues/${str}`);
+        return this.http.get(`${this.issue}/${str}`);
     }
     editissue(id:any,body:any){
         return this.http.put(`${this.issue}/${id}`,body);
     }
-
     callnext(name:String){
         this.loggedin$.next(name);
+    }
+    patchissue(body:any,id:number):Observable<any>{
+        return this.http.patch(`${this.issue}/${id}`,body);
+    }
+    deleteissue(id:number){
+        return this.http.delete(`${this.issue}/${id}`);
     }
 }

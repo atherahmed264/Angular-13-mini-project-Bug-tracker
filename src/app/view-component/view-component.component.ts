@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { issue } from '../Models/issues.model';
@@ -9,7 +9,7 @@ import { ServerComms } from '../Services/server-comms.component';
   templateUrl: './view-component.component.html',
   styleUrls: ['./view-component.component.scss']
 })
-export class ViewComponentComponent implements OnInit {
+export class ViewComponentComponent implements OnInit,OnDestroy {
 
   constructor(private route: ActivatedRoute ,private service:ServerComms ,private router:Router) { }
 
@@ -34,7 +34,6 @@ export class ViewComponentComponent implements OnInit {
     })
     
   }
-
   edit(){
     let obj:issue = {
       description:this.name,
@@ -46,6 +45,16 @@ export class ViewComponentComponent implements OnInit {
     setTimeout(() => {
       this.router.navigate(['/home'])
     } ,500)
+  }
+  delete(id:number){
+    this.service.deleteissue(id).subscribe();
+    setTimeout( () => {
+      this.router.navigate(['/home']);  
+    } ,500);
+  }
+
+  ngOnDestroy() : void {
+    this.editMode ? alert('Are you sure tou want to exit') : '';
   }
 
 }

@@ -4,8 +4,12 @@
     </div>
     <div class="card-body ">
         <div class="row mb-4">
+            <div class="col-md-2 d-flex justify-content-start">
+                <a role="button" routerLink="/home" class="btn btn-primary"> < Back</a>
+            </div>
             <div class="col-md-9 d-flex justify-content-end">
-                <button class="btn btn-primary" (click)="editMode=!editMode"> {{ editMode ? 'Cancel' : 'Edit' }}</button>
+                <button class="mx-4 btn btn-primary" (click)="editMode=!editMode"> {{ editMode ? 'Cancel' : 'Edit' }}</button>
+                <button class="btn btn-danger btn-sm" (click)="delete(id)" >Delete</button> 
             </div>
         </div>
         <div class="row d-flex justify-content-center mt-4">

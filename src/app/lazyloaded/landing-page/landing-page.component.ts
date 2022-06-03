@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Chart } from 'chart.js';
-import { issue } from '../Models/issues.model';
-import { ServerComms } from '../Services/server-comms.component';
+import { issue } from '../../Models/issues.model';
+import { ServerComms } from '../../Services/server-comms.component';
 
 @Component({
   selector: 'app-landing-page',

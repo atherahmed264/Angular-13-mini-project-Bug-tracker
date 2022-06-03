@@ -15,7 +15,7 @@
       "Mobile": "07397434614",
       "Country": "India",
       "Username": "atherahm123",
-      "Password": "atherather123",
+      "Password": "atherather",
       "id": 2
     }
   ],
@@ -24,17 +24,17 @@
       "description": "home page not loading properly",
       "severity": "Minor",
       "status": "Open",
-      "date": "2022-06-01T11:51:43.432Z",
+      "date": "2022-06-03T06:01:30.410Z",
       "id": 1,
-      "count": 8
+      "count": 9
     },
     {
       "description": "images not loading",
       "severity": "Critical",
       "status": "Closed",
-      "date": "2022-06-01T11:22:47.485Z",
+      "date": "2022-06-03T06:04:40.491Z",
       "id": 3,
-      "count": 4
+      "count": 0
     },
     {
       "description": "Cart not loading",
@@ -42,7 +42,7 @@
       "status": "Open",
       "date": "2022-06-01T09:17:15.525Z",
       "id": 4,
-      "count": 3
+      "count": 4
     },
     {
       "description": "product details not accessible in mobile",

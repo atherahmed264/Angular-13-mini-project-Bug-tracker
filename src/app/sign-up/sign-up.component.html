@@ -1,10 +1,11 @@
 <div class="card grad">
     <div class="card-header">
-        <h4 class="display-4">Sign Up For Free !</h4>
+        <h4 *ngIf="!passchange" class="display-4">Sign Up For Free !</h4>
+        <h4 *ngIf="passchange" class="display-4"> Change Password </h4>
     </div>
     <div class="card-body">
         <form [formGroup]="signupForm" (ngSubmit)="signUp()" class="form-group p-5">
-            <div class="row mb-5">
+            <div *ngIf="!passchange" class="row mb-5">
                 <div class="col-md-2 p-0">
                     <label for="firstn " class="fst">First Name </label>
                 </div>
@@ -27,7 +28,7 @@
                 </div>
             </div>
 
-            <div class="row mb-5">
+            <div *ngIf="!passchange" class="row mb-5">
                 <div class="col-md-2 p-0">
                     <label for="country" class="fst">Country </label>
                 </div>
@@ -50,7 +51,7 @@
                 </div>
             </div>
 
-            <div class="row mb-5">
+            <div *ngIf="!passchange" class="row mb-5">
                 <div class="col-md-2">
                     <label for="email" class="m">Email Address </label>
                 </div>
@@ -65,7 +66,7 @@
 
             <div class="row mb-5">
                 <div class="col-md-2">
-                    <label for="usern" class="m" >Create Username </label>
+                    <label for="usern" class="m" > <span class="nil" *ngIf="!passchange" >Create </span> Username </label>
                 </div>
                 <div class="col-md-3">
                     <input type="text" class="form-control" id="usern" name="usern" 
@@ -76,6 +77,10 @@
                     <span>
 
                     </span>
+                </div>
+                <div *ngIf="passchange" class="col-md-5">
+                    <a class="link-dark mx-4" (click)="checkuser()">Validate Username</a>
+                    <span *ngIf="show" class="nil" href="#" class="badge badge-pill badge-success">Username Found</span>
                 </div>
             </div>
 
@@ -90,10 +95,9 @@
                         password should be atleast 6 characters 
                     </span>
                 </div>
-                <div class="col-md-3" *ngIf="pass"><p >Password must be atleast 6 chars including special characters</p></div>
             </div>
 
-            <div class="row mb-5">
+            <div class="row mb-3">
                 <div class="col-md-2">
                     <label for="passretype" class="m" >Retype Password </label>
                 </div>
@@ -109,9 +113,12 @@
                 </div>
             </div>
 
-            <div class="row mb-5 d-flex justify-content-center">
-                <div class="col-md-2">
-                    <button class="btn btn-light m" type="submit">Register</button>
+            <div class="row mb-5 ">
+                <div *ngIf="!passchange" class="d-flex justify-content-end col-md-8">
+                    <button class="btn btn-dark m" type="submit" [disabled]="btndisable">Register</button>
+                </div>
+                <div *ngIf="passchange" class="d-flex justify-content-end col-md-8">
+                    <button class="btn btn-dark m" type="button" [disabled]="btndisable" (click)="change()">Change</button>
                 </div>
             </div>
         </form>

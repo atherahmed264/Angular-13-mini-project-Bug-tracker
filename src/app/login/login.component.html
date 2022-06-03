@@ -1,7 +1,7 @@
 <div class="image">
     <div class="row">
-        <div class="col-md d-flex justify-content-start p-4">
-            <div class="lead mx-4"> <p> Click to View Issue Details without Logging In</p></div>
+        <div class="col-md d-flex justify-content-center p-4">
+            <div class="lead mx-4"> <p> Click to View without Logging In</p></div>
             <a class="btn btn-dark" role="button" title="Click to view without logging in" routerLink="/home">View Issues</a>
         </div>    
     </div>
@@ -24,7 +24,7 @@
                 </div>
                 <div class="col-md-5">
                     <input type="text" class="form-control" formControlName="username">
-                    <span class="p-0" *ngIf="form.get('username')?.invalid && form.get('username')?.touched">Enter Username</span>
+                    <span class="p-0 er" *ngIf="form.get('username')?.invalid && form.get('username')?.touched">Enter Username</span>
                 </div>
             </div>
             <div class="row d-flex justify-content-center mt-5">
@@ -33,8 +33,8 @@
                 </div>
                 <div class="col-md-5">
                     <input type="password" class="form-control" formControlName="password">
-                    <span class="p-0" *ngIf="form.get('password')?.invalid && form.get('password')?.touched">Enter Password</span>
-                    <a href="#" class="d-flex justify-content-end mt-3"> Forgot Password ? </a>
+                    <span class="p-0 er" *ngIf="form.get('password')?.invalid && form.get('password')?.touched">Enter Password</span>
+                    <a routerLink="/signup" (click)="changepass()" class="d-flex justify-content-end mt-3"> Forgot Password ? </a>
                 </div>
             </div>
             <div class="row">

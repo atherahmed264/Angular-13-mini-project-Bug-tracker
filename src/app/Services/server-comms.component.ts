@@ -21,6 +21,9 @@ export class ServerComms {
     getUsers():Observable<any>{
         return this.http.get(this.users);
     }
+    patchUser(body:any,id:any){
+        return this.http.patch(`${this.users}/${id}`,body);
+    }
     getData(){
         this.getUsers().subscribe(res=>{
             this.data = res;

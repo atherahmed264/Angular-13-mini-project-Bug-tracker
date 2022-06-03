@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AddEditIssueComponent } from './add-edit-issue/add-edit-issue.component';
 import { HomepageComponent } from './homepage/homepage.component';
-import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './Services/auth-guard';
 import { SignUpComponent } from './sign-up/sign-up.component';
@@ -15,7 +14,7 @@ const routes: Routes = [
   { path:'home' ,       component : HomepageComponent},
   { path:'addissue',    component : AddEditIssueComponent , canActivate:[AuthGuard] },
   { path: 'view/:id',   component : ViewComponentComponent , canActivate:[AuthGuard]},
-  { path: 'landing',    component : LandingPageComponent , canActivate:[AuthGuard]},
+  { path: 'landing',    loadChildren: () => import('./lazyloaded/lazyload.module').then(m => m.LazyLoad), canActivate:[AuthGuard]},
 ];
 
 @NgModule({

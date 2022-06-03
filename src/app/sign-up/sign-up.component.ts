@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -10,7 +10,7 @@ import { ServerComms } from '../Services/server-comms.component';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent implements OnInit, OnDestroy {
 
   constructor( private router:Router , private service:ServerComms) { }
   
@@ -19,8 +19,15 @@ export class SignUpComponent implements OnInit {
   postObject! : User;
   passbool:boolean = false; 
   allData:User[] = [];
+  passchange:boolean = false;
+  check:boolean = false;
+  btndisable:boolean = false;
+  id:any;
+  show:any;
 
   ngOnInit(): void {
+    this.passchange = sessionStorage.getItem('data') ? true : false;
+    this.btndisable = this.passchange;
     this.signupForm = new FormGroup({
       "firstName": new FormControl('',[Validators.required,this.notaNum]),
       "lastName": new FormControl('',[Validators.required]),
@@ -55,6 +62,7 @@ export class SignUpComponent implements OnInit {
   }
   
    signUp(){
+    if(!this.passchange){ 
     if(this.signupForm != undefined && !this.signupForm.invalid){
       if(this.vals()?.password == this.vals()?.retypepass){
         this.passbool = false;
@@ -91,5 +99,42 @@ export class SignUpComponent implements OnInit {
       console.log('form error');
       alert('please fill out details carefully')
     }
+  }
+  else {
+
+  }
+  }
+  checkuser(){
+    this.check=true
+    let usr = this.allData.find( val => {
+      return val.Username == this.vals()?.username
+    })
+    console.log(usr);
+    if(usr){
+      this.id = usr?.id;
+      this.check = false;
+      this.show = true;
+      this.btndisable = false;
+    }
+    else alert('Username not found')
+  }
+  change(){
+    if(this.vals()?.retypepass.length > 6 && this.vals()?.password.length > 6 && this.vals()?.password == this.vals()?.retypepass){
+      this.service.patchUser({
+        Password:this.vals()?.password
+      },this.id)
+      .subscribe();
+      alert('Password Changed successfully');
+      this.router.navigate([''])
+      
+    }
+    else{
+      alert('Passwords dont match');
+    }
+  }
+
+  ngOnDestroy() : void {
+    sessionStorage.removeItem('data');
+    this.passchange = false;
   }
 }

@@ -22,4 +22,11 @@ describe('FooterComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render footer content', () => {
+    const fixture = TestBed.createComponent(FooterComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('footer')).toBeTruthy();
+  });
 });

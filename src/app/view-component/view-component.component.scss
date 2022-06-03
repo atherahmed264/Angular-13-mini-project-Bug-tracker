@@ -1,3 +1,11 @@
-.side{
-    margin-right: 80px;
+
+@media (min-width:320px){
+    .side{
+        margin-left: 20px;
+    }
+}
+@media (min-width:1025px){
+    .side{
+        margin-right: 92px;
+    }
 }

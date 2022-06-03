@@ -22,6 +22,7 @@ export class ViewComponentComponent implements OnInit,OnDestroy {
   date:any;
   options:String[]=['Minor' , 'Major' , 'Critical'];
   radio:String[]=['Open' , 'Closed' , 'In Progress'];
+  save:boolean = false;
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(re => this.id = re.get('id'));
@@ -42,6 +43,7 @@ export class ViewComponentComponent implements OnInit,OnDestroy {
       date: new Date(),
     };
     this.service.editissue(this.id,obj).subscribe();
+    this.save = true;
     setTimeout(() => {
       this.router.navigate(['/home'])
     } ,500)
@@ -54,7 +56,7 @@ export class ViewComponentComponent implements OnInit,OnDestroy {
   }
 
   ngOnDestroy() : void {
-    this.editMode ? alert('Are you sure tou want to exit') : '';
+    this.save ? alert('Are you sure you want to submit'): this.editMode ? alert('Are you sure tou want to exit') : '';
   }
 
 }

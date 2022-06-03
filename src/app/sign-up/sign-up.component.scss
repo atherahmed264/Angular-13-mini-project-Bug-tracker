@@ -10,9 +10,6 @@
 .s{
     margin-left: 750px;
 }
-.grad{
-    background-image: linear-gradient(to right, #434343 0%, black 100%);
-}
 input.ng-touched.ng-invalid{
     border: 1px solid rgb(2, 2, 2);
 }
@@ -20,6 +17,14 @@ span{
     color: white;
     background-color: black;
 }
-input{
-    background-color: rgb(207, 207, 207);
+.card-header{
+    background-color: rgb(255, 255, 255);
+    color: rgb(4, 4, 4);
+}
+.nil{
+    background-color: white;
+    color: black;
+}
+.link-dark{
+    cursor: pointer;
 }

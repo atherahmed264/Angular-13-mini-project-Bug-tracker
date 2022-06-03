@@ -48,5 +48,8 @@ export class LoginComponent implements OnInit {
     this.form.get('username')?.value || this.form.get('password')?.value ? alert('Are you sure you want to go to signup page'):'';
     this.route.navigate(['/signup']);
   }
+  changepass(){
+    sessionStorage.setItem('data','changepass');
+  }
 
 }

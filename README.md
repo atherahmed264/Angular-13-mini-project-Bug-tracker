@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 # DEPENDENCIES
 
-Bootstrap v5.1.3
+Bootstrap v5.1.3, 
 Chart.js
 
 ## Development server

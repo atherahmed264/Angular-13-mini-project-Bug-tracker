@@ -88,6 +88,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
         this.getData();
       } ,500) 
       this.signupForm.reset();
+      alert('Signup Successful Redirecting to login');
+      this.router.navigate(['']);
       }  
       }
       else{

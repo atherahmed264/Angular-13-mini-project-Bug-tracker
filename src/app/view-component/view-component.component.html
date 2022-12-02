@@ -43,12 +43,12 @@
                 <input type="text" id="status" class="form-control" name="status" disabled [(ngModel)]="status">
             </div>
         </div>
-        <div *ngIf="editMode" class="row d-flex justify-content-center mt-4">
-            <div class="col-md-2 label">
+        <div *ngIf="editMode" class="row d-flex justify-content-center mt-4 side">
+            <div class="col-md-2 ">
                 <label for="status">Issue Status</label>
             </div>
             <ng-container *ngIf="editMode">
-                <div *ngFor="let rad of radio" class="col-md-1 side ">
+                <div *ngFor="let rad of radio" class="col-md-2 ">
                     <label for="status">{{rad}}</label>
                     <input type="radio" class="form-check-input" id="status" name="status" value="{{rad}}" [(ngModel)]="status">
                 </div>

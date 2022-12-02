@@ -24,9 +24,9 @@
       "description": "home page not loading properly",
       "severity": "Minor",
       "status": "Open",
-      "date": "2022-06-03T06:01:30.410Z",
+      "date": "2022-06-05T12:24:25.586Z",
       "id": 1,
-      "count": 9
+      "count": 1
     },
     {
       "description": "images not loading",
@@ -34,7 +34,7 @@
       "status": "Closed",
       "date": "2022-06-03T06:04:40.491Z",
       "id": 3,
-      "count": 0
+      "count": 2
     },
     {
       "description": "Cart not loading",
@@ -89,7 +89,7 @@
       "status": "In Progress",
       "date": "2022-06-01T15:57:43.411Z",
       "id": 10,
-      "count": 3
+      "count": 4
     },
     {
       "description": "product list not responsive",

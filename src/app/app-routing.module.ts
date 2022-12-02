@@ -9,12 +9,12 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { ViewComponentComponent } from './view-component/view-component.component';
 
 const routes: Routes = [
-  { path:'' ,           component : LoginComponent },
-  { path:'signup' ,     component : SignUpComponent},
-  { path:'home' ,       component : HomepageComponent},
-  { path:'addissue',    component : AddEditIssueComponent , canActivate:[AuthGuard] },
-  { path: 'view/:id',   component : ViewComponentComponent , canActivate:[AuthGuard]},
-  { path: 'landing',    loadChildren: () => import('./lazyloaded/lazyload.module').then(m => m.LazyLoad), canActivate:[AuthGuard]},
+  { path: '', component: LoginComponent },
+  { path: 'signup', component: SignUpComponent },
+  { path: 'home', component: HomepageComponent },
+  { path: 'addissue', component: AddEditIssueComponent, canActivate: [AuthGuard] },
+  { path: 'view/:id', component: ViewComponentComponent, canActivate: [AuthGuard] },
+  { path: 'landing', loadChildren: () => import('./lazyloaded/lazyload.module').then(m => m.LazyLoad), canActivate: [AuthGuard] },
 ];
 
 @NgModule({

@@ -30,10 +30,10 @@ export class LoginComponent implements OnInit {
     console.log(this.service.data);
     this.data = this.service.data
     if(this.form.valid){
-      let user = this.data.find(el => el.Username == this.form.value.username && el.Password == this.form.value.password);
+      let user = this.data.find(el => el.UserName == this.form.value.username && el.Password == this.form.value.password);
       console.log(user);
       if(user){
-      this.service.callnext(user?.Username);
+      this.service.callnext(user?.UserName);
       this.route.navigate(['/landing'])
       }
       else{

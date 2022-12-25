@@ -22,11 +22,10 @@
   "issues": [
     {
       "description": "home page not loading properly",
-      "severity": "Minor",
+      "severity": "Critical",
       "status": "Open",
-      "date": "2022-06-05T12:24:25.586Z",
-      "id": 1,
-      "count": 1
+      "date": "2022-12-10T15:40:42.097Z",
+      "id": 1
     },
     {
       "description": "images not loading",
@@ -98,6 +97,14 @@
       "date": "2022-06-02T10:23:36.559Z",
       "count": 6,
       "id": 11
+    },
+    {
+      "description": "ather",
+      "severity": "Critical",
+      "status": "Open",
+      "date": "2022-12-10T15:39:41.103Z",
+      "count": 0,
+      "id": 12
     }
   ]
 }

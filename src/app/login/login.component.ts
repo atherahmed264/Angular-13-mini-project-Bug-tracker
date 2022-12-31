@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from '../Models/usermodel';
 import { ServerComms } from '../Services/server-comms.component';
 
@@ -12,7 +12,7 @@ import { ServerComms } from '../Services/server-comms.component';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private route:Router, private service:ServerComms) { }
+  constructor(private route:Router, private service:ServerComms,private snackBar:MatSnackBar) { }
   form!:FormGroup;
   data!:User[];
   wrongcred:boolean = false;
@@ -29,23 +29,25 @@ export class LoginComponent implements OnInit {
     console.log(this.form);
     console.log(this.service.data);
     this.data = this.service.data
-    if(this.form.valid){
-      let user = this.data.find(el => el.UserName == this.form.value.username && el.Password == this.form.value.password);
-      console.log(user);
-      if(user){
-      this.service.callnext(user?.UserName);
-      this.route.navigate(['/landing'])
-      }
-      else{
-        this.wrongcred = true;
-      }
+    let payload = {
+      userEmail:this.form.value.username,
+      userPass:this.form.value.password,
     }
-    else{
-      alert('Wrong Username or Password')
-    }
+    this.service.loginUser(payload).subscribe({
+      next: (val:any) => {
+        if(val.message === "Success"){
+          console.log("login success",val);
+          this.service.callnext(val.data.UserName);
+          localStorage.setItem("Token",val.token);
+          this.snackBar.open("Login Successfull","", { duration : 1000});
+          this.route.navigate(['/landing']);
+        }
+
+      },
+      error: err => {}
+    })
   }
   signup(){
-    this.form.get('username')?.value || this.form.get('password')?.value ? alert('Are you sure you want to go to signup page'):'';
     this.route.navigate(['/signup']);
   }
   changepass(){

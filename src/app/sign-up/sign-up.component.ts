@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { User } from '../Models/usermodel';
 import { ServerComms } from '../Services/server-comms.component';
@@ -12,7 +13,7 @@ import { ServerComms } from '../Services/server-comms.component';
 })
 export class SignUpComponent implements OnInit, OnDestroy {
 
-  constructor(private router: Router, private service: ServerComms) { }
+  constructor(private router: Router, private service: ServerComms, private snackBar:MatSnackBar) { }
 
   signupForm!: any;
   pass: boolean = false;
@@ -26,7 +27,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
   show: any;
 
   ngOnInit(): void {
-    fetch('http://localhost:5000/api/v1/user').then(x => x.json()).then(x => console.log(JSON.stringify(x))).catch(x => console.log(x))
     this.passchange = sessionStorage.getItem('data') ? true : false;
     this.btndisable = this.passchange;
     this.signupForm = new FormGroup({
@@ -77,30 +77,29 @@ export class SignUpComponent implements OnInit, OnDestroy {
             Password: this.vals()?.password,
             ConfirmPassword: this.vals()?.retypepass
           }
-          console.log(this.postObject);
-          console.log(this.allData);
-          let val = this.allData.find(el => el.UserName == this.postObject.UserName);
-          console.log(val, 'bruhhhhhhhhhhhhhhhhhhhh');
-          val = undefined
-          if (val) {
-            alert('Username Already Exists Please choose other one');
-          }
-          else {
+          if(this.postObject) {
             this.service.createAccount(this.postObject).subscribe( res => {
               console.log(JSON.stringify(res));
               console.log(JSON.stringify(this.postObject));
+              this.snackBar.open("Sign up Successfull","",{
+                duration:2000
+              });
             }, err => {
-              console.log("eerr",err);
+              console.log("eerr",JSON.stringify(err));
+              this.snackBar.open(err.error.message,"",{
+                duration:4000
+              });
             });
             setTimeout(() => {
               this.getData();
             }, 500)
             this.signupForm.reset();
-            alert('Signup Successful Redirect to login page');
           }
         }
         else {
-          console.log('pass didnt match');
+          this.snackBar.open("Passwords Dont Match","",{
+            duration:3000
+          });
           this.passbool = true;
         }
       }

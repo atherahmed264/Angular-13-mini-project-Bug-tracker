@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row mb-3 mt-3 d-flex align-items-center text-center">
+    Configurations <mat-icon>settings</mat-icon>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row mb-3 mt-3">
+    <div class="mr-3">
+      <span class="mr-3"> Sort By : </span>
+      <mat-radio-group aria-label="Select an option" [(ngModel)]="radio">
+        <mat-radio-button style="margin-right: 20px; margin-left: 10px;" value="1">Older</mat-radio-button>
+        <mat-radio-button value="-1">Newer</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+  <div class="row mt-3 mb-3">
+    <mat-form-field appearance="fill">
+      <mat-label>Type</mat-label>
+      <mat-select [formControl]="filterType" multiple [(ngModel)]="typeFilter">
+        <mat-option *ngFor="let topping of typeFilters" [value]="topping">{{topping}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="row mt-3 mb-3">
+    <span class="text-start text-bold mb-2"> Filters </span> <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Status</mat-label>
+      <mat-select [formControl]="filterStatus" multiple [(ngModel)]="statusFilter">
+        <mat-option *ngFor="let topping of statusFilters" [value]="topping">{{topping}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+
+  <div class="d-flex justify-content-evenly">
+    <button mat-raised-button color="warn" (click)="dialog.close()">Close</button>
+    <button mat-raised-button color="primary" (click)="runValidation()">Apply</button>
+  </div>
+</div>

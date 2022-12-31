@@ -12,6 +12,8 @@ export class ServerComms {
     baseUrl = "http://localhost:5000/api/v1";
     routes = {
         signup: "/user/signup",
+        login:'/user/login',
+        records:'/record/list',
     }
 
     loggedin$ = new BehaviorSubject<String | undefined>('');
@@ -23,6 +25,10 @@ export class ServerComms {
         let url = this.baseUrl+this.routes.signup;
         console.log(url,body);
         return this.http.post(url, body);
+    }
+    loginUser(body:any){
+        let url = this.baseUrl + this.routes.login;
+        return this.http.post(url,body);
     }
     getUsers(): Observable<any> {
         return this.http.get(this.users);
@@ -39,8 +45,17 @@ export class ServerComms {
     addissues(body: issue): Observable<any> {
         return this.http.post(this.issue, body);
     }
-    getissues(): Observable<any> {
-        return this.http.get(this.issue);
+    getissues(obj?:any): Observable<any> {
+        let payload = 
+            {
+                "limit":"5",
+                "page":"1",
+                "searchTecxt":""
+            }
+        if(obj) payload = Object.assign(payload,obj);    
+        let url = this.baseUrl + this.routes.records;
+        console.log(payload);
+        return this.http.post(url,payload);
     }
     getissuebyID(str: any): Observable<any> {
         return this.http.get(`${this.issue}/${str}`);

@@ -1,32 +1,36 @@
 <div class="container">
-    <div class="row mb-3">
+    <div class="button-container">
+        <button mat-fab color="primary" aria-label="Example icon button with a delete icon" matTooltip="Add New Record">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    <!-- <div class="row mb-3">
         <div class="col-md-10 ">
             <p class="display-4">Welcome , {{ Username ? Username : 'Guest' }}</p>
         </div>
         <div class="col-md-2 mt-3">
             <button (click)="gotToaddIssue()" class="btn btn-success">Add Issue + </button>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-5 d-flex justify-content-end">
+    </div> -->
+    <div class="d-flex flex-row mt-5 justify-content-between ">
+        <div class="w-50">
             <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchinput">
         </div>
-        <div class="d-flex justify-content-end col-md-7">
-            <button class="btn btn-outline-dark mx-5 mt-3" (click)="sort('o')">Sort by Older</button>
-            <button class="btn btn-outline-dark mt-3" (click)="sort('l')">Sort by Latest</button>
-        </div>
+        
+        
+        <button mat-raised-button class="button" (click)="openPopup()"> Filters <mat-icon>filter_alt</mat-icon> </button>
     </div>
     <div *ngIf="issues;else spinner" class="row mt-4">
-        <div class="col-md-6" *ngFor="let issue of (issues | search:searchinput) ; let i = index">
+        <!-- <div class="col-md-6" *ngFor="let issue of (issues | search:searchinput) ; let i = index">
             <div class="card mb-4 shadow p-3 bg-white rounded">
                 <div class="card-header">
-                    {{issue.description | capital}}
+                    {{issue.RecordNumber}}
                 </div>
                 <div class="card-body">
                     <ul>
-                        <li> Severity : {{ issue.severity}} </li>
-                        <li> Issue Status : {{ issue.status}} </li>
-                        <li> Issue raised Date : {{ issue.date | date}}</li>
+                        <li> Title : {{ issue.Title}} </li>
+                        <li> Type : {{ issue.Type}} </li>
+                        <li> Raised On : {{ issue.CreatedAt | date:'dd-MMM-yyyy'}}</li>
                         <div class="d-flex justify-content-end">
                             <a role="button" [routerLink]="['/view',issue.id]" (click)="count(issue.id,issue.count)" 
                             class="mx-2 btn btn-outline-dark btn-sm" > View </a>
@@ -34,7 +38,25 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div> -->
+        <table class="table table-striped mb-5">
+          <thead>
+            <tr>
+              <th *ngFor="let head of tableHeaders">{{ head }}</th>
+            </tr>
+          </thead>
+          
+          <tbody>
+            <tr *ngFor="let item of issues">
+              <td>{{item.RecordNumber}}</td>
+              <td>{{item.Title}}</td>
+              <td>{{item.Type}}</td>
+              <td>{{item.Status}}</td>
+              <td>{{item.AssignedTo.Name}}</td>
+              <td>{{item.CreatedAt | date:'dd-MMM-yyyy'}}</td>
+            </tr>
+          </tbody>
+        </table>
 
     </div>
     <ng-template #spinner >

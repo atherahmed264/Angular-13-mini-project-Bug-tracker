@@ -1,7 +1,7 @@
 <div class="card grad">
-    <div class="card-header">
-        <h4 *ngIf="!passchange" class="display-4">Sign Up For Free !</h4>
-        <h4 *ngIf="passchange" class="display-4"> Change Password </h4>
+    <div class="card-header text-center text-white gradient">
+        <h4 *ngIf="!passchange" class="display-4 my-auto">Sign Up For Free !</h4>
+        <h4 *ngIf="passchange" class="display-4 my-auto"> Change Password </h4>
     </div>
     <div class="card-body">
         <form [formGroup]="signupForm" (ngSubmit)="signUp()" class="form-group p-5">

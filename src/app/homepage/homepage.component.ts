@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
@@ -8,6 +7,7 @@ import { issue } from '../Models/issues.model';
 import { ServerComms } from '../Services/server-comms.component';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { debounceTime, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-homepage',
@@ -16,7 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class HomepageComponent implements OnInit {
 
-  constructor(private service: ServerComms, private route: Router, private dialog: MatDialog) { }
+  constructor(private service: ServerComms, private route: Router, private dialog: MatDialog , private snack:MatSnackBar) { }
 
   tableHeaders = ['Record Number', 'Title', 'Type', 'Status', 'Assigned To', 'Created At'];
   Username!: String | undefined;
@@ -25,22 +25,37 @@ export class HomepageComponent implements OnInit {
   searchinput!: string;
   body: any;
   dataSource!: any;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
   displayedColumns = ["Type", "Status", "Title", "AssignedTo"];
+  loader = false;
 
-  loadPage() {
-    this.dataSource.paginator = this.paginator;
-  }
   ngOnInit(): void {
     this.service.loggedin$.subscribe(res => this.Username = res);
-    this.service.getissues().subscribe(response => {
-      this.issues = response.data;
-      this.dataSource = new MatTableDataSource(this.issues);
-      this.loadPage()
-      console.log(this.issues);
+    this.getRecords();
+    let ob$ = this.searchText$.asObservable();
+    ob$.pipe(debounceTime(2000)).subscribe(val => {
+      this.getRecords(val);
     });
   }
 
+  searchText$:Subject<string> = new Subject<string>();
+  search(){
+    this.searchText$.next(this.searchinput);
+  }
+
+  getRecords(search?:string){
+    this.loader = true;
+    let payload = sessionStorage.getItem('payload');
+    let searchText = search;
+    this.service.getissues(payload,searchText).subscribe(response => {
+      this.issues = response.data;
+      console.log(this.issues);
+      this.loader = false
+    },
+    err => {
+      this.snack.open("Some Error Occurred","",{ duration:3000});
+      this.loader = false;
+    });
+  }
   gotToaddIssue() {
     this.route.navigate(['/addissue'])
   }
@@ -74,19 +89,13 @@ export class HomepageComponent implements OnInit {
 
   openPopup() {
     let dialog = this.dialog.open(FilterPopup, {
-      height: '400px',
-      width: '800px'
+      height: '420px',
+      width: '800px',
+      disableClose:true
     });
     dialog.afterClosed().subscribe({
       next: payload => {
-        this.service.getissues(payload).subscribe({
-          next: res => {
-            this.issues = res.data;
-            this.dataSource = new MatTableDataSource(this.issues);
-            this.loadPage()
-            console.log(this.issues);
-          }
-        })
+          this.getRecords();
       }
     })
   }
@@ -104,13 +113,15 @@ export class FilterPopup implements OnInit {
   constructor(private snack: MatSnackBar, public dialog: MatDialogRef<FilterPopup>) { }
 
   ngOnInit(): void {
-
+    this.radio = sessionStorage.getItem('radio') || undefined;
+    this.typeFilter = JSON.parse(sessionStorage.getItem('typeFilters') as string) || undefined;
+    this.statusFilter = JSON.parse(sessionStorage.getItem('statusFilters') as string) || undefined;
   }
 
   filterStatus = new FormControl('');
   statusFilters = ['Active', 'Invalid', 'New']
   filterType = new FormControl('');
-  typeFilters = ['Bug', 'User Story', 'Task'];
+  typeFilters = ['Bug', 'UserStory', 'Task'];
   radio!: any;
   statusFilter!: any;
   typeFilter!: any;
@@ -126,18 +137,39 @@ export class FilterPopup implements OnInit {
   }
 
   buildObj() {
+    sessionStorage.removeItem('payload');
     let payload: any = {}
     if (this.radio) {
+      let radio = this.radio;
       payload.sort = this.radio;
+      sessionStorage.setItem('radio',radio);
     }
     if (this.typeFilter) {
+      let filters = JSON.stringify(this.typeFilter);
       payload.filter = payload.filter || {};
-      payload.filter.Type = this.typeFilter
+      payload.filter.Type = this.typeFilter;
+      sessionStorage.setItem('typeFilters',filters);
     }
     if (this.statusFilter) {
+      let filters = JSON.stringify(this.statusFilter);
       payload.filter = payload.filter || {};
-      payload.filter.Status = this.statusFilter
+      payload.filter.Status = this.statusFilter;
+      sessionStorage.setItem('statusFilters',filters);
+    }
+    if(Object.keys(payload).length > 0){
+      let str = JSON.stringify(payload)
+      sessionStorage.setItem('payload',str);
     }
     this.dialog.close(payload);
+  }
+
+  clear(){
+    this.radio = undefined;
+    this.typeFilter = undefined;
+    this.statusFilter = undefined;
+    sessionStorage.removeItem('payload');
+    sessionStorage.removeItem('statusFilters');
+    sessionStorage.removeItem('typeFilters');
+    sessionStorage.removeItem('radio');
   }
 }

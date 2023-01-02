@@ -45,12 +45,13 @@ export class ServerComms {
     addissues(body: issue): Observable<any> {
         return this.http.post(this.issue, body);
     }
-    getissues(obj?:any): Observable<any> {
+    getissues(obj?:any,search?:string): Observable<any> {
+        if(sessionStorage.getItem('payload')) obj = JSON.parse(sessionStorage.getItem('payload') as string); 
         let payload = 
             {
-                "limit":"5",
+                "limit":"15",
                 "page":"1",
-                "searchTecxt":""
+                "searchText":search || ""
             }
         if(obj) payload = Object.assign(payload,obj);    
         let url = this.baseUrl + this.routes.records;

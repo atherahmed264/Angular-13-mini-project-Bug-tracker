@@ -35,9 +35,9 @@ export class SignUpComponent implements OnInit, OnDestroy {
       "Mobile": new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(11)]),
       "Country": new FormControl('', [Validators.required, this.notaNum]),
       "email": new FormControl('', [Validators.required, Validators.email]),
-      "username": new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]),
-      "password": new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(16)]),
-      "retypepass": new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(16)])
+      "username": new FormControl('', [Validators.required, Validators.minLength(6)]),
+      "password": new FormControl('', [Validators.required, Validators.minLength(6)]),
+      "retypepass": new FormControl('', [Validators.required, Validators.minLength(6)])
 
     })
     this.getData();

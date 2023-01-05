@@ -15,9 +15,10 @@ import { debounceTime, Subject } from 'rxjs';
   styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit {
-
+  
   constructor(private service: ServerComms, private route: Router, private dialog: MatDialog , private snack:MatSnackBar) { }
-
+  
+  searchText!: string;
   tableHeaders = ['Record Number', 'Title', 'Type', 'Status', 'Assigned To', 'Created At'];
   Username!: String | undefined;
   issues!: any[]
@@ -30,10 +31,11 @@ export class HomepageComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.loggedin$.subscribe(res => this.Username = res);
-    this.getRecords();
+    this.getRecords(sessionStorage.getItem('payload'),this.searchText);
     let ob$ = this.searchText$.asObservable();
     ob$.pipe(debounceTime(2000)).subscribe(val => {
-      this.getRecords(val);
+      this.searchText = val;
+      this.getRecords(sessionStorage.getItem('payload'),val);
     });
   }
 
@@ -42,9 +44,9 @@ export class HomepageComponent implements OnInit {
     this.searchText$.next(this.searchinput);
   }
 
-  getRecords(search?:string){
+  getRecords(body?:any,search?:string){ 
     this.loader = true;
-    let payload = sessionStorage.getItem('payload');
+    let payload = body ? body : sessionStorage.getItem('payload');
     let searchText = search;
     this.service.getissues(payload,searchText).subscribe(response => {
       this.issues = response.data;
@@ -95,7 +97,8 @@ export class HomepageComponent implements OnInit {
     });
     dialog.afterClosed().subscribe({
       next: payload => {
-          this.getRecords();
+        if(payload === true) this.getRecords({},this.searchText);
+        if(payload) this.getRecords(payload,this.searchText);
       }
     })
   }
@@ -125,18 +128,20 @@ export class FilterPopup implements OnInit {
   radio!: any;
   statusFilter!: any;
   typeFilter!: any;
+  filterCleared = false;
 
   runValidation() {
     let valids = [this.typeFilter, this.statusFilter, this.radio]
     let noneSelected = valids.every(value => !value);
     if (noneSelected) {
-      this.snack.open("Make Selection Before Applying", "", { duration: 3000 });
+      this.snack.open("Make Selection Before Applying or Click Close if You Want to Close", "", { duration: 3000 });
       return;
     }
     this.buildObj()
   }
 
   buildObj() {
+    this.filterCleared = false;
     sessionStorage.removeItem('payload');
     let payload: any = {}
     if (this.radio) {
@@ -162,8 +167,9 @@ export class FilterPopup implements OnInit {
     }
     this.dialog.close(payload);
   }
-
+  
   clear(){
+    this.filterCleared = true;
     this.radio = undefined;
     this.typeFilter = undefined;
     this.statusFilter = undefined;

@@ -27,16 +27,16 @@ export class LandingPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.loggedin$.subscribe( res => this.user = res);
-    this.service.getissues().subscribe( res => {
-      this.data = res ;
-      this.data.forEach( el => {
-        this.labels.push(el.description);
-        this.values.push(el.count);
-      })
-      this.barChartLabels = this.labels;
-      this.barChartData = [ { data: this.values ,label:'No. of views'}];
-      console.log(this.labels , this.values); 
-    })
+    // this.service.getissues().subscribe( res => {
+    //   this.data = res ;
+    //   this.data.forEach( el => {
+    //     this.labels.push(el.description);
+    //     this.values.push(el.count);
+    //   })
+    //   this.barChartLabels = this.labels;
+    //   this.barChartData = [ { data: this.values ,label:'No. of views'}];
+    //   console.log(this.labels , this.values); 
+    // })
   }
 
   route(str:String){

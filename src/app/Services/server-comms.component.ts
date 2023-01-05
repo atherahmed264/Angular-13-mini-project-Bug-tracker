@@ -45,8 +45,9 @@ export class ServerComms {
     addissues(body: issue): Observable<any> {
         return this.http.post(this.issue, body);
     }
-    getissues(obj?:any,search?:string): Observable<any> {
-        if(sessionStorage.getItem('payload')) obj = JSON.parse(sessionStorage.getItem('payload') as string); 
+    getissues(obj:any,search:string|undefined): Observable<any> {
+        console.log(obj);
+        if(typeof obj === 'string') obj = JSON.parse(obj);
         let payload = 
             {
                 "limit":"15",
@@ -55,7 +56,7 @@ export class ServerComms {
             }
         if(obj) payload = Object.assign(payload,obj);    
         let url = this.baseUrl + this.routes.records;
-        console.log(payload);
+        console.log({payload});
         return this.http.post(url,payload);
     }
     getissuebyID(str: any): Observable<any> {

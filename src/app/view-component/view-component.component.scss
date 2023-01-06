@@ -69,3 +69,24 @@
     color: black;
     cursor:pointer;
 }
+.replies-panel{
+    padding-top: 0;
+    width: max-content;
+    margin-right: 200px !important;
+}
+.pr-10{
+    padding-right: 100px;
+}
+.pointer-none{
+    pointer-events: none;
+}
+.black-bg{
+    background-color: #454545;
+}
+.border-reply{
+    border: 1px solid black;
+    border-radius: 25px;
+}
+.width-1{
+    width: 800px;
+}

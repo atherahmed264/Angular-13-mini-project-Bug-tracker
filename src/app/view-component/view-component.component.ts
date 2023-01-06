@@ -25,6 +25,7 @@ export class ViewComponentComponent implements OnInit {
   }
   overviewSection = true;
   commentsSection = false;
+  reply!:string
   comment!:string;
   @ViewChild('matoverview', { static: true }) matOverview!: MatExpansionPanel;
   @ViewChild('matcomment', { static: true }) matComment!: MatExpansionPanel;

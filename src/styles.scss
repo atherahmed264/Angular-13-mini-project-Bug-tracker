@@ -37,5 +37,7 @@ $CAPSTONE-theme: mat.define-light-theme((
 
 html, body { 
   height: 100%;
+  background-color: #8BC6EC;
+background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
 }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

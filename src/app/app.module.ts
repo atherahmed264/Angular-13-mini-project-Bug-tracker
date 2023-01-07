@@ -27,6 +27,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { MatDividerModule} from '@angular/material/divider';
 import {MatSelectModule} from '@angular/material/select';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatDialogModule,
     MatDividerModule,
     MatSelectModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent]

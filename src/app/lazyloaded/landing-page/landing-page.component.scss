@@ -1,7 +1,4 @@
-.card:hover{
-    cursor:pointer ;
-    transform: scale(1.1);
-}
+
 .centered {
     position: absolute;
     top: 25%;
@@ -18,4 +15,8 @@
 .edit{
     background-image: linear-gradient(to right, #ff6e7f, #bfe9ff);
     color: white;
+}
+.card{
+    width:1000px;
+    padding: 20px 50px;
 }

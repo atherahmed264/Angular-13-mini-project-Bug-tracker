@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<!-- <div class="container mt-4">
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
         <div class="carousel-indicators">
           <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -70,18 +70,83 @@
             </div>
         </div>
     </div>
-</div>
-<div class="conatiner">
-   <div class="row d-flex justify-content-center">
-     <p class="col-md-9 display-6"> Issues Views Comparison</p>
-     <div class="col-md-9">
-       <canvas baseChart
-       [datasets]="barChartData"
-       [labels]="barChartLabels"
-       [options]="barChartOptions"
-       [legend]="barChartLegend"
-       chartType= 'bar'>  
-       </canvas>
-     </div>
-   </div> 
+</div> -->
+
+<div class="container d-flex justify-content-center align-items-center mb">
+  <div class="card">
+
+    <mat-tab-group>
+      <mat-tab label="User Details">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+          <img src="https://as2.ftcdn.net/v2/jpg/02/34/61/79/1000_F_234617921_p1AGQkGyEl8CSzwuUI74ljn6IZXqMUf2.jpg"
+            alt="image not found" height="150px" width="150px">
+        
+            <button class="btn btn-sm btn-outline-primary d-flex justify-content-center align-items-center mt-3" matTitle="Edit" ><mat-icon>edit</mat-icon> </button>
+            
+        </div>
+        <div class="tab details">
+          <div class="d-flex justify-content-center align-items-center mt-3">
+            <p class="mx-2">
+              <mat-form-field appearance="outline">
+                <mat-label>First Name</mat-label>
+                <input matInput placeholder="First Name">
+              </mat-form-field>
+            </p>
+            <p class="mx-2">
+              <mat-form-field appearance="outline">
+                <mat-label>Second Name</mat-label>
+                <input matInput placeholder="First Name" disabled value="Ahmed">
+              </mat-form-field>
+            </p>
+          </div>
+          <div class="d-flex justify-content-center align-items-center mt-3">
+            <p class="mx-2">
+              <mat-form-field appearance="outline">
+                <mat-label>User Name</mat-label>
+                <input matInput placeholder="User Name">
+              </mat-form-field>
+            </p>
+            <p class="mx-2">
+              <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Email">
+              </mat-form-field>
+            </p>
+          </div>
+          <div class="d-flex justify-content-center align-items-center mt-3">
+            <p class="mx-2">
+              <mat-form-field appearance="outline">
+                <mat-label>Mobile</mat-label>
+                <input matInput placeholder="Mobile">
+              </mat-form-field>
+            </p>
+            <p class="mx-2">
+              <mat-form-field appearance="outline">
+                <mat-label>Country</mat-label>
+                <input matInput placeholder="Country">
+              </mat-form-field>
+            </p>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="User Stats">
+
+        <!-- CHART -->
+
+        <div class="conatiner">
+          <div class="row d-flex justify-content-center">
+            <p class="col-md-9 display-6"> Issues Views Comparison</p>
+            <div class="col-md-9">
+              <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                [legend]="barChartLegend" chartType='bar'>
+              </canvas>
+            </div>
+          </div>
+        </div>
+
+      </mat-tab>
+  
+    </mat-tab-group>
+
+  </div>
 </div>

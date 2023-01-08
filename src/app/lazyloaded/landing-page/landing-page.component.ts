@@ -24,6 +24,11 @@ export class LandingPageComponent implements OnInit {
   barChartLegend = true;
   barChartData!:any;
   user:any;
+  phoneNum!:number;
+  country!:string;
+  firstName!:string;
+  lastName!:string;
+  editable = false;
 
   ngOnInit(): void {
     this.service.loggedin$.subscribe( res => this.user = res);

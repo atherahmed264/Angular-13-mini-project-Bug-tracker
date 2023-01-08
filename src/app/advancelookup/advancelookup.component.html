@@ -1,0 +1,15 @@
+<mat-form-field class="w-100" appearance="fill">
+    <mat-label>Assigned To</mat-label>
+    <input type="text"
+           placeholder="Pick one"
+           aria-label="Number"
+           matInput
+           [(ngModel)]="inputVal"
+           [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions" [value]="option">
+        {{option}}
+      </mat-option>
+      <button *ngIf="advanceLookup" class="w-100 btn btn-sm btn-outline-primary" (click)="openLookup()">Advance lookup</button>
+    </mat-autocomplete>
+  </mat-form-field>

@@ -28,6 +28,13 @@ import { MatDividerModule} from '@angular/material/divider';
 import {MatSelectModule} from '@angular/material/select';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AdvancelookupComponent,LookupPopup } from './advancelookup/advancelookup.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -41,7 +48,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     ViewComponentComponent,
     firstletterCapital,
     SearchInput,
-    FilterPopup
+    FilterPopup,
+    AdvancelookupComponent,
+    LookupPopup
   
   ],
   imports: [
@@ -63,7 +72,14 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatDividerModule,
     MatSelectModule,
     MatExpansionModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    BrowserAnimationsModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatTabsModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

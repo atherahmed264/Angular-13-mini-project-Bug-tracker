@@ -9,6 +9,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatTabsModule} from '@angular/material/tabs';
 import { MatIconModule } from "@angular/material/icon";
+import { MatTooltipModule} from '@angular/material/tooltip';
+import { MatExpansionModule } from "@angular/material/expansion";
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
     declarations : [
@@ -26,7 +29,11 @@ import { MatIconModule } from "@angular/material/icon";
         MatFormFieldModule,
         MatInputModule,
         MatTabsModule,
-        MatIconModule
+        MatIconModule,
+        MatTooltipModule,
+        MatExpansionModule,
+        MatAutocompleteModule
+       
     ],
     exports : [
         LandingPageComponent,

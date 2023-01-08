@@ -72,7 +72,7 @@
     </div>
 </div> -->
 
-<div class="container d-flex justify-content-center align-items-center mb">
+<div class="container d-flex justify-content-center align-items-center mt-5 mb-5">
   <div class="card">
 
     <mat-tab-group>
@@ -80,22 +80,37 @@
         <div class="d-flex flex-column justify-content-center align-items-center">
           <img src="https://as2.ftcdn.net/v2/jpg/02/34/61/79/1000_F_234617921_p1AGQkGyEl8CSzwuUI74ljn6IZXqMUf2.jpg"
             alt="image not found" height="150px" width="150px">
-        
-            <button class="btn btn-sm btn-outline-primary d-flex justify-content-center align-items-center mt-3" matTitle="Edit" ><mat-icon>edit</mat-icon> </button>
-            
+
+          <button *ngIf="!editable" (click)="editable = true" matTooltip="edit"
+            class="btn btn-sm btn-outline-primary d-flex justify-content-center align-items-center mt-3"><mat-icon>edit</mat-icon>
+          </button>
+
         </div>
+        <ng-container *ngIf="editable">
+          <span class="d-flex justify-content-center align-items-center ">
+
+            <button (click)="editable = false" matTooltip="cancel"
+              class="btn btn-sm btn-outline-primary mx-2 d-flex justify-content-center align-items-center mt-3"><mat-icon>cancel</mat-icon>
+            </button>
+            <button (click)="editable = false" matTooltip="save"
+              class="btn btn-sm btn-outline-primary mx-2 d-flex justify-content-center align-items-center mt-3"><mat-icon>save</mat-icon>
+            </button>
+
+          </span>
+
+        </ng-container>
         <div class="tab details">
           <div class="d-flex justify-content-center align-items-center mt-3">
             <p class="mx-2">
               <mat-form-field appearance="outline">
                 <mat-label>First Name</mat-label>
-                <input matInput placeholder="First Name">
+                <input matInput placeholder="First Name" [(ngModel)]="firstName" [disabled]="!editable">
               </mat-form-field>
             </p>
             <p class="mx-2">
               <mat-form-field appearance="outline">
-                <mat-label>Second Name</mat-label>
-                <input matInput placeholder="First Name" disabled value="Ahmed">
+                <mat-label>Last Name</mat-label>
+                <input matInput placeholder="Last Name" [(ngModel)]="lastName" [disabled]="!editable">
               </mat-form-field>
             </p>
           </div>
@@ -103,13 +118,13 @@
             <p class="mx-2">
               <mat-form-field appearance="outline">
                 <mat-label>User Name</mat-label>
-                <input matInput placeholder="User Name">
+                <input matInput placeholder="User Name" [disabled]="!editable">
               </mat-form-field>
             </p>
             <p class="mx-2">
               <mat-form-field appearance="outline">
                 <mat-label>Email</mat-label>
-                <input matInput placeholder="Email">
+                <input matInput placeholder="Email" [disabled]="!editable">
               </mat-form-field>
             </p>
           </div>
@@ -117,35 +132,57 @@
             <p class="mx-2">
               <mat-form-field appearance="outline">
                 <mat-label>Mobile</mat-label>
-                <input matInput placeholder="Mobile">
+                <input matInput placeholder="Mobile" [(ngModel)]="phoneNum" [disabled]="!editable">
               </mat-form-field>
             </p>
             <p class="mx-2">
               <mat-form-field appearance="outline">
                 <mat-label>Country</mat-label>
-                <input matInput placeholder="Country">
+                <input matInput placeholder="Country" [(ngModel)]="country" [disabled]="!editable">
               </mat-form-field>
             </p>
           </div>
         </div>
       </mat-tab>
       <mat-tab label="User Stats">
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                My Records
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="conatiner">
+              My Total Records : 15
+              
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
 
         <!-- CHART -->
-
-        <div class="conatiner">
-          <div class="row d-flex justify-content-center">
-            <p class="col-md-9 display-6"> Issues Views Comparison</p>
-            <div class="col-md-9">
-              <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-                [legend]="barChartLegend" chartType='bar'>
-              </canvas>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Users Statistics
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="conatiner">
+              <div class="row d-flex justify-content-center">
+                <p class="display-6"> Issues Views Comparison</p>
+                <div class="">
+                  <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                    [legend]="barChartLegend" chartType='bar'>
+                  </canvas>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+
 
       </mat-tab>
-  
+
     </mat-tab-group>
 
   </div>

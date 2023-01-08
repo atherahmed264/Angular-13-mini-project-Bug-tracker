@@ -1,37 +1,73 @@
-<div class="container">
-  <div class="row mb-3 mt-3 d-flex align-items-center text-center">
-    Configurations <mat-icon>settings</mat-icon>
-  </div>
-  <mat-divider></mat-divider>
-  <div class="row mb-3 mt-3">
-    <div class="mr-3">
-      <span class="mr-3"> Sort By : </span>
-      <mat-radio-group aria-label="Select an option" [(ngModel)]="radio">
-        <mat-radio-button style="margin-right: 20px; margin-left: 10px;" value="1">Older</mat-radio-button>
-        <mat-radio-button value="-1">Newer</mat-radio-button>
-      </mat-radio-group>
+<div class="">
+  <mat-tab-group>
+    <mat-tab label="Filters">
+      <div class="container">
+
+      
+      <div class="row mb-3 mt-3">
+        <div class="mr-3">
+          <span class="mr-3"> Sort By : </span>
+          <mat-radio-group aria-label="Select an option" [(ngModel)]="radio">
+            <mat-radio-button style="margin-right: 20px; margin-left: 10px;" value="1">Older</mat-radio-button>
+            <mat-radio-button value="-1">Newer</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="d-flex justify-content-end align-items-end">
+          <a style="color: red;cursor: pointer;" (click)="clear()"> Clear Filters </a> 
+        </div>
+      </div>
+      <div class="row mt-3 mb-3">
+        <span class="text-start text-bold mb-2"> Filters </span> <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Type</mat-label>
+          <mat-select [formControl]="filterType" multiple [(ngModel)]="typeFilter">
+            <mat-option *ngFor="let topping of typeFilters" [value]="topping">{{topping}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    
+      <div class="row mt-3 mb-3">
+        
+        <mat-form-field appearance="fill">
+          <mat-label>Status</mat-label>
+          <mat-select [formControl]="filterStatus" multiple [(ngModel)]="statusFilter">
+            <mat-option *ngFor="let topping of statusFilters" [value]="topping">{{topping}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
-    <a class="text-end" style="color: red;" (click)="clear()"> Clear Filters </a> 
-  </div>
-  <div class="row mt-3 mb-3">
-    <mat-form-field appearance="fill">
-      <mat-label>Type</mat-label>
-      <mat-select [formControl]="filterType" multiple [(ngModel)]="typeFilter">
-        <mat-option *ngFor="let topping of typeFilters" [value]="topping">{{topping}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+    </mat-tab>
+    <mat-tab label="Advance Filters"> 
+      <div class="container">
+       
+          <div class="mt-4">
+            <app-advancelookup [advanceLookup]="true"></app-advancelookup>
+          </div>
 
-  <div class="row mt-3 mb-3">
-    <span class="text-start text-bold mb-2"> Filters </span> <br>
-    <mat-form-field appearance="fill">
-      <mat-label>Status</mat-label>
-      <mat-select [formControl]="filterStatus" multiple [(ngModel)]="statusFilter">
-        <mat-option *ngFor="let topping of statusFilters" [value]="topping">{{topping}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+          <div class="d-flex justify-content-between align-items-center">
 
+            <mat-form-field appearance="fill" class="mt-3 mb-3">
+              <mat-label>Enter a date range</mat-label>
+              <div class="d-flex justify-content-center align-items-center ">
+                
+                <mat-date-range-input  [rangePicker]="picker">
+                  <input matStartDate formControlName="start" placeholder="Start date">
+                  <input matEndDate formControlName="end" placeholder="End date">
+                </mat-date-range-input>
+                
+                <mat-datepicker-toggle class="float-right" matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              </div>
+              
+            </mat-form-field>
+            
+            <a style="color: red; cursor: pointer;" >Clear</a>
+          </div>
+          
+        
+      </div>
+      </mat-tab>
+  </mat-tab-group>
 
   <div class="d-flex justify-content-evenly">
     <button mat-raised-button color="warn" (click)="dialog.close(filterCleared)">Close</button>

@@ -1,5 +1,7 @@
-import { Component, Inject, Input, OnInit, ViewChild , ElementRef, AfterViewInit } from '@angular/core';
+import { Component, Inject, Input, OnInit, ViewChild , ElementRef, AfterViewInit, Output ,EventEmitter  } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { debounceTime, Subject } from 'rxjs';
+
 
 @Component({
   selector: 'app-advancelookup',
@@ -11,72 +13,92 @@ export class AdvancelookupComponent implements OnInit {
   constructor(private dialog:MatDialog) { }
 
   ngOnInit(): void {
+    this.filteredOptions = this.filteredOptions.map((x:any,i:number) => {
+      return {
+        ...x,
+        id:i,
+        selected : false
+      }
+    })
   }
 
-  filteredOptions = [
-    {
-      name:"Ather AHmed",
-      email:"atherfar@gmail.com",
-      username:"atherAhm",
-      selected:false
-    },
-    {
-      name:"AHmed nashith",
-      email:"anasht@gmail.com",
-      username:"nashtAhm",
-      selected:false
-    },
-    {
-      name:"md sarfaraz",
-      email:"sarfarzar@gmail.com",
-      username:"sompraj",
-      selected:false
-    },
-    {
-      name:"Ather AHmed",
-      email:"atherfar@gmail.com",
-      username:"atherAhm",
-      selected:false
-    },
-    {
-      name:"AHmed nashith",
-      email:"anasht@gmail.com",
-      username:"nashtAhm",
-      selected:false
-    },
-    {
-      name:"md sarfaraz",
-      email:"sarfarzar@gmail.com",
-      username:"sompraj",
-      selected:false
-    },
+  // filteredOptions = [
+  //   {
+  //     name:"Ather AHmed",
+  //     email:"atherfar@gmail.com",
+  //     username:"atherAhm",
+  //     selected:false
+  //   },
+  //   {
+  //     name:"AHmed nashith",
+  //     email:"anasht@gmail.com",
+  //     username:"nashtAhm",
+  //     selected:false
+  //   },
+  //   {
+  //     name:"md sarfaraz",
+  //     email:"sarfarzar@gmail.com",
+  //     username:"sompraj",
+  //     selected:false
+  //   },
+  //   {
+  //     name:"Ather AHmed",
+  //     email:"atherfar@gmail.com",
+  //     username:"atherAhm",
+  //     selected:false
+  //   },
+  //   {
+  //     name:"AHmed nashith",
+  //     email:"anasht@gmail.com",
+  //     username:"nashtAhm",
+  //     selected:false
+  //   },
+  //   {
+  //     name:"md sarfaraz",
+  //     email:"sarfarzar@gmail.com",
+  //     username:"sompraj",
+  //     selected:false
+  //   },
     
-  ];
+  // ];
+  //   headerObj = [
+  //     {
+  //       id:1,
+  //       name:"Name",
+  //       attr:"name"
+  //     },
+  //     {
+  //       id:2,
+  //       name:"Email",
+  //       attr:"email"
+  //     },
+  //     {
+  //       id:3,
+  //       name:"User Name",
+  //       attr:"userName"
+  //     }
+  // ];
+  @Input() filteredOptions!:any[];
   @Input() inputVal!:string;
-  headerObj = [
-    {
-      id:1,
-      name:"Name",
-      attr:"Name"
-    },
-    {
-      id:2,
-      name:"Email",
-      attr:"email"
-    },
-    {
-      id:3,
-      name:"User Name",
-      attr:"userName"
-    }
-];
+  @Input() headerObj!:any[]
   @Input() advanceLookup !: boolean ;
+  @Output() searchText = new EventEmitter<string>();
+  @Output() loadPage = new EventEmitter<number>();
+  @Input() pageNo!:number;
   openLookup(){
     let dialogref = this.dialog.open(LookupPopup,{
       width:"900px",
       height:"400px",
       disableClose:true,
-      data:[this.filteredOptions,this.headerObj]
+      data:[this.filteredOptions,this.headerObj,this.pageNo]
+    });
+    dialogref.componentInstance.$load.subscribe(page => {
+      // emit event page
+      this.loadPage.emit(page);
+    });
+    dialogref.componentInstance.$search.pipe(debounceTime(2000)).subscribe(search => {
+      //emit search text
+      this.searchText.emit(search);
     });
   } 
 }
@@ -92,57 +114,22 @@ export class LookupPopup implements OnInit,AfterViewInit{
 
   headers!:any[];
   tabledata!:any[];
-  filteredOptions = [
-    {
-      name:"Ather AHmed",
-      email:"atherfar@gmail.com",
-      username:"atherAhm",
-      selected:false
-    },
-    {
-      name:"AHmed nashith",
-      email:"anasht@gmail.com",
-      username:"nashtAhm",
-      selected:false
-    },
-    {
-      name:"md sarfaraz",
-      email:"sarfarzar@gmail.com",
-      username:"sompraj",
-      selected:false
-    },
-    {
-      name:"Ather AHmed",
-      email:"atherfar@gmail.com",
-      username:"atherAhm",
-      selected:false
-    },
-    {
-      name:"AHmed nashith",
-      email:"anasht@gmail.com",
-      username:"nashtAhm",
-      selected:false
-    },
-    {
-      name:"md sarfaraz",
-      email:"sarfarzar@gmail.com",
-      username:"sompraj",
-      selected:false
-    },
-    
-  ];
+  $load:Subject<number> = new Subject();
+  $search:Subject<string> = new Subject();
+  page!:number;
+
   @ViewChild('loader',{ read: ElementRef }) loader!:ElementRef
   ngOnInit(): void { 
-      [this.tabledata,this.headers] = this.data;
+      [this.tabledata,this.headers,this.page] = this.data;
       console.log(this.tabledata,this.headers);
-      console.log(this.loader.nativeElement);
   }
   ngAfterViewInit(): void {
       console.log(this.loader.nativeElement);
       const intrsc = new IntersectionObserver(val => {
         if(val[0].isIntersecting){
-          console.log(this.tabledata)
-          console.log("LOAD MORE");
+          /// load 
+          this.$load.next(this.page++);
+          console.log("pageNo",this.page);
           this.tabledata.push(...this.tabledata);
           console.log(this.tabledata);
         }
@@ -150,12 +137,16 @@ export class LookupPopup implements OnInit,AfterViewInit{
       intrsc.observe(this.loader.nativeElement);
   }
 
-  radioSelected(email:any){
+  srchTxt!:string
+  emitSearch(){
+    this.$search.next(this.srchTxt)
+  }
+  radioSelected(id:any){
     this.tabledata.map(val => {
-      console.log(email != val.email,email != val.email)
-      if(val.email != email){ 
+      console.log(id != val.id,id != val.id)
+      if(val.id != id){ 
         val.selected = false;
-      }else if(val.email == email){
+      }else if(val.id == id){
         val.selected = true;
       }
     });

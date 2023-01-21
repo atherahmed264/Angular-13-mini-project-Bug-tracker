@@ -2,7 +2,7 @@
     <div class="d-flex justify-content-between align-items-center">
         <mat-form-field class="mx-3" >
             <mat-label>Search</mat-label>
-            <input matInput>
+            <input matInput (input)="emitSearch()" [(ngModel)]="srchTxt">
           </mat-form-field>
           <div class="d-flex">
               <button class="btn btn-outline-primary mx-2">Select</button>
@@ -24,17 +24,16 @@
         <tbody>
             <tr *ngFor="let obj of tabledata">
                 <div class="d-flex justify-content-start align-items-center" style="width: 100%;">
-                    <input type="radio" id="select" [checked]="obj.selected" (change)="radioSelected(obj.email)">
+                    <input type="radio" id="select" [checked]="obj.selected" (change)="radioSelected(obj.id)">
                 </div>
                
-                <td> {{obj.name}} </td>
-                <td> {{obj.email}} </td>
-                <td> {{obj.username}} </td>
+                <td *ngFor="let header of headers"> {{ obj[header["attr"]] }} </td>
+
             </tr>
         </tbody>
     </table>
 
-    <div class="spinner-border" role="status" #loader>
+    <div class="spinner-border" role="status" #loader *ngIf="tabledata.length < 20">
         <span class="visually-hidden">Loading...</span>
       </div>
 </div>

@@ -41,7 +41,14 @@
       <div class="container">
        
           <div class="mt-4">
-            <app-advancelookup [advanceLookup]="true"></app-advancelookup>
+            <app-advancelookup 
+            [advanceLookup]="true" 
+            [filteredOptions]="data" 
+            [headerObj]="headerObj" 
+            (loadPage)="loadMore($event)" 
+            (searchText)="searchApi($event)" 
+            [pageNo]="1"
+            ></app-advancelookup>
           </div>
 
           <div class="d-flex justify-content-between align-items-center">

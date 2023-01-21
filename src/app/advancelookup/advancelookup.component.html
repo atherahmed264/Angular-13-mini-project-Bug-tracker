@@ -7,6 +7,7 @@
            [(ngModel)]="inputVal"
            [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete">
+
       <mat-option *ngFor="let option of filteredOptions" [value]="option">
         {{option}}
       </mat-option>

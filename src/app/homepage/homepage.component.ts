@@ -178,4 +178,51 @@ export class FilterPopup implements OnInit {
     sessionStorage.removeItem('typeFilters');
     sessionStorage.removeItem('radio');
   }
+
+  headerObj = [
+    {
+      name:"Record Number",
+      attr:"recordNum"
+    },
+    {
+      name:"Record Type",
+      attr:"recordType"
+    },
+    {
+      name:"Record Status",
+      attr:"recordStatus"
+    },
+    {
+      name:"Record Owner",
+      attr:"recordOwn"
+    },
+  ];
+  data = [
+    {
+      recordNum:"10980",
+      recordType:"New",
+      recordStatus:"Active",
+      recordOwn:"Ather Ahmed"
+    },
+    {
+      recordNum:"10980",
+      recordType:"New",
+      recordStatus:"Active",
+      recordOwn:"Ather Ahmed"
+    },
+    {
+      recordNum:"10980",
+      recordType:"New",
+      recordStatus:"Active",
+      recordOwn:"Ather Ahmed"
+    },
+  ];
+  loadMore(page:number){
+    console.log("load moreeee");
+    console.log(page);
+  }
+  searchApi(search:string){
+    console.log("SEARCHHH");
+    console.log(search);
+  }
 }

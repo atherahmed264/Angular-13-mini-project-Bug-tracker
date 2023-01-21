@@ -36,15 +36,19 @@ export class LoginComponent implements OnInit {
     this.service.loginUser(payload).subscribe({
       next: (val:any) => {
         if(val.message === "Success"){
+          this.snackBar.open("Login Successfull","", { duration : 1000});
           console.log("login success",val);
           this.service.callnext(val.data.UserName);
           localStorage.setItem("Token",val.token);
-          this.snackBar.open("Login Successfull","", { duration : 1000});
           this.route.navigate(['/landing']);
         }
 
       },
-      error: err => {}
+      error: err => {
+        console.log(err.error.message);
+        let msg = err.error?.message || "Something went wrong";
+        this.snackBar.open(msg,"",{ duration : 1000});
+      }
     })
   }
   signup(){

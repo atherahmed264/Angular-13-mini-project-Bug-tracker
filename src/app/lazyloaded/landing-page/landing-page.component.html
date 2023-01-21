@@ -144,45 +144,25 @@
           </div>
         </div>
       </mat-tab>
-      <mat-tab label="User Stats">
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                My Records
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="conatiner">
+      <mat-tab label="My Records">
+            <div class="container">
               My Total Records : 15
-              
             </div>
-          </mat-expansion-panel>
-        </mat-accordion>
-
-        <!-- CHART -->
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Users Statistics
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="conatiner">
-              <div class="row d-flex justify-content-center">
-                <p class="display-6"> Issues Views Comparison</p>
-                <div class="">
-                  <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-                    [legend]="barChartLegend" chartType='bar'>
-                  </canvas>
-                </div>
+      </mat-tab>
+      <mat-tab label="Stats">
+        <div class="container">
+          <div class="container">
+            <div class="row d-flex justify-content-center">
+              <p class="display-6"> Issues Views Comparison</p>
+              <div class="">
+                <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                  [legend]="barChartLegend" chartType='bar'>
+                </canvas>
               </div>
             </div>
-          </mat-expansion-panel>
-        </mat-accordion>
-
-
+          </div>
+        </div>
       </mat-tab>
-
     </mat-tab-group>
 
   </div>

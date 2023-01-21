@@ -75,8 +75,8 @@
         <mat-icon class="my-0 mx-2 py-0 mb-3">account_circle</mat-icon>
     </div>
     <div>
-        <button class="btn btn-danger px-5 py-1 mx-3" matTooltip="click to go back">Close</button>
-        <button class="px-5 py-1 btn btn-primary mx-5" matTooltip="save details">Save</button>
+        <button class="btn btn-danger px-5 py-1 mx-3" matTooltip="click to go back" (click)="goBack()">Close</button>
+        <button class="px-5 py-1 btn btn-primary mx-5" matTooltip="save details"(click)="createRecord()">Save</button>
     </div>
 </div>
 <div class="custom_cont ">
@@ -133,13 +133,13 @@
                     <div class="col-md-4 mb-5">
                         <div class="d-flex flex-column align-items-start justify-content-between">
                             <div class="d-flex justify-content-start mt-4">
-                                <label for="links text-center">
+                                <label for="assign-to">
                                     <div class="d-flex  justify-content-start">
                                         <button class="btn btn-outline-dark d-flex justify-content-center" disabled> Assign To <mat-icon class="mx-2">account_circle</mat-icon> </button>
                                     </div>
                                 </label>
                             </div>
-                            <input type="text" class="form-control mt-2" name="owner" id="owner">
+                            <input type="text" class="form-control mt-2" name="owner" id="owner" [(ngModel)]="assignedTo">
                             <div class="d-flex justify-content-start mt-4">
                                 <label for="links text-center">
                                     <div class="d-flex justify-content-start">

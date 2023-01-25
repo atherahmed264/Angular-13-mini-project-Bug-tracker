@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
@@ -16,7 +15,7 @@ import { debounceTime, Subject } from 'rxjs';
 })
 export class HomepageComponent implements OnInit {
   
-  constructor(private service: ServerComms, private route: Router, private dialog: MatDialog , private snack:MatSnackBar) { }
+  constructor(private service: ServerComms, public route: Router, private dialog: MatDialog , private snack:MatSnackBar) { }
   
   searchText!: string;
   tableHeaders = ['Record Number', 'Title', 'Type', 'Status', 'Assigned To', 'Created At'];
@@ -102,7 +101,9 @@ export class HomepageComponent implements OnInit {
       }
     })
   }
-
+  cl(x:any){
+    console.log(x)
+  }
 }
 
 

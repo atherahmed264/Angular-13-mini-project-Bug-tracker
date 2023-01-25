@@ -96,23 +96,23 @@
                         <input type="text" id="title" name="title" class="form-control" placeholder="Enter Title" [(ngModel)]="title">
                     </div>
                     <div class="col-md-2">
-                        <h3> Select Type </h3>
+                        <h3 class="mx-5"> Select Type </h3>
                         <div class="d-flex justify-content-center align-items-center">
                             <mat-icon id="default_icon" class="mx-3" *ngIf="!icon">account_box</mat-icon>
-                            <mat-icon id="bug_icon" class="mx-3" *ngIf="icon === 'bug'">bug_report</mat-icon>
-                            <mat-icon id="task_icon" class="mx-3" *ngIf="icon === 'task'">assignment</mat-icon>
-                            <mat-icon id="userstory_icon" class="mx-3"
-                                *ngIf="icon === 'userstory'">chrome_reader_mode</mat-icon>
+                            <mat-icon id="bug_icon" class="mx-3" *ngIf="icon === 'Bug'">bug_report</mat-icon>
+                            <mat-icon id="task_icon" class="mx-3" *ngIf="icon === 'Task'">assignment</mat-icon>
+                            <mat-icon id="UserStory_icon" class="mx-3"
+                                *ngIf="icon === 'UserStory'">chrome_reader_mode</mat-icon>
                             <select name="type" id="type" class="form-select" (change)="ontypeChange()"
                                 [(ngModel)]="type">
                                 <option value="">Select</option>
-                                <option value="userstory"> UserStory</option>
-                                <option value="task">Task</option>
-                                <option value="bug">Bug</option>
+                                <option value="UserStory"> UserStory</option>
+                                <option value="Task">Task</option>
+                                <option value="Bug">Bug</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2 mx-5">
                         <h3> Select Status</h3>
                         <select name="status" id="status" class="form-select" [(ngModel)]="status"
                             [ngClass]='status === "Invalid" ? "inv" : status === "New" ? "new": status === "Active" ? "act" : ""'>
@@ -123,32 +123,64 @@
                         </select>
                     </div>
                 </div>
-                <div class="d-flex justify-content-between my-4">
+                <div class="d-flex justify-content-start my-4">
                     <div class="col-md-6">
                         <h3 class="inline">Enter Description</h3> (Maximum 200 Characters)
                         <textarea name="desc" id="desc" cols="30" class="form-control" rows="10" (keyup)="count()"
                             [(ngModel)]="description"></textarea>
                         <span *ngIf="showCount"> {{ showCount }} Chars Entered</span>
                     </div>
-                    <div class="col-md-4 mb-5">
-                        <div class="d-flex flex-column align-items-start justify-content-between">
-                            <div class="d-flex justify-content-start mt-4">
-                                <label for="assign-to">
-                                    <div class="d-flex  justify-content-start">
-                                        <button class="btn btn-outline-dark d-flex justify-content-center" disabled> Assign To <mat-icon class="mx-2">account_circle</mat-icon> </button>
+                    <div class="col-md-4 mb-5 mx-5">
+                        <mat-tab-group>
+                            <mat-tab label="Efforts">
+                                <div class="d-flex justify-content-between mt-3">
+                                    <mat-form-field appearance="standard">
+                                        <mat-label>Select Start Date</mat-label>
+                                            <input matInput [matDatepicker]="picker1" [(ngModel)]="startDate">
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                       
+                                      </mat-form-field>
+                                    <mat-form-field appearance="standard">
+                                        <mat-label>Select End Date</mat-label>
+                                        <input matInput [matDatepicker]="picker2" [(ngModel)]="endDate" >
+                                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker2></mat-datepicker>
+                                      </mat-form-field>
+                                </div>
+                                <div class="d-flex flex-column justify-content-between mt-2">
+                                    <div class="">
+                                        <div class="mb-2 text-end"> Enter Efforts In Hours </div>
+                                        <input type="number" placeholder="Total Efforts in Hours" class="form-control mb-3" [(ngModel)]="efforts">
                                     </div>
-                                </label>
-                            </div>
-                            <input type="text" class="form-control mt-2" name="owner" id="owner" [(ngModel)]="assignedTo">
-                            <div class="d-flex justify-content-start mt-4">
-                                <label for="links text-center">
-                                    <div class="d-flex justify-content-start">
-                                        <div class="btn btn-outline-dark d-flex justify-content-center " >Add Links <mat-icon class="py-0 px-0 mx-1">add</mat-icon></div>
+                                    <div class="">
+                                        <div class="mb-2 text-end"> Completed Efforts In Hours </div>
+                                        <input type="number" placeholder="Completed Efforts" class="form-control" [(ngModel)]="effortsComp">
                                     </div>
-                                </label>
-                            </div>
-                            <input type="file" class="form-control mt-4" name="attachmenst" id="attachments">
-                        </div>
+                                </div>
+                            </mat-tab>
+                            <mat-tab label="Attachments">
+
+                                <div class="d-flex flex-column align-items-start justify-content-between">
+                                    <div class="d-flex justify-content-start mt-4">
+                                        <label for="assign-to">
+                                            <div class="d-flex  justify-content-start">
+                                                <p class=" d-flex justify-content-center border-bottom-none" disabled> Assigned To <mat-icon class="mx-2">account_circle</mat-icon> </p>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <input type="text" class="form-control" name="owner" id="owner" [(ngModel)]="assignedTo">
+                                    <div class="d-flex justify-content-start mt-4">
+                                        <label for="links text-center">
+                                            <div class="d-flex justify-content-start">
+                                                <div class="btn btn-outline-dark d-flex justify-content-center " >Add Links <mat-icon class="py-0 px-0 mx-1">add</mat-icon></div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <input type="file" class="form-control mt-4" name="attachmenst" id="attachments">
+                                </div>
+                            </mat-tab>
+                        </mat-tab-group>
                     </div>
                 </div>
             

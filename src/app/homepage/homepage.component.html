@@ -47,7 +47,7 @@
           </thead>
           
           <tbody>
-            <tr *ngFor="let item of issues">
+            <tr *ngFor="let item of issues;let i = index" class="mouse-pointer" (click)="route.navigate(['view',item._id])">
               <td>{{item.RecordNumber}}</td>
               <td>{{item.Title}}</td>
               <td>{{item.Type}}</td>

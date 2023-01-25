@@ -13,10 +13,10 @@ import { ServerComms } from '../Services/server-comms.component';
 })
 export class ViewComponentComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute ,private service:ServerComms ,private router:Router,private snack:MatSnackBar,private param:ActivatedRoute) { }
+  constructor(private route: ActivatedRoute ,private service:ServerComms ,private router:Router,private snack:MatSnackBar,private activeRoute:ActivatedRoute) { }
   
-  icon:'userstory' | 'bug' | 'task' | '' = '';
-  type:'userstory' | 'bug' | 'task' | '' = '';
+  icon:'UserStory' | 'Bug' | 'Task' | '' = '';
+  type:'UserStory' | 'Bug' | 'Task' | '' = '';
   description!:string;
   status:string = ''
   classes = {
@@ -24,6 +24,10 @@ export class ViewComponentComponent implements OnInit {
     "active":"act",
     "new":"new"
   }
+  efforts!:number;
+  effortsComp!:number;
+  endDate!:Date;
+  startDate!:Date;
   overviewSection = true;
   commentsSection = false;
   reply!:string
@@ -32,13 +36,10 @@ export class ViewComponentComponent implements OnInit {
   @ViewChild('matcomment', { static: true }) matComment!: MatExpansionPanel;
 
   ngOnInit(): void {
-    this.param.paramMap.subscribe(res => {
+    this.activeRoute.paramMap.subscribe(res => {
       let rcid = res.get("id");
       if(rcid && rcid !=='add')
-        this.getRecordDetails(rcid);
-      else{
-        this.getRecordDetails("63a36684cbdfe83c273dbfb3");
-      }  
+        this.getRecordDetails(rcid); 
     });
   }
   
@@ -63,7 +64,7 @@ export class ViewComponentComponent implements OnInit {
   assignedTo:any;
   createRecord(){
   //   {
-  //     "Title":"task for",
+  //     "Title":"Task for",
   //     "Descryption":"nothing",
   //     "Type":"Task",
   //     "CreatedBy":"639ca034da10173255153d65",
@@ -77,6 +78,7 @@ export class ViewComponentComponent implements OnInit {
       this.snack.open("Please Fill The Mandatory Details","",{ duration:2000});
       return;
     }
+    
     let payload = {
       "Title":this.title,
       "Descryption":this.description,
@@ -84,15 +86,33 @@ export class ViewComponentComponent implements OnInit {
       "CreatedBy":this.assignedTo,
       "AssignedTo":this.assignedTo,
       "Status":this.status,
+      "StartDate":this.startDate,
+      "EndDate":this.endDate,
+      "Efforts":this.efforts,
+      "CompletedEfforts":this.effortsComp
     }
-    this.service.createRec(payload).subscribe(res => {
+    console.log("payload",payload);
+    this.service.createRec(payload).subscribe((res:any) => {
       console.log(res);
+      this.snack.open(`${res.data.Type} Created Successfully Number - ${res.data.RecordNumber}`,"",{ duration:3000});
+      let savedData:RecordDetails = {
+        Title: res.data.Title,
+        Status: res.data.Status,
+        Type:res.data.Type,
+        Descryption:res.data.Descryption,
+        AssignedTo:res.data.AssignedTo?.Name,
+        Efforts:res.data.Efforts,
+        EffortsCompleted:res.data.CompletedEfforts,
+        startDate:res.data.StartDate,
+        endDate:res.data.EndDate,
+      }
+      this.bindRecordDetails(savedData);
     },err => {
       this.snack.open(err.error.message,"",{duration:2000});
     });
   }
   comments:Comment[] = [{
-    comment:"this is a very nice task brooooo",
+    comment:"this is a very nice Task brooooo",
     username:"Ather Ahmed",
     userid:"aldhfghadlsfgg44422",
     replies:[
@@ -129,14 +149,32 @@ export class ViewComponentComponent implements OnInit {
         this.snack.open(res.message,"",{ duration:2000});
         return;
       }
-      this.title = res.data.Title;
-      this.status = res.data.Status;
-      this.type = res.data.Type.toLowerCase();
-      this.description = res.data.Descryption;
-      this.assignedTo = res.data.AssignedTo;
+      let data:RecordDetails = {
+        Title: res.data.Title,
+        Status: res.data.Status,
+        Type:res.data.Type,
+        Descryption:res.data.Descryption,
+        AssignedTo:res.data.AssignedTo.Name,
+      }
+      this.bindRecordDetails(data);
     },err => {
       this.snack.open(err.error.message,"",{ duration:2000});
     });
+  }
+  bindRecordDetails(obj:RecordDetails){
+    this.title = obj.Title;
+    this.status = obj.Status;
+    this.type = obj.Type;
+    this.description = obj.Descryption;
+    this.assignedTo = obj.AssignedTo;
+    this.efforts = obj.Efforts as number;
+    this.effortsComp = obj.EffortsCompleted as number;
+    this.startDate = obj.startDate as Date;
+    this.endDate = obj.endDate as Date;
+  }
+
+  saveData(){
+    this.title
   }
 }
 type Comment = {
@@ -145,3 +183,17 @@ type Comment = {
   userid:string,
   replies:any[],
 }
+type RecordDetails =  {
+  Title:string,
+  Status:string,
+  Type:'UserStory' | 'Bug' | 'Task' | '',
+  Descryption:string,
+  AssignedTo:string,
+  Attachments?:string[],
+  Parent?:string,
+  Child?:string,
+  Efforts?:number,
+  EffortsCompleted?:number,
+  startDate?:Date,
+  endDate?:Date,
+} 

@@ -93,7 +93,7 @@
                 <div class="d-flex justify-content-between brdr">
                     <div class="col-md-6">
                         <h3> Record Title </h3>
-                        <input type="text" id="title" name="title" class="form-control" placeholder="Enter Title">
+                        <input type="text" id="title" name="title" class="form-control" placeholder="Enter Title" [(ngModel)]="title">
                     </div>
                     <div class="col-md-2">
                         <h3> Select Type </h3>
@@ -167,7 +167,7 @@
 
                 <div class=" d-flex justify-content-center align-items-center ">
                     <div class="mr-5">
-                        <label for="commentBox" [ngClass]=" comment && 'btn btn-primary'">Add Comment</label>
+                        <label for="commentBox" [ngClass]=" comment && 'btn btn-primary'" (click)="addComment()">Add Comment</label>
                     </div>
                     <div class="col-md-10">
                         <textarea name="comment" id="comment" cols="20" rows="2" class="form-control" [(ngModel)]="comment"></textarea>
@@ -179,13 +179,13 @@
             <div class="d-flex flex-column justify-content-center align-items-center mt-4">
                 <div class="card shadow-sm bg-white-rounded mx-3 w-100 rounded-lg mb-5">
                     <div class="container">
-                        <div class="d-flex flex-column comment-whole mb-4">
+                        <div class="d-flex flex-column comment-whole mb-4" *ngFor="let comment of comments;let i=index">
                         <div class="d-flex align-items-center justify-content-center mt-4">
                             <div class="d-flex flex-column justify-content-center align-items-center mt-3">
                                 <img src="https://as2.ftcdn.net/v2/jpg/02/34/61/79/1000_F_234617921_p1AGQkGyEl8CSzwuUI74ljn6IZXqMUf2.jpg" alt="#img" height="50px" width="50px">
-                                <p class="text-sm mt-2">Ather Ahmed</p>
+                                <p class="text-sm mt-2"> {{ comment.username }} </p>
                             </div>
-                                <p class="card py-3 px-3 mx-5 col-md-10">This is a very nice task</p>
+                                <p class="card py-3 px-3 mx-5 col-md-10"> {{ comment.comment }} </p>
                                 <a class="reply">Reply</a>
                         </div>
                         <ng-container>
@@ -195,20 +195,22 @@
                                 <mat-expansion-panel>
                                     <mat-expansion-panel-header>
                                         <mat-panel-title>
-                                            <span class=""> Replies (1) </span> 
+                                            <span class=""> Replies ({{ comment.replies.length }}) </span> 
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
-                                    <div class="d-flex justify-content-start align-items-center ">
-                                        <div class="d-flex flex-column justify-content-center align-items-center ">
-                                            <mat-icon>account_circle</mat-icon>
-                                            <span>Ather Ahmed</span>
+                                    <ng-container *ngIf="comment.replies.length > 0" >
+                                        <div *ngFor="let rep of comment.replies;" class="d-flex justify-content-start align-items-center my-2 ">
+                                            <div class="d-flex flex-column justify-content-center align-items-center ">
+                                                <mat-icon>account_circle</mat-icon>
+                                                <span> {{ rep.username }} </span>
+                                            </div>
+                                            <span class="card py-3 px-3 col-md-6 mx-5">
+                                                {{ rep.reply }}
+                                            </span>
                                         </div>
-                                       <span class="py-3 mx-3 px-3 col-md-7 border-reply">
-                                           lol noob
-                                       </span>
-                                    </div>
+                                    </ng-container>
                                     <div class="d-flex justify-content-start align-items-center mt-5">
-                                        <div class="mx-3" [ngClass]="reply && 'btn btn-primary'">
+                                        <div class="mx-3" [ngClass]="reply && 'btn btn-primary'" (click)="addReply(i)">
                                             Add Reply
                                         </div>
                                         <input type="text" class="form-control width-1" [(ngModel)]="reply">

@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'signup', component: SignUpComponent },
   { path: 'home', component: HomepageComponent },
   { path: 'addissue', component: AddEditIssueComponent, canActivate: [AuthGuard] },
-  { path: 'view', component: ViewComponentComponent },
+  { path: 'view/:id', component: ViewComponentComponent },
   { path: 'landing', loadChildren: () => import('./lazyloaded/lazyload.module').then(m => m.LazyLoad), canActivate: [AuthGuard] },
 ];
 

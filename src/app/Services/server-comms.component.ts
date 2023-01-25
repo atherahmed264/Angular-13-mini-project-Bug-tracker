@@ -14,7 +14,9 @@ export class ServerComms {
         signup: "/user/signup",
         login:'/user/login',
         records:'/record/list',
-    }
+        createRecord:"/record",
+        getRecordDetails:'/record/details'
+    };
 
     loggedin$ = new BehaviorSubject<String | undefined>('');
     data!: User[];
@@ -73,5 +75,13 @@ export class ServerComms {
     }
     deleteissue(id: number) {
         return this.http.delete(`${this.issue}/${id}`);
+    }
+    createRec(body:any){
+        let url = this.baseUrl + this.routes.createRecord;
+        return this.http.post(url,body);
+    }
+    getRecordDetails(body:{id:string}){
+        let url = this.baseUrl + this.routes.getRecordDetails;
+        return this.http.post(url,body);
     }
 }

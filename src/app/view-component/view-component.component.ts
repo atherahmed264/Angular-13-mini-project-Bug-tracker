@@ -13,7 +13,7 @@ import { ServerComms } from '../Services/server-comms.component';
 })
 export class ViewComponentComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute ,private service:ServerComms ,private router:Router,private snack:MatSnackBar) { }
+  constructor(private route: ActivatedRoute ,private service:ServerComms ,private router:Router,private snack:MatSnackBar,private param:ActivatedRoute) { }
   
   icon:'userstory' | 'bug' | 'task' | '' = '';
   type:'userstory' | 'bug' | 'task' | '' = '';
@@ -32,8 +32,14 @@ export class ViewComponentComponent implements OnInit {
   @ViewChild('matcomment', { static: true }) matComment!: MatExpansionPanel;
 
   ngOnInit(): void {
-  
-    
+    this.param.paramMap.subscribe(res => {
+      let rcid = res.get("id");
+      if(rcid && rcid !=='add')
+        this.getRecordDetails(rcid);
+      else{
+        this.getRecordDetails("63a36684cbdfe83c273dbfb3");
+      }  
+    });
   }
   
   showCount:number = 0
@@ -65,6 +71,7 @@ export class ViewComponentComponent implements OnInit {
   //     "Status":"Active"
   // }
     let arr = [this.title,this.assignedTo,this.status,this.type,this.description];
+    console.log(arr);
     let err = arr.some(el => !el);
     if(err){
       this.snack.open("Please Fill The Mandatory Details","",{ duration:2000});
@@ -78,8 +85,63 @@ export class ViewComponentComponent implements OnInit {
       "AssignedTo":this.assignedTo,
       "Status":this.status,
     }
-    
+    this.service.createRec(payload).subscribe(res => {
+      console.log(res);
+    },err => {
+      this.snack.open(err.error.message,"",{duration:2000});
+    });
+  }
+  comments:Comment[] = [{
+    comment:"this is a very nice task brooooo",
+    username:"Ather Ahmed",
+    userid:"aldhfghadlsfgg44422",
+    replies:[
+      {
+        username:"Ather Ahmed",
+        reply:"LOL noob"
+      }
+    ]
+  }];
+  addReply(i:number){
+    let reply = {
+      username:"Ather Ahmed",
+      userId:"alhdsgfhadgf76ghg3",
+      reply:this.reply
+    }
+    this.comments[i].replies.push(reply);
+    this.reply = ""
+  }
+  addComment(){
+    let newCom:Comment = {
+      comment:this.comment,
+      username:'Ather Ahmed',//user,
+      userid:"ahgkga124gb",
+      replies:[]
+    }
+    this.comments.push(newCom);
+    this.comment = "";
   }
 
+  getRecordDetails(id:string){
+    let pay = {id};
+    this.service.getRecordDetails(pay).subscribe((res:any) => {
+      if(res.message.toLowerCase() !== "success"){
+        this.snack.open(res.message,"",{ duration:2000});
+        return;
+      }
+      this.title = res.data.Title;
+      this.status = res.data.Status;
+      this.type = res.data.Type.toLowerCase();
+      this.description = res.data.Descryption;
+      this.assignedTo = res.data.AssignedTo;
+    },err => {
+      this.snack.open(err.error.message,"",{ duration:2000});
+    });
+  }
 }
-
+type Comment = {
+  comment:string,
+  username:string,
+  userid:string,
+  replies:any[],
+}

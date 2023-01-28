@@ -9,7 +9,7 @@
     <mat-autocomplete #auto="matAutocomplete">
 
       <mat-option *ngFor="let option of filteredOptions" [value]="option">
-        {{option}}
+        {{option.Name}}
       </mat-option>
       <button *ngIf="advanceLookup" class="w-100 btn btn-sm btn-outline-primary" (click)="openLookup()">Advance lookup</button>
     </mat-autocomplete>

@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 import { issue } from '../Models/issues.model';
-import { ServerComms } from '../Services/server-comms.component';
+import { ServerComms, UserHeaders } from '../Services/server-comms.component';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { debounceTime, Subject } from 'rxjs';
@@ -114,12 +114,13 @@ export class HomepageComponent implements OnInit {
 })
 
 export class FilterPopup implements OnInit {
-  constructor(private snack: MatSnackBar, public dialog: MatDialogRef<FilterPopup>) { }
+  constructor(private snack: MatSnackBar, public dialog: MatDialogRef<FilterPopup>, private service:ServerComms) { }
 
   ngOnInit(): void {
     this.radio = sessionStorage.getItem('radio') || undefined;
     this.typeFilter = JSON.parse(sessionStorage.getItem('typeFilters') as string) || undefined;
     this.statusFilter = JSON.parse(sessionStorage.getItem('statusFilters') as string) || undefined;
+    this.getUsers();
   }
 
   filterStatus = new FormControl('');
@@ -168,6 +169,22 @@ export class FilterPopup implements OnInit {
     }
     this.dialog.close(payload);
   }
+
+  pageNo = 1;
+  limit = 10;
+  searchText = "";
+  getUsers(){
+    this.service.userLookup(this.pageNo,this.searchText,this.limit).subscribe({
+      next:(res:any) => {
+        this.headerObj = UserHeaders;
+        this.data = res.data;
+        console.log(this.data);
+      },
+      error:(err:any) => {
+        this.snack.open("Unable to fetch Users Right now","",{ duration:4000});
+      }
+    })
+  }
   
   clear(){
     this.filterCleared = true;
@@ -180,44 +197,8 @@ export class FilterPopup implements OnInit {
     sessionStorage.removeItem('radio');
   }
 
-  headerObj = [
-    {
-      name:"Record Number",
-      attr:"recordNum"
-    },
-    {
-      name:"Record Type",
-      attr:"recordType"
-    },
-    {
-      name:"Record Status",
-      attr:"recordStatus"
-    },
-    {
-      name:"Record Owner",
-      attr:"recordOwn"
-    },
-  ];
-  data = [
-    {
-      recordNum:"10980",
-      recordType:"New",
-      recordStatus:"Active",
-      recordOwn:"Ather Ahmed"
-    },
-    {
-      recordNum:"10980",
-      recordType:"New",
-      recordStatus:"Active",
-      recordOwn:"Ather Ahmed"
-    },
-    {
-      recordNum:"10980",
-      recordType:"New",
-      recordStatus:"Active",
-      recordOwn:"Ather Ahmed"
-    },
-  ];
+  headerObj:any;
+  data:any
   loadMore(page:number){
     console.log("load moreeee");
     console.log(page);

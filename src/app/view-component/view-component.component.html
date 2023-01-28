@@ -70,13 +70,13 @@
     </div>
 </div> -->
 <div class="d-flex justify-content-between mt-3">
-    <div class="d-flex align-items-center justify-content-evenly mx-5">
+    <div class="d-flex align-items-center justify-content-evenly mx-5 flex-wrap">
         <h2>Ather Ahmed </h2>
         <mat-icon class="my-0 mx-2 py-0 mb-3">account_circle</mat-icon>
     </div>
     <div>
         <button class="btn btn-danger px-5 py-1 mx-3" matTooltip="click to go back" (click)="goBack()">Close</button>
-        <button class="px-5 py-1 btn btn-primary mx-5" matTooltip="save details"(click)="createRecord()">Save</button>
+        <button class="px-5 py-1 btn btn-primary mx-5" matTooltip="save details"(click)="saveOrCreate()">{{ new ? 'Create' : 'Save'}}</button>
     </div>
 </div>
 <div class="custom_cont ">
@@ -90,7 +90,7 @@
 
             
   
-                <div class="d-flex justify-content-between brdr">
+                <div class="d-flex justify-content-between brdr flex-wrap">
                     <div class="col-md-6">
                         <h3> Record Title </h3>
                         <input type="text" id="title" name="title" class="form-control" placeholder="Enter Title" [(ngModel)]="title">
@@ -148,7 +148,7 @@
                                         <mat-datepicker #picker2></mat-datepicker>
                                       </mat-form-field>
                                 </div>
-                                <div class="d-flex flex-column justify-content-between mt-2">
+                                <div class="d-flex flex-column justify-content-between mt-2 flex-wrap">
                                     <div class="">
                                         <div class="mb-2 text-end"> Enter Efforts In Hours </div>
                                         <input type="number" placeholder="Total Efforts in Hours" class="form-control mb-3" [(ngModel)]="efforts">
@@ -161,7 +161,7 @@
                             </mat-tab>
                             <mat-tab label="Attachments">
 
-                                <div class="d-flex flex-column align-items-start justify-content-between">
+                                <div class="d-flex flex-column align-items-start justify-content-between flex-wrap">
                                     <div class="d-flex justify-content-start mt-4">
                                         <label for="assign-to">
                                             <div class="d-flex  justify-content-start">
@@ -170,10 +170,13 @@
                                         </label>
                                     </div>
                                     <input type="text" class="form-control" name="owner" id="owner" [(ngModel)]="assignedTo">
-                                    <div class="d-flex justify-content-start mt-4">
+                                    <div class="d-flex justify-content-start mt-4 flex-wrap">
                                         <label for="links text-center">
                                             <div class="d-flex justify-content-start">
-                                                <div class="btn btn-outline-dark d-flex justify-content-center " >Add Links <mat-icon class="py-0 px-0 mx-1">add</mat-icon></div>
+                                                <div class="d-flex flex-wrap">
+                                                    <div class="btn btn-outline-dark d-flex justify-content-center " >Add Links <mat-icon class="py-0 px-0 mx-1">add</mat-icon></div>
+                                                    <input type="text" class="form-control">
+                                                </div>
                                             </div>
                                         </label>
                                     </div>
@@ -197,7 +200,7 @@
             </mat-expansion-panel-header>
             <div class="custom-cont brdr">
 
-                <div class=" d-flex justify-content-center align-items-center ">
+                <div class=" d-flex justify-content-center align-items-center flex-wrap">
                     <div class="mr-5">
                         <label for="commentBox" [ngClass]=" comment && 'btn btn-primary'" (click)="addComment()">Add Comment</label>
                     </div>
@@ -208,7 +211,7 @@
                 </div>
                 
             </div>
-            <div class="d-flex flex-column justify-content-center align-items-center mt-4">
+            <div class="d-flex flex-column justify-content-center align-items-center mt-4 flex-wrap">
                 <div class="card shadow-sm bg-white-rounded mx-3 w-100 rounded-lg mb-5">
                     <div class="container">
                         <div class="d-flex flex-column comment-whole mb-4" *ngFor="let comment of comments;let i=index">
@@ -221,7 +224,7 @@
                                 <a class="reply">Reply</a>
                         </div>
                         <ng-container>
-                        <div class="d-flex justify-content-start">
+                        <div class="d-flex justify-content-start flex-wrap">
                             <span class="px-5 py-5 mx-4"></span>
                             <mat-accordion class="col-md-10">
                                 <mat-expansion-panel>
@@ -241,7 +244,7 @@
                                             </span>
                                         </div>
                                     </ng-container>
-                                    <div class="d-flex justify-content-start align-items-center mt-5">
+                                    <div class="d-flex justify-content-start align-items-center mt-5 flex-wrap">
                                         <div class="mx-3" [ngClass]="reply && 'btn btn-primary'" (click)="addReply(i)">
                                             Add Reply
                                         </div>

@@ -32,14 +32,17 @@ export class ViewComponentComponent implements OnInit {
   commentsSection = false;
   reply!:string
   comment!:string;
+  new = false;
   @ViewChild('matoverview', { static: true }) matOverview!: MatExpansionPanel;
   @ViewChild('matcomment', { static: true }) matComment!: MatExpansionPanel;
 
   ngOnInit(): void {
     this.activeRoute.paramMap.subscribe(res => {
-      let rcid = res.get("id");
-      if(rcid && rcid !=='add')
-        this.getRecordDetails(rcid); 
+      this.rcid = res.get("id");
+      if(this.rcid && this.rcid !=='add')
+        this.getRecordDetails(this.rcid);
+      else  
+        this.new = true;   
     });
   }
   
@@ -62,6 +65,13 @@ export class ViewComponentComponent implements OnInit {
   }
   title:any;
   assignedTo:any;
+  rcid:any
+  checkMandatory():boolean{
+    let arr = [this.title,this.assignedTo,this.status,this.type,this.description];
+    console.log(arr);
+    let err = arr.some(el => !el);
+    return err
+  }
   createRecord(){
   //   {
   //     "Title":"Task for",
@@ -71,9 +81,8 @@ export class ViewComponentComponent implements OnInit {
   //     "AssignedTo":"639ca034da10173255153d65",
   //     "Status":"Active"
   // }
-    let arr = [this.title,this.assignedTo,this.status,this.type,this.description];
-    console.log(arr);
-    let err = arr.some(el => !el);
+    
+    let err = this.checkMandatory();
     if(err){
       this.snack.open("Please Fill The Mandatory Details","",{ duration:2000});
       return;
@@ -94,19 +103,8 @@ export class ViewComponentComponent implements OnInit {
     console.log("payload",payload);
     this.service.createRec(payload).subscribe((res:any) => {
       console.log(res);
+      this.bindRecordDetails(res);
       this.snack.open(`${res.data.Type} Created Successfully Number - ${res.data.RecordNumber}`,"",{ duration:3000});
-      let savedData:RecordDetails = {
-        Title: res.data.Title,
-        Status: res.data.Status,
-        Type:res.data.Type,
-        Descryption:res.data.Descryption,
-        AssignedTo:res.data.AssignedTo?.Name,
-        Efforts:res.data.Efforts,
-        EffortsCompleted:res.data.CompletedEfforts,
-        startDate:res.data.StartDate,
-        endDate:res.data.EndDate,
-      }
-      this.bindRecordDetails(savedData);
     },err => {
       this.snack.open(err.error.message,"",{duration:2000});
     });
@@ -149,32 +147,78 @@ export class ViewComponentComponent implements OnInit {
         this.snack.open(res.message,"",{ duration:2000});
         return;
       }
-      let data:RecordDetails = {
-        Title: res.data.Title,
-        Status: res.data.Status,
-        Type:res.data.Type,
-        Descryption:res.data.Descryption,
-        AssignedTo:res.data.AssignedTo.Name,
-      }
-      this.bindRecordDetails(data);
+     
+      this.bindRecordDetails(res);
     },err => {
       this.snack.open(err.error.message,"",{ duration:2000});
     });
   }
-  bindRecordDetails(obj:RecordDetails){
+  bindRecordDetails(res:any){
+    console.log(res);
+    let obj:RecordDetails = {
+      Title: res.data.Title,
+      Status: res.data.Status,
+      Type:res.data.Type,
+      Descryption:res.data.Descryption,
+      AssignedTo:res.data.AssignedTo?.Name,
+      Efforts:res.data.Efforts,
+      CompletedEfforts:res.data.CompletedEfforts,
+      StartDate:res.data.StartDate,
+      EndDate:res.data.EndDate,
+    }
+    
     this.title = obj.Title;
     this.status = obj.Status;
     this.type = obj.Type;
     this.description = obj.Descryption;
     this.assignedTo = obj.AssignedTo;
     this.efforts = obj.Efforts as number;
-    this.effortsComp = obj.EffortsCompleted as number;
-    this.startDate = obj.startDate as Date;
-    this.endDate = obj.endDate as Date;
+    this.effortsComp = obj.CompletedEfforts as number;
+    this.startDate = obj.StartDate as Date;
+    this.endDate = obj.EndDate as Date;
   }
 
   saveData(){
-    this.title
+    let err = this.checkMandatory();
+    if(err){
+      this.snack.open("Please Fill The Mandatory Details","",{ duration:2000});
+      return;
+    }
+
+    let payload:RecordDetails = {
+      Title:this.title,
+      Type:this.type,
+      Status:this.status,
+      AssignedTo:this.assignedTo,
+      Descryption:this.description,
+      Efforts:this.efforts,
+      CompletedEfforts:this.effortsComp,
+      EndDate:this.endDate,
+      StartDate:this.startDate,
+      id:this.rcid
+    }
+    this.service.saveRecordDetails(payload).subscribe({
+      next: (res:any) => {
+        if(res.message.toLowerCase() !== 'success'){
+          this.snack.open("Some Error Occurred","",{ duration:3000});
+          return 
+        }
+        this.bindRecordDetails(res);
+        this.snack.open("Details Saved Successfully","OK",{ duration:4000});
+        
+      },
+      error: err => {
+        this.snack.open(err.error.message,"",{ duration:4000});
+      }
+    })
+  }
+  saveOrCreate(){
+    if(this.new){
+      this.createRecord();
+    }
+    else{
+      this.saveData();
+    }
   }
 }
 type Comment = {
@@ -193,7 +237,8 @@ type RecordDetails =  {
   Parent?:string,
   Child?:string,
   Efforts?:number,
-  EffortsCompleted?:number,
-  startDate?:Date,
-  endDate?:Date,
+  CompletedEfforts?:number,
+  StartDate?:Date,
+  EndDate?:Date,
+  id?:string
 } 

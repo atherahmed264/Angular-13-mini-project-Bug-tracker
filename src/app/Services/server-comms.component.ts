@@ -1,4 +1,5 @@
 import { HttpClient } from "@angular/common/http";
+import { utf8Encode } from "@angular/compiler/src/util";
 import { Injectable } from "@angular/core";
 import { Observable, BehaviorSubject, retry } from "rxjs";
 import { issue } from "../Models/issues.model";
@@ -15,7 +16,11 @@ export class ServerComms {
         login:'/user/login',
         records:'/record/list',
         createRecord:"/record",
-        getRecordDetails:'/record/details'
+        getRecordDetails:'/record/details',
+        savedetails:'/record/edit',
+        advancelookupUser:'/user/advancelookup',
+        addcomment:'/comment', // post method to add patch method to edit delete method to delete
+        addreply:'/comment',
     };
 
     loggedin$ = new BehaviorSubject<String | undefined>('');
@@ -84,4 +89,59 @@ export class ServerComms {
         let url = this.baseUrl + this.routes.getRecordDetails;
         return this.http.post(url,body);
     }
+    saveRecordDetails(body:any){
+        let url = this.baseUrl + this.routes.savedetails;
+        return this.http.post(url,body);
+    }
+
+    userLookup(page:number,searchText:string="",limit:number=5){
+        let body = { page, searchText, limit };
+        let url = this.baseUrl + this.routes.advancelookupUser;
+        return this.http.post(url,body);
+    } 
+
+    addCommentOrReply(type:string,recordId:string,userId:string,text:string){
+        let body = {
+            "Issue":recordId,
+            "UserId":userId,
+            "Type":type,
+            "Comment":text
+        }
+        let url = this.baseUrl + this.routes.addcomment;
+        return this.http.post(url,body)
+    }
 }
+
+export const UserHeaders = [
+    {
+        name:"Name",
+        attr:"Name"
+    },
+    {
+        name:"User Name",
+        attr:"UserName"
+    },
+    {
+        name:"Email",
+        attr:"Email"
+    },
+]
+
+// [
+//     {
+//       name:"Record Number",
+//       attr:"recordNum"
+//     },
+//     {
+//       name:"Record Type",
+//       attr:"recordType"
+//     },
+//     {
+//       name:"Record Status",
+//       attr:"recordStatus"
+//     },
+//     {
+//       name:"Record Owner",
+//       attr:"recordOwn"
+//     },
+//   ];

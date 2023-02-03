@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit, ViewChild , ElementRef, AfterViewInit, Output ,EventEmitter  } from '@angular/core';
+import { Component, Inject, Input, OnInit, ViewChild , ElementRef, AfterViewInit, Output ,EventEmitter, OnChanges  } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { debounceTime, Subject } from 'rxjs';
 
@@ -8,7 +8,7 @@ import { debounceTime, Subject } from 'rxjs';
   templateUrl: './advancelookup.component.html',
   styleUrls: ['./advancelookup.component.scss']
 })
-export class AdvancelookupComponent implements OnInit {
+export class AdvancelookupComponent implements OnInit,OnChanges {
 
   constructor(private dialog:MatDialog) { }
 
@@ -21,7 +21,35 @@ export class AdvancelookupComponent implements OnInit {
       }
     })
   }
+  oldVal:any;
+  @Output() changes = new EventEmitter<string>();
+  @Input() enableMultiInput!:boolean
+  appendInput(val: string, id: string) {
+    this.selectedObj.id = id;
+    this.selectedObj.name = val;
 
+
+    // enabling selection of multi values when advance lookup is false for just dropdown cases
+    // if(id){
+    //   this.filteredOptions.forEach(x => x.checked = x.id === id);
+    //   this.selectedObj.id?.push(id);
+
+    //   if(this.oldVal){
+    //     this.value = this.oldVal +" | "+ val;
+    //     this.oldVal = this.value
+    //     val && this.selectedObj.name?.push(val);
+    //   } else {
+    //     this.value = val;
+    //     this.oldVal = this.value;
+    //     this.value && this.selectedObj.name?.push(this.value);
+    //   }
+    // }
+  }
+
+  ngOnChanges(changes:any){
+    console.log("onchanges");
+    this.value = this.selectedObj.name;
+  }
   // filteredOptions = [
   //   {
   //     name:"Ather AHmed",
@@ -78,6 +106,8 @@ export class AdvancelookupComponent implements OnInit {
   //       attr:"userName"
   //     }
   // ];
+  @Input() selectedObj:any;
+  @Input() value:any;
   @Input() filteredOptions!:any[];
   @Input() inputVal!:string;
   @Input() headerObj!:any[]

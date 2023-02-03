@@ -192,7 +192,7 @@
     </mat-accordion>
 
     <mat-accordion class="mt-5">
-        <mat-expansion-panel #matcomment >
+        <mat-expansion-panel #matcomment (afterExpand)="loadComments()">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                    <h2 class="my-5">Comments & Discussion </h2> 
@@ -202,7 +202,7 @@
 
                 <div class=" d-flex justify-content-center align-items-center flex-wrap">
                     <div class="mr-5">
-                        <label for="commentBox" [ngClass]=" comment && 'btn btn-primary'" (click)="addComment()">Add Comment</label>
+                        <label for="commentBox" [ngClass]=" comment && 'btn btn-primary'" (click)="addComment()">{{ adding ? 'Adding...' : 'Add Comment'}}</label>
                     </div>
                     <div class="col-md-10">
                         <textarea name="comment" id="comment" cols="20" rows="2" class="form-control" [(ngModel)]="comment"></textarea>

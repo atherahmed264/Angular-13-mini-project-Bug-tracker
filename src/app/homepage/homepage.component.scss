@@ -21,6 +21,14 @@ table{
 .w-10{
     width: 200px;
 }
-.mouse-pointer{
+.mouse-pointer:hover{
     cursor: pointer;
+   
+}
+thead{
+    background-color: black;
+    color: white;
+}
+.w-1000{
+    width: 1200px;
 }

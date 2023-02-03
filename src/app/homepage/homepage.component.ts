@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
@@ -7,13 +7,14 @@ import { ServerComms, UserHeaders } from '../Services/server-comms.component';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { debounceTime, Subject } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss']
 })
-export class HomepageComponent implements OnInit {
+export class HomepageComponent implements OnInit,OnChanges {
   
   constructor(private service: ServerComms, public route: Router, private dialog: MatDialog , private snack:MatSnackBar) { }
   
@@ -36,6 +37,10 @@ export class HomepageComponent implements OnInit {
       this.searchText = val;
       this.getRecords(sessionStorage.getItem('payload'),val);
     });
+  }
+
+  ngOnChanges(){
+    console.log("pnchange")
   }
 
   searchText$:Subject<string> = new Subject<string>();
@@ -96,6 +101,7 @@ export class HomepageComponent implements OnInit {
     });
     dialog.afterClosed().subscribe({
       next: payload => {
+        console.log('payload',payload);
         if(payload === true) this.getRecords({},this.searchText);
         if(payload) this.getRecords(payload,this.searchText);
       }
@@ -114,7 +120,7 @@ export class HomepageComponent implements OnInit {
 })
 
 export class FilterPopup implements OnInit {
-  constructor(private snack: MatSnackBar, public dialog: MatDialogRef<FilterPopup>, private service:ServerComms) { }
+  constructor(private snack: MatSnackBar, public dialog: MatDialogRef<FilterPopup>, private service:ServerComms, private datePipe:DatePipe) { }
 
   ngOnInit(): void {
     this.radio = sessionStorage.getItem('radio') || undefined;
@@ -133,6 +139,7 @@ export class FilterPopup implements OnInit {
   filterCleared = false;
 
   runValidation() {
+    console.log("jkk",this.selectedUsers);
     let valids = [this.typeFilter, this.statusFilter, this.radio]
     let noneSelected = valids.every(value => !value);
     if (noneSelected) {
@@ -141,7 +148,8 @@ export class FilterPopup implements OnInit {
     }
     this.buildObj()
   }
-
+  selectedUsers = {name:"",id:""}
+  users:any
   buildObj() {
     this.filterCleared = false;
     sessionStorage.removeItem('payload');
@@ -163,6 +171,13 @@ export class FilterPopup implements OnInit {
       payload.filter.Status = this.statusFilter;
       sessionStorage.setItem('statusFilters',filters);
     }
+    if(this.selectedUsers.id){
+      payload.filter.OwnerId = this.selectedUsers.id;
+    }
+    if(this.startDate && this.endDate){
+      payload.filter.StartDate = this.datePipe.transform(this.startDate,"dd-MM-yyyy");
+      payload.filter.EndDate = this.datePipe.transform(this.endDate,"dd-MM-yyyy");
+    }
     if(Object.keys(payload).length > 0){
       let str = JSON.stringify(payload)
       sessionStorage.setItem('payload',str);
@@ -173,6 +188,8 @@ export class FilterPopup implements OnInit {
   pageNo = 1;
   limit = 10;
   searchText = "";
+  startDate!:Date;
+  endDate!:Date;
   getUsers(){
     this.service.userLookup(this.pageNo,this.searchText,this.limit).subscribe({
       next:(res:any) => {
@@ -196,7 +213,7 @@ export class FilterPopup implements OnInit {
     sessionStorage.removeItem('typeFilters');
     sessionStorage.removeItem('radio');
   }
-
+  
   headerObj:any;
   data:any
   loadMore(page:number){

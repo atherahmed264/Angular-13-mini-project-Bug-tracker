@@ -1,3 +1,4 @@
+import { utf8Encode } from '@angular/compiler/src/util';
 import { Component, OnInit ,OnDestroy, ViewChild } from '@angular/core';
 import { MatExpansionPanel } from '@angular/material/expansion/expansion-panel';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,6 +13,7 @@ import { ServerComms } from '../Services/server-comms.component';
   styleUrls: ['./view-component.component.scss']
 })
 export class ViewComponentComponent implements OnInit {
+  adding!: boolean;
 
   constructor(private route: ActivatedRoute ,private service:ServerComms ,private router:Router,private snack:MatSnackBar,private activeRoute:ActivatedRoute) { }
   
@@ -109,17 +111,7 @@ export class ViewComponentComponent implements OnInit {
       this.snack.open(err.error.message,"",{duration:2000});
     });
   }
-  comments:Comment[] = [{
-    comment:"this is a very nice Task brooooo",
-    username:"Ather Ahmed",
-    userid:"aldhfghadlsfgg44422",
-    replies:[
-      {
-        username:"Ather Ahmed",
-        reply:"LOL noob"
-      }
-    ]
-  }];
+  comments!:Comment[]
   addReply(i:number){
     let reply = {
       username:"Ather Ahmed",
@@ -130,14 +122,30 @@ export class ViewComponentComponent implements OnInit {
     this.reply = ""
   }
   addComment(){
-    let newCom:Comment = {
-      comment:this.comment,
-      username:'Ather Ahmed',//user,
-      userid:"ahgkga124gb",
-      replies:[]
+    if(!sessionStorage.getItem('userId')){
+      this.snack.open("Login Before Adding Comments","",{ duration:3000});
+      return;
     }
-    this.comments.push(newCom);
-    this.comment = "";
+    this.adding = true;
+    this.service.addCommentOrReply("Comment",this.rcid,sessionStorage.getItem('userId') as string,this.comment)
+    .subscribe({
+      next: (res:any) => {
+        let newCom:Comment = {
+          comment:res.data?.Comment,
+          username:'Ather Ahmed',//user,
+          userid:res.data?.UserId,
+          replies:res.data?.Replies
+        }
+        this.comments.push(newCom);
+        this.adding = false;
+        this.comment = "";
+      }, 
+      error:err => {
+        this.adding = false;
+        this.snack.open(err.error.message,"",{ duration:3000});
+      }
+    })
+    
   }
 
   getRecordDetails(id:string){
@@ -220,6 +228,27 @@ export class ViewComponentComponent implements OnInit {
       this.saveData();
     }
   }
+
+  loadComments(){
+    this.service.getCommentList(this.rcid).subscribe({
+      next: (res:any) => {
+        console.log(res.data,"daaata");
+        this.comments = res.data.map((val:any) => {
+          return {
+            comment:val.Comment,
+            username:val.UserId?.UserName,
+            userid:val.UserId?._id,
+            replies:val.Replies
+          }
+        });
+      },
+      error:err => {
+        this.snack.open(err.error.message,"",{ duration:3000});
+      }
+    })
+  }
+  
+
 }
 type Comment = {
   comment:string,

@@ -20,7 +20,7 @@
         <span class="text-start text-bold mb-2"> Filters </span> <br>
         <mat-form-field appearance="fill">
           <mat-label>Type</mat-label>
-          <mat-select [formControl]="filterType" multiple [(ngModel)]="typeFilter">
+          <mat-select multiple [(ngModel)]="typeFilter">
             <mat-option *ngFor="let topping of typeFilters" [value]="topping">{{topping}}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -30,7 +30,7 @@
         
         <mat-form-field appearance="fill">
           <mat-label>Status</mat-label>
-          <mat-select [formControl]="filterStatus" multiple [(ngModel)]="statusFilter">
+          <mat-select  multiple [(ngModel)]="statusFilter">
             <mat-option *ngFor="let topping of statusFilters" [value]="topping">{{topping}}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -42,12 +42,15 @@
        
           <div class="mt-4">
             <app-advancelookup 
-            [advanceLookup]="true" 
+            [advanceLookup]="false" 
             [filteredOptions]="data" 
             [headerObj]="headerObj" 
             (loadPage)="loadMore($event)" 
             (searchText)="searchApi($event)" 
+            [selectedObj]="selectedUsers"
+            [value]="selectedUsers.name"
             [pageNo]="1"
+            [enableMultiInput]="true"
             ></app-advancelookup>
           </div>
 
@@ -57,9 +60,9 @@
               <mat-label>Enter a date range</mat-label>
               <div class="d-flex justify-content-center align-items-center ">
                 
-                <mat-date-range-input  [rangePicker]="picker">
-                  <input matStartDate formControlName="start" placeholder="Start date">
-                  <input matEndDate formControlName="end" placeholder="End date">
+                <mat-date-range-input  [rangePicker]="picker" >
+                  <input matStartDate placeholder="Start date" [(ngModel)]="startDate">
+                  <input matEndDate  placeholder="End date" [(ngModel)]="endDate">
                 </mat-date-range-input>
                 
                 <mat-datepicker-toggle class="float-right" matSuffix [for]="picker"></mat-datepicker-toggle>

@@ -4,12 +4,14 @@
            placeholder="Pick one"
            aria-label="Number"
            matInput
-           [(ngModel)]="inputVal"
+           [(ngModel)]="value"
+           (change)="changes.emit('#')"
+           (blur)="value = selectedObj.name"
            [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete">
 
-      <mat-option *ngFor="let option of filteredOptions" [value]="option">
-        {{option.Name}}
+      <mat-option *ngFor="let option of filteredOptions" [value]="option.Name" (click)="appendInput(option.Name,option._id)">
+        <mat-checkbox class="example-margin" [checked]="option.checked">{{option.Name}}</mat-checkbox>  
       </mat-option>
       <button *ngIf="advanceLookup" class="w-100 btn btn-sm btn-outline-primary" (click)="openLookup()">Advance lookup</button>
     </mat-autocomplete>

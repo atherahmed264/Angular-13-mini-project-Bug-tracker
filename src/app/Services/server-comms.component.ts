@@ -20,7 +20,7 @@ export class ServerComms {
         savedetails:'/record/edit',
         advancelookupUser:'/user/advancelookup',
         addcomment:'/comment', // post method to add patch method to edit delete method to delete
-        addreply:'/comment',
+        getComments:'/comment/list'
     };
 
     loggedin$ = new BehaviorSubject<String | undefined>('');
@@ -102,13 +102,20 @@ export class ServerComms {
 
     addCommentOrReply(type:string,recordId:string,userId:string,text:string){
         let body = {
-            "Issue":recordId,
+            "Record":recordId,
             "UserId":userId,
             "Type":type,
             "Comment":text
         }
+        console.log('body',body);
         let url = this.baseUrl + this.routes.addcomment;
         return this.http.post(url,body)
+    }
+
+    getCommentList(RecordId:string){
+        let body = { RecordId };
+        let url = this.baseUrl + this.routes.getComments;
+        return this.http.post(url,body);
     }
 }
 

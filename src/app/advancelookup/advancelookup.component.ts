@@ -13,13 +13,14 @@ export class AdvancelookupComponent implements OnInit,OnChanges {
   constructor(private dialog:MatDialog) { }
 
   ngOnInit(): void {
-    this.filteredOptions = this.filteredOptions.map((x:any,i:number) => {
-      return {
-        ...x,
-        id:i,
-        selected : false
-      }
-    })
+    console.log(this.filteredOptions);
+    // this.filteredOptions = this.filteredOptions.map((x:any,i:number) => {
+    //   return {
+    //     ...x,
+    //     id:i,
+    //     selected : false
+    //   }
+    // })
   }
   oldVal:any;
   @Output() changes = new EventEmitter<string>();
@@ -106,6 +107,9 @@ export class AdvancelookupComponent implements OnInit,OnChanges {
   //       attr:"userName"
   //     }
   // ];
+  
+  @Input() hide!:boolean;
+  @Input() openPop!:boolean;
   @Input() selectedObj:any;
   @Input() value:any;
   @Input() filteredOptions!:any[];
@@ -117,7 +121,7 @@ export class AdvancelookupComponent implements OnInit,OnChanges {
   @Input() pageNo!:number;
   openLookup(){
     let dialogref = this.dialog.open(LookupPopup,{
-      width:"900px",
+      width:"700px",
       height:"400px",
       disableClose:true,
       data:[this.filteredOptions,this.headerObj,this.pageNo]
@@ -131,6 +135,11 @@ export class AdvancelookupComponent implements OnInit,OnChanges {
       this.searchText.emit(search);
     });
   } 
+  checkPopup(){
+    if(this.openPop){
+      this.openLookup();
+    }
+  }
 }
 
 @Component({

@@ -20,7 +20,8 @@ export class ServerComms {
         savedetails:'/record/edit',
         advancelookupUser:'/user/advancelookup',
         addcomment:'/comment', // post method to add patch method to edit delete method to delete
-        getComments:'/comment/list'
+        getComments:'/comment/list',
+        advanceLookupRecord:'/record/advancelookup'
     };
 
     loggedin$ = new BehaviorSubject<String | undefined>('');
@@ -117,6 +118,16 @@ export class ServerComms {
         let url = this.baseUrl + this.routes.getComments;
         return this.http.post(url,body);
     }
+
+    recordLookup(page:number,limit:number,searchText:string){
+        let body = {
+            page,
+            searchText,
+            limit
+        }
+        let url = this.baseUrl + this.routes.advanceLookupRecord;
+        return this.http.post(url,body);
+    }
 }
 
 export const UserHeaders = [
@@ -134,21 +145,21 @@ export const UserHeaders = [
     },
 ]
 
-// [
-//     {
-//       name:"Record Number",
-//       attr:"recordNum"
-//     },
-//     {
-//       name:"Record Type",
-//       attr:"recordType"
-//     },
-//     {
-//       name:"Record Status",
-//       attr:"recordStatus"
-//     },
-//     {
-//       name:"Record Owner",
-//       attr:"recordOwn"
-//     },
-//   ];
+export const RecordHeaders =[
+    {
+      name:"Record Number",
+      attr:"recordNum"
+    },
+    {
+      name:"Record Type",
+      attr:"recordType"
+    },
+    {
+      name:"Record Status",
+      attr:"recordStatus"
+    },
+    {
+      name:"Record Owner",
+      attr:"recordOwn"
+    },
+  ];

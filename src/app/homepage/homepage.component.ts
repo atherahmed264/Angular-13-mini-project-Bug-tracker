@@ -175,8 +175,9 @@ export class FilterPopup implements OnInit {
       payload.filter.OwnerId = this.selectedUsers.id;
     }
     if(this.startDate && this.endDate){
-      payload.filter.StartDate = this.datePipe.transform(this.startDate,"dd-MM-yyyy");
-      payload.filter.EndDate = this.datePipe.transform(this.endDate,"dd-MM-yyyy");
+      let start = this.datePipe.transform(this.startDate,"yyyy-MM-dd");
+      let end = this.datePipe.transform(this.endDate,"yyyy-MM-dd");
+      payload.dateRange = start+"/"+end;
     }
     if(Object.keys(payload).length > 0){
       let str = JSON.stringify(payload)

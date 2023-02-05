@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { utf8Encode } from "@angular/compiler/src/util";
 import { Injectable } from "@angular/core";
 import { Observable, BehaviorSubject, retry } from "rxjs";
@@ -21,7 +21,8 @@ export class ServerComms {
         advancelookupUser:'/user/advancelookup',
         addcomment:'/comment', // post method to add patch method to edit delete method to delete
         getComments:'/comment/list',
-        advanceLookupRecord:'/record/advancelookup'
+        advanceLookupRecord:'/record/advancelookup',
+        uploadDoc:"/record/upload/"
     };
 
     loggedin$ = new BehaviorSubject<String | undefined>('');
@@ -127,6 +128,13 @@ export class ServerComms {
         }
         let url = this.baseUrl + this.routes.advanceLookupRecord;
         return this.http.post(url,body);
+    }
+
+    uploadFile(rcid:string,formData:FormData){
+        let header = new HttpHeaders();
+        header.set("Content-Type","image/jpeg");
+        let url = this.baseUrl+this.routes.uploadDoc+rcid;
+        return this.http.post(url,formData,{headers:header});
     }
 }
 

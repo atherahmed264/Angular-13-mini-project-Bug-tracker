@@ -1,10 +1,8 @@
-import { utf8Encode } from '@angular/compiler/src/util';
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { MatExpansionPanel } from '@angular/material/expansion/expansion-panel';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { issue } from '../Models/issues.model';
 import { RecordHeaders, ServerComms, UserHeaders } from '../Services/server-comms.component';
 
 @Component({
@@ -129,7 +127,8 @@ export class ViewComponentComponent implements OnInit, AfterViewInit {
       this.snack.open(err.error.message, "", { duration: 2000 });
     });
   }
-  comments!: Comment[]
+  comments!: Comment[];
+  file!:FileList;
   addReply(i: number) {
     let reply = {
       username: "Ather Ahmed",
@@ -236,6 +235,19 @@ export class ViewComponentComponent implements OnInit, AfterViewInit {
       StartDate: this.startDate,
       id: this.rcid
     }
+    if(this.file){
+      let fd = new FormData();
+      //fd.append("document",this.file,this.file.name);
+      this.service.uploadFile(this.rcid,fd).subscribe({
+        next:(val:any) => {
+          this.snack.open("File Uploaded", "" , { duration :3000});
+        },
+        error:(err:any) => {
+          this.snack.open(`File Upload Failed ${err.error.message}`, "" , { duration :3000});
+        }
+      });
+      console.log(this.file);
+    }
     this.service.saveRecordDetails(payload).subscribe({
       next: (res: any) => {
         if (res.message.toLowerCase() !== 'success') {
@@ -249,7 +261,8 @@ export class ViewComponentComponent implements OnInit, AfterViewInit {
       error: err => {
         this.snack.open(err.error.message, "", { duration: 4000 });
       }
-    })
+    });
+
   }
   saveOrCreate() {
     if (this.new) {
@@ -258,6 +271,34 @@ export class ViewComponentComponent implements OnInit, AfterViewInit {
     else {
       this.saveData();
     }
+  }
+  upload(ev: Event) {
+    let e = ev.target as HTMLInputElement;
+    this.file = e.files as FileList;
+    console.log(this.file);
+    let filetoupload = this.file.item(0);
+    
+    if(filetoupload?.type.split("/")[0] !== 'image'){
+      this.snack.open("Only Images are Allowed","",{ duration:4000});
+      e.files = null;
+      return;
+    }
+
+    let name = filetoupload?.name;
+    let fd = new FormData();
+    filetoupload?.arrayBuffer().then(buff => {
+      let blob = new Blob([new Uint8Array(buff)]);
+      fd.append('document', blob,name);
+      this.service.uploadFile(this.rcid, fd).subscribe({
+        next:(res:any) => {
+          if(res.message.toLowerCase() === 'success')
+            this.snack.open("File Uploaded Successfully","",{ duration:4000});
+            this.input.value = "";
+        }
+      })
+    }).catch(err => {
+      this.snack.open("Something wrong with file " + err, "", { duration: 4000 });
+    })
   }
 
   loadComments() {
@@ -333,6 +374,8 @@ export class ViewComponentComponent implements OnInit, AfterViewInit {
     })
   }
 
+  @ViewChild('fileInput') input!:any;
+  attachments = []
 }
 type Comment = {
   comment: string,

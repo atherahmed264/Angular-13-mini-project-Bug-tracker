@@ -195,8 +195,12 @@
                                         </div>
                                     </label>
                                 </div> -->
-                                <input type="file" class="form-control mt-4" name="attachmenst" id="attachments" multiple>
+                                <input #fileInput type="file" class="form-control mt-4" name="attachmenst" id="attachments" (change)="upload($event)" 
+                                accept=".jpg, .jpeg, .png" >
+                                <p>Allowed Files .jpg .jpeg .png</p>
+                                
                             </div>
+                            
                         </mat-tab>
                     </mat-tab-group>
                 </div>

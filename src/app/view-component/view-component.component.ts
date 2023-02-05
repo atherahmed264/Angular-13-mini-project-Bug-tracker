@@ -50,7 +50,7 @@ export class ViewComponentComponent implements OnInit, AfterViewInit {
         this.new = true;
     });
     this.getUsers();
-    this.getRecords();
+   // this.getRecords();
   }
   ngAfterViewInit(): void {
     this.el = document.querySelector(".advopen") as HTMLButtonElement;
@@ -112,7 +112,7 @@ export class ViewComponentComponent implements OnInit, AfterViewInit {
       "Title": this.title,
       "Descryption": this.description,
       "Type": this.type,
-      "CreatedBy": this.assignedTo,
+      "CreatedBy": this.assignedTo, // chanbge
       "AssignedTo": this.assignedTo,
       "Status": this.status,
       "StartDate": this.startDate,
@@ -179,7 +179,17 @@ export class ViewComponentComponent implements OnInit, AfterViewInit {
       this.snack.open(err.error.message, "", { duration: 2000 });
     });
   }
+  createdBy!:any; 
+  createdOn!:string
   bindRecordDetails(res: any) {
+    debugger;
+    console.log(res)
+    let intl = new Intl.RelativeTimeFormat('en',{ style:'short',numeric:'auto'});
+    let current = Date.now();
+    let created = new Date(res.data.CreatedAt).valueOf();
+    const diff = created - current;
+    
+   this.createdOn= intl.format(Math.floor(diff/(1000*60*60*24)),'days');
     this.selectedUsers.id = res.data.AssignedTo?._id;
     this.selectedUsers.name = res.data.AssignedTo?.Name + " - " + res.data.AssignedTo?.Email;
     console.log(res);

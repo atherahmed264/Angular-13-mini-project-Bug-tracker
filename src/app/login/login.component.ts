@@ -40,8 +40,9 @@ export class LoginComponent implements OnInit {
           console.log("login success",val);
           this.service.callnext(val.data.UserName);
           localStorage.setItem("Token",val.token);
+          sessionStorage.setItem("userObj",JSON.stringify(val));
           sessionStorage.setItem("userId",val.data?._id);
-          this.route.navigate(['/landing']);
+          this.route.navigate(['/home']);
         }
 
       },

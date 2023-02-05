@@ -82,7 +82,7 @@
             alt="image not found" height="150px" width="150px">
 
           <button *ngIf="!editable" (click)="editable = true" matTooltip="edit"
-            class="btn btn-sm btn-outline-primary d-flex justify-content-center align-items-center mt-3"><mat-icon>edit</mat-icon>
+            class="btn btn-sm btn-outline-dark d-flex justify-content-center align-items-center mt-3"><mat-icon>edit</mat-icon>
           </button>
 
         </div>
@@ -90,10 +90,10 @@
           <span class="d-flex justify-content-center align-items-center ">
 
             <button (click)="editable = false" matTooltip="cancel"
-              class="btn btn-sm btn-outline-primary mx-2 d-flex justify-content-center align-items-center mt-3"><mat-icon>cancel</mat-icon>
+              class="btn btn-sm btn-outline-dark mx-2 d-flex justify-content-center align-items-center mt-3"><mat-icon>cancel</mat-icon>
             </button>
             <button (click)="editable = false" matTooltip="save"
-              class="btn btn-sm btn-outline-primary mx-2 d-flex justify-content-center align-items-center mt-3"><mat-icon>save</mat-icon>
+              class="btn btn-sm btn-outline-dark mx-2 d-flex justify-content-center align-items-center mt-3"><mat-icon>save</mat-icon>
             </button>
 
           </span>
@@ -118,13 +118,13 @@
             <p class="mx-2">
               <mat-form-field appearance="outline">
                 <mat-label>User Name</mat-label>
-                <input matInput placeholder="User Name" [disabled]="!editable">
+                <input matInput placeholder="User Name" [disabled]="!editable" [(ngModel)]="username">
               </mat-form-field>
             </p>
             <p class="mx-2">
               <mat-form-field appearance="outline">
                 <mat-label>Email</mat-label>
-                <input matInput placeholder="Email" [disabled]="!editable">
+                <input matInput placeholder="Email" [(ngModel)]="email" [disabled]="!editable">
               </mat-form-field>
             </p>
           </div>

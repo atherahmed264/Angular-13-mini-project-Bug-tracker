@@ -22,8 +22,9 @@ table{
     width: 200px;
 }
 .mouse-pointer:hover{
-    cursor: pointer;
-   
+    border-bottom: 1px solid #000;
+    border-left: 1px solid #000;
+    cursor: pointer !important;
 }
 thead{
     background-color: black;
@@ -31,4 +32,15 @@ thead{
 }
 .w-1000{
     width: 1200px;
+}
+.inv{
+    color: #dc3545 !important;
+}
+
+.act{
+    color: green !important;
+}
+
+.new{
+    color: #0d6efd !important;
 }

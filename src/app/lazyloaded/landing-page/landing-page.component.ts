@@ -29,9 +29,21 @@ export class LandingPageComponent implements OnInit {
   firstName!:string;
   lastName!:string;
   editable = false;
-
+  userDetails!:any;
+  email!:string;
+  username!:string;
   ngOnInit(): void {
     this.service.loggedin$.subscribe( res => this.user = res);
+    this.userDetails = sessionStorage.getItem('userObj');
+    if(this.userDetails){
+      this.userDetails = JSON.parse(this.userDetails);
+      this.firstName = this.userDetails.data?.Name?.split(" ")[0];
+      this.lastName = this.userDetails.data?.Name?.split(" ")[1];
+      this.phoneNum = this.userDetails.data?.Mobile;
+      this.country = this.userDetails.data?.Country;
+      this.email = this.userDetails.data?.Email;
+      this.username = this.userDetails.data?.UserName;
+    }
     // this.service.getissues().subscribe( res => {
     //   this.data = res ;
     //   this.data.forEach( el => {

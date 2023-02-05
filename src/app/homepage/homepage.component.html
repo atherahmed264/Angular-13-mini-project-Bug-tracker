@@ -51,7 +51,10 @@
               <td>{{item.RecordNumber}}</td>
               <td>{{item.Title}}</td>
               <td>{{item.Type}}</td>
-              <td>{{item.Status}}</td>
+              <td [ngClass]="item.Status.toLowerCase() == 'invalid' ? 'inv' : 
+              item.Status.toLowerCase() == 'active' ? 'act' : 
+              item.Status.toLowerCase() == 'new' ? 'new' :'' 
+              ">{{item.Status}}</td>
               <td>{{item.AssignedTo.Name}}</td>
               <td>{{item.CreatedAt | date:'dd-MMM-yyyy'}}</td>
             </tr>

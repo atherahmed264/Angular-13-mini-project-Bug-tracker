@@ -91,8 +91,8 @@
 
 
 
-            <div class="d-flex justify-content-between brdr flex-wrap">
-                <div class="col-md-6">
+            <div class="d-flex justify-content-start brdr flex-wrap">
+                <div class="col-md-5">
                     <h3> Record Title </h3>
                     <input type="text" id="title" name="title" class="form-control" placeholder="Enter Title"
                         [(ngModel)]="title">
@@ -113,7 +113,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-2 mx-5">
+                <div class="col-md-2 mx-3">
                     <h3> Select Status</h3>
                     <select name="status" id="status" class="form-select" [(ngModel)]="status"
                         [ngClass]='status === "Invalid" ? "inv" : status === "New" ? "new": status === "Active" ? "act" : ""'>
@@ -123,25 +123,22 @@
                         <option value="Active">Active</option>
                     </select>
                 </div>
+                <div class="d-flex justify-content-end">
+                    <p class="mt-5 text-sm">Created By Ather Ahmed {{ createdOn }}</p>
+                </div>
+                
             </div>
             <div class="d-flex justify-content-start my-4">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <h3 class="inline">Enter Description</h3> (Maximum 200 Characters)
                     <textarea name="desc" id="desc" cols="30" class="form-control" rows="10" (keyup)="count()"
                         [(ngModel)]="description"></textarea>
                     <span *ngIf="showCount"> {{ showCount }} Chars Entered</span>
                 </div>
-                <div class="col-md-4 mb-5 mx-5">
+                <div class="col-md-6 mb-5 mx-5">
                     <mat-tab-group>
                         <mat-tab label="Efforts">
-                            <div class="d-flex justify-content-start mt-4">
-                                <label for="assign-to">
-                                    <div class="d-flex  justify-content-start">
-                                        <p class=" d-flex justify-content-center border-bottom-none" disabled> Assigned
-                                            To <mat-icon class="mx-2">account_circle</mat-icon> </p>
-                                    </div>
-                                </label>
-                            </div>
+                            
                             <div class="col-md-12">
                                 <app-advancelookup [advanceLookup]="false" [filteredOptions]="data"
                                     [headerObj]="headerObj" (loadPage)="loadMore($event)"
@@ -165,14 +162,15 @@
                                     <mat-datepicker #picker2></mat-datepicker>
                                 </mat-form-field>
                             </div>
-                            <div class="d-flex flex-column justify-content-between mt-2 flex-wrap">
+                            <div class="d-flex justify-content-between mt-2 flex-wrap">
                                 <div class="">
-                                    <div class="mb-2 text-end"> Enter Efforts In Hours </div>
+                                    <div class="mb-2"> Total </div>
+                                   
                                     <input type="number" placeholder="Total Efforts in Hours" class="form-control mb-3"
                                         [(ngModel)]="efforts">
                                 </div>
                                 <div class="">
-                                    <div class="mb-2 text-end"> Completed Efforts In Hours </div>
+                                    <div class="mb-2"> Completed  </div>
                                     <input type="number" placeholder="Completed Efforts" class="form-control"
                                         [(ngModel)]="effortsComp">
                                 </div>
@@ -182,7 +180,7 @@
 
                             <div class="d-flex flex-column align-items-start justify-content-between flex-wrap">
 
-                                <div class="d-flex justify-content-start mt-4 flex-wrap">
+                                <!-- <div class="d-flex justify-content-start mt-4 flex-wrap">
                                     <label for="links text-center">
                                         <div class="d-flex justify-content-start">
                                             <div class="d-flex flex-column">
@@ -196,8 +194,8 @@
                                             </div>
                                         </div>
                                     </label>
-                                </div>
-                                <input type="file" class="form-control mt-4" name="attachmenst" id="attachments">
+                                </div> -->
+                                <input type="file" class="form-control mt-4" name="attachmenst" id="attachments" multiple>
                             </div>
                         </mat-tab>
                     </mat-tab-group>

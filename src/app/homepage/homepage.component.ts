@@ -15,6 +15,7 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit,OnChanges {
+  theme!: boolean;
   
   constructor(private service: ServerComms, public route: Router, private dialog: MatDialog , private snack:MatSnackBar) { }
   
@@ -37,6 +38,9 @@ export class HomepageComponent implements OnInit,OnChanges {
       this.searchText = val;
       this.getRecords(sessionStorage.getItem('payload'),val);
     });
+    this.service.themeSwitch$.subscribe(theme => {
+      this.theme = theme;
+    })
   }
 
   ngOnChanges(){
@@ -116,10 +120,11 @@ export class HomepageComponent implements OnInit,OnChanges {
 @Component({
   selector: 'app-filterpopup',
   templateUrl: './filter-popup.html',
-  styles: [``]
+  styles: []
 })
 
 export class FilterPopup implements OnInit {
+  theme!: boolean;
   constructor(private snack: MatSnackBar, public dialog: MatDialogRef<FilterPopup>, private service:ServerComms, private datePipe:DatePipe) { }
 
   ngOnInit(): void {
@@ -127,6 +132,9 @@ export class FilterPopup implements OnInit {
     this.typeFilter = JSON.parse(sessionStorage.getItem('typeFilters') as string) || undefined;
     this.statusFilter = JSON.parse(sessionStorage.getItem('statusFilters') as string) || undefined;
     this.getUsers();
+    this.service.themeSwitch$.subscribe(theme => {
+      this.theme = theme;
+    })
   }
 
   filterStatus = new FormControl('');

@@ -12,6 +12,7 @@ import { ServerComms } from '../Services/server-comms.component';
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit, OnDestroy {
+  theme!: boolean;
 
   constructor(private router: Router, private service: ServerComms, private snackBar:MatSnackBar) { }
 
@@ -41,7 +42,9 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
     })
     this.getData();
-
+    this.service.themeSwitch$.subscribe(theme => {
+      this.theme = theme;
+    })
   }
 
   notaNum(str: AbstractControl): any {

@@ -13,7 +13,7 @@
                     LOGIN
                 </h4>
             </div>
-            <div class="card-body">
+            <div class="card-body" ngClass="{{ theme && 'darkTab'}}">
 
                 <form [formGroup]="form" (ngSubmit)="submitForm()" class="form-group">
                     <span *ngIf="wrongcred" class="row d-flex justify-content-center p-0">
@@ -25,7 +25,7 @@
                             <div class="d-flex justify-content-center align-items-center ">
                                 <mat-icon class="">account_circle</mat-icon>
                                 
-                                    <input type="text" id="useremail" class="form-control mx-3" formControlName="username" placeholder="Enter Your Email">
+                                    <input type="text" id="useremail" ngClass="{{ theme && 'input-dark'}}" class="form-control mx-3" formControlName="username" placeholder="Enter Your Email">
                                 </div>      
                                     <span class="p-0 text-center er"
                                         *ngIf="form.get('username')?.invalid && form.get('username')?.touched">Enter
@@ -40,7 +40,7 @@
                             <div class="d-flex justify-content-center align-items-center">
                                 <mat-icon >lock</mat-icon>
 
-                                <input type="password" id="userpassword" placeholder="Enter Your Password" class="form-control mx-3" formControlName="password">
+                                <input type="password" id="userpassword" ngClass="{{ theme && 'input-dark'}}"  placeholder="Enter Your Password" class=" form-control mx-3" formControlName="password">
                             </div>
                                 <span class="p-0 er"
                                     *ngIf="form.get('password')?.invalid && form.get('password')?.touched">Enter
@@ -60,10 +60,10 @@
 
                         </div>
                     </div>
-                    <div class="d-flex justify-content-center mt-5">
-                        <button class="btn btn-primary mx-4" type="submit">SIGN IN</button>
+                    <div class="d-flex flex-column align-items-center mt-4">
+                        <button class="btn btn-primary mx-4 col-md-10 my-2" type="submit">SIGN IN</button>
 
-                        <button class="btn btn-success mx-4" type="button" (click)="signup()">SIGN UP</button>
+                        <button class="btn btn-success mx-4 col-md-10 my-2" type="button" (click)="signup()">SIGN UP</button>
                     </div>
                     <p class="d-flex justify-content-center mt-4 mb-3 lead">Click Signup if you dont have an existing
                         account</p>

@@ -1,4 +1,9 @@
-
+<div class="button-container">
+    <button class="dark" mat-fab aria-label="themeIcon" (click)="changeTheme()" matTooltip="Switch Theme" >
+        <mat-icon *ngIf="!theme"> highlight</mat-icon>
+        <mat-icon *ngIf="theme">wb_sunny</mat-icon>
+    </button>
+  </div>
 <app-header *ngIf="loggedIn"></app-header>
 
 <div>

@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit, Renderer2 } from '@angular/core';
 import { MatExpansionPanel } from '@angular/material/expansion/expansion-panel';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTab, MatTabGroup, MatTabLabel } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { RecordHeaders, ServerComms, UserHeaders } from '../Services/server-comms.component';
@@ -10,13 +11,14 @@ import { RecordHeaders, ServerComms, UserHeaders } from '../Services/server-comm
   templateUrl: './view-component.component.html',
   styleUrls: ['./view-component.component.scss']
 })
-export class ViewComponentComponent implements OnInit, AfterViewInit {
+export class ViewComponentComponent implements OnInit,AfterViewInit {
   adding!: boolean;
   headerObj!: { name: string; attr: string; }[];
   data: any;
   el!: HTMLButtonElement;
+  theme!: boolean;
 
-  constructor(private route: ActivatedRoute, private service: ServerComms, private router: Router, private snack: MatSnackBar, private activeRoute: ActivatedRoute, private element: ElementRef) { }
+  constructor(private route: ActivatedRoute, private service: ServerComms, private router: Router, private snack: MatSnackBar, private activeRoute: ActivatedRoute, private element: ElementRef,private render:Renderer2) { }
 
   icon: 'UserStory' | 'Bug' | 'Task' | '' = '';
   type: 'UserStory' | 'Bug' | 'Task' | '' = '';
@@ -40,6 +42,7 @@ export class ViewComponentComponent implements OnInit, AfterViewInit {
   @ViewChild('matcomment', { static: true }) matComment!: MatExpansionPanel;
 
   ngOnInit(): void {
+
     this.activeRoute.paramMap.subscribe(res => {
       this.rcid = res.get("id");
       if (this.rcid && this.rcid !== 'add')
@@ -48,12 +51,34 @@ export class ViewComponentComponent implements OnInit, AfterViewInit {
         this.new = true;
     });
     this.getUsers();
+    
    // this.getRecords();
   }
   ngAfterViewInit(): void {
-    this.el = document.querySelector(".advopen") as HTMLButtonElement;
-    console.log("elll", this.el);
+    this.service.themeSwitch$.subscribe(res => {
+      this.theme = res;
+      console.log("ress",this.theme);
+      let tab = this.render.selectRootElement('#mat-tab-label-0-0',true);
+      let tab2 = this.render.selectRootElement('#mat-tab-label-0-1',true);
+      
+      console.log('rendere',tab);
+      console.log('rendere2',tab2);
+      if(tab){
+        if(this.theme){
+          this.render.addClass(tab,'text-white');
+          this.render.addClass(tab2,'text-white');
+        }
+        else{
+          this.render.removeClass(tab,'text-white');
+          this.render.removeClass(tab2,'text-white');
+        }
+      }
+    })
   }
+  // ngAfterViewInit(): void {
+    
+  // }
+  // @ViewChild('tab',{ static:false}) matTab!:MatTabLabel
 
   clickel() {
 
@@ -130,6 +155,10 @@ export class ViewComponentComponent implements OnInit, AfterViewInit {
   comments!: Comment[];
   file!:FileList;
   addReply(i: number) {
+    if(!this.reply){
+      this.snack.open("Reply text Empty","",{ duration:3000});
+      return;
+    }
     let reply = {
       username: "Ather Ahmed",
       userId: "alhdsgfhadgf76ghg3",
@@ -139,6 +168,10 @@ export class ViewComponentComponent implements OnInit, AfterViewInit {
     this.reply = ""
   }
   addComment() {
+    if(!this.comment){
+      return;
+    }
+    
     if (!sessionStorage.getItem('userId')) {
       this.snack.open("Login Before Adding Comments", "", { duration: 3000 });
       return;

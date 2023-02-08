@@ -1,6 +1,6 @@
-<div class="card grad">
-    <div class="card-header text-center text-white gradient">
-        <h4 *ngIf="!passchange" class="display-4 my-auto">Sign Up For Free !</h4>
+<div class="card grad" ngClass="{{ theme && 'darkTab'}}">
+    <div class="card-header text-center gradient" ngClass="{{ theme && 'text-white'}}">
+        <h2 *ngIf="!passchange" class="display-4 my-auto">Sign Up For Free !</h2>
         <h4 *ngIf="passchange" class="display-4 my-auto"> Change Password </h4>
     </div>
     <div class="card-body">
@@ -11,7 +11,7 @@
                 </div>
                 <div class="col-md-2">
                     <input type="text" name="firstn" id="firstn" class="form-control " 
-                    formControlName="firstName" placeholder="First Name" >
+                    formControlName="firstName" placeholder="First Name" ngClass="{{ theme && 'dark-input'}}"  >
                     <span class="p-0" *ngIf="signupForm.get('firstName').invalid && signupForm.get('firstName').touched">
                         Enter Valid Name
                     </span>
@@ -20,7 +20,7 @@
                     <label for="lastn" class="lst">Last Name </label>
                 </div>
                 <div class="col-md-2">
-                    <input type="text" id="lastn" name="lastn" class="form-control" 
+                    <input type="text" id="lastn" name="lastn" class="form-control" ngClass="{{ theme && 'dark-input'}}"
                     formControlName="lastName" placeholder="Last Name">
                     <span class="p-0" *ngIf="signupForm.get('lastName').invalid && signupForm.get('lastName').touched">
                         Enter Valid Last Name
@@ -33,7 +33,7 @@
                     <label for="country" class="fst">Country </label>
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" id="country" name="country" 
+                    <input type="text" class="form-control" id="country" name="country" ngClass="{{ theme && 'dark-input'}}"
                     formControlName="Country" placeholder="Country">
                     <span class="p-0" *ngIf="signupForm.get('Country').invalid && signupForm.get('Country').touched">
                         Enter Valid Country Name
@@ -43,7 +43,7 @@
                     <label for="mobile" class="lst">Mobile No </label>
                 </div>
                 <div class="col-md-2">
-                    <input type="text" id="mobile" name="mobile" class="form-control" 
+                    <input type="text" id="mobile" name="mobile" class="form-control" ngClass="{{ theme && 'dark-input'}}"
                     formControlName="Mobile" placeholder="Mobile number">
                     <span class="p-0" *ngIf="signupForm.get('Mobile').invalid && signupForm.get('Mobile').touched">
                         Enter valid Mobile no
@@ -56,7 +56,7 @@
                     <label for="email" class="m">Email Address </label>
                 </div>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="email" name="email" 
+                    <input type="text" class="form-control" id="email" name="email" ngClass="{{ theme && 'dark-input'}}"
                     formControlName="email" placeholder="Email Address">
                     <span class="p-0" *ngIf="signupForm.get('email').invalid && signupForm.get('email').touched">
                         Enter Valid email adress
@@ -69,7 +69,7 @@
                     <label for="usern" class="m" > <span class="nil" *ngIf="!passchange" >Create </span> Username </label>
                 </div>
                 <div class="col-md-3">
-                    <input type="text" class="form-control" id="usern" name="usern" 
+                    <input type="text" class="form-control" id="usern" name="usern" ngClass="{{ theme && 'dark-input'}}"
                     formControlName="username" placeholder="Username">
                     <span class="p-0" *ngIf="signupForm.get('username').invalid && signupForm.get('username').touched">
                         Enter username with atleast 6 characters
@@ -79,7 +79,7 @@
                     </span>
                 </div>
                 <div *ngIf="passchange" class="col-md-5">
-                    <a class="link-dark mx-4" (click)="checkuser()">Validate Username</a>
+                    <a class="mx-4" ngClass="{{ theme ? 'link-light' : 'link-dark ' }}" (click)="checkuser()">Validate Username</a>
                     <span *ngIf="show" class="nil" href="#" class="badge badge-pill badge-success">Username Found</span>
                 </div>
             </div>
@@ -89,7 +89,7 @@
                     <label for="pass" class="m" >Create Password </label>
                 </div>
                 <div class="col-md-3">
-                    <input type="password" class="form-control" id="pass" name="pass" 
+                    <input type="password" class="form-control" id="pass" name="pass" ngClass="{{ theme && 'dark-input'}}"
                     formControlName="password" placeholder="Password" (click)="pass=true;">
                     <span class="p-0" *ngIf="signupForm.get('password').invalid && signupForm.get('password').touched">
                         password should be atleast 6 characters 
@@ -102,7 +102,7 @@
                     <label for="passretype" class="m" >Retype Password </label>
                 </div>
                 <div class="col-md-3">
-                    <input type="password" class="form-control" id="passretype" name="passretype" 
+                    <input type="password" class="form-control" id="passretype" name="passretype" ngClass="{{ theme && 'dark-input'}}"
                     formControlName="retypepass" placeholder="Type Password Again">
                     <span class="p-0" *ngIf="signupForm.get('retypepass').invalid && signupForm.get('retypepass').touched">
                         password should be atleast 6 characters 
@@ -115,10 +115,10 @@
 
             <div class="row mb-5 ">
                 <div *ngIf="!passchange" class="d-flex justify-content-end col-md-8">
-                    <button class="btn btn-dark m" type="submit" [disabled]="btndisable">Register</button>
+                    <button class="btn m" ngClass="{{ theme ? 'btn-light' : 'btn-dark'}}" type="submit" [disabled]="btndisable">Register</button>
                 </div>
                 <div *ngIf="passchange" class="d-flex justify-content-end col-md-8">
-                    <button class="btn btn-dark m" type="button" [disabled]="btndisable" (click)="change()">Change</button>
+                    <button class="btn m" ngClass="{{ theme ? 'btn-light' : 'btn-dark'}}" type="button" [disabled]="btndisable" (click)="change()">Change</button>
                 </div>
             </div>
         </form>

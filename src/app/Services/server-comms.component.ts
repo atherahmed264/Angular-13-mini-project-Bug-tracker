@@ -28,7 +28,8 @@ export class ServerComms {
     loggedin$ = new BehaviorSubject<String | undefined>('');
     data!: User[];
     users: string = 'http://localhost:3000/users';
-    issue: string = 'http://localhost:3000/issues'
+    issue: string = 'http://localhost:3000/issues';
+    themeSwitch$ = new BehaviorSubject<boolean>(false); // true dark // false light
 
     createAccount(body: User): Observable<any> {
         let url = this.baseUrl+this.routes.signup;

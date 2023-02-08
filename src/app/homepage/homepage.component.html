@@ -1,4 +1,4 @@
-<div class="container card mt-4 mb-2 ">
+<div class="container card mt-4 mb-2" ngClass="{{ theme && 'darkTab'}}">
     <div class="button-container">
         <button mat-fab color="primary" aria-label="Example icon button with a delete icon" matTooltip="Add New Record" [routerLink]="['/view','add']">
           <mat-icon>add</mat-icon>
@@ -14,7 +14,7 @@
     </div> -->
     <div class="d-flex flex-row mt-3 justify-content-between ">
         <div class="w-50">
-            <input type="text" class="form-control" placeholder="Search" (input)="search()" [(ngModel)]="searchinput">
+            <input type="text"  ngClass="{{ theme && 'input-dark'}}" class="k form-control" placeholder="Search By Number or Name" (input)="search()" [(ngModel)]="searchinput">
         </div>
         
         
@@ -39,7 +39,7 @@
                 </div>
             </div>
         </div> -->
-        <table class="table table-striped mb-5 w-1000 mx-auto">
+        <table class=" table mb-5 "  ngClass="{{ theme ? 'table-dark' : 'table-light'}}">
           <thead>
             <tr>
               <th *ngFor="let head of tableHeaders">{{ head }}</th>

@@ -7,10 +7,14 @@ import { ServerComms } from '../Services/server-comms.component';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  theme!: boolean;
 
   constructor(private service:ServerComms) { }
 
   ngOnInit(): void {
+    this.service.themeSwitch$.subscribe(res => {
+      this.theme = res;
+    })
 
     this.service.loggedin$.subscribe( res => {
       this.data = res;

@@ -20,3 +20,17 @@
     width:1000px;
     padding: 20px 50px;
 }
+.darkTab{
+    background-color: #13131A;
+    color: #f5f5fa !important;
+}
+input-dark{
+    background-color: black;
+    color: white;
+}
+.text-white{
+    color: white;
+}
+input.dark:disabled{
+    color: gray;
+}

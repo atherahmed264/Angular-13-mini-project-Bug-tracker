@@ -34,7 +34,11 @@
 .custom_cont{
     margin: 10px 40px 20px 20px;
 }
-.brdr{
+.brdrD{
+    border-top: 2px solid white;
+    padding-top: 20px;
+}
+.brdrL{
     border-top: 2px solid black;
     padding-top: 20px;
 }
@@ -95,4 +99,30 @@
 }
 .border-bottom-none{
     border-bottom: none;
+}
+
+.darkTab{
+    background-color: #13131A;
+    color: #f5f5fa;
+}
+
+.dark-input{
+    background-color: black;
+    color: whitesmoke;
+}
+// ::ng-deep .mat-tab-list .mat-tab-label {
+//     color: whitesmoke;
+// }
+.ml-5{
+    margin-left: 40px;
+}
+.text-white{
+    color: white;
+}
+
+.date-field{
+    height: 37px;
+}
+.h-20{
+    height: 20px;
 }

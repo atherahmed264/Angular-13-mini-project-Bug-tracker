@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Chart } from 'chart.js';
 import { issue } from '../../Models/issues.model';
@@ -9,9 +9,10 @@ import { ServerComms } from '../../Services/server-comms.component';
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.scss']
 })
-export class LandingPageComponent implements OnInit {
+export class LandingPageComponent implements OnInit,AfterViewInit {
+  theme!: boolean;
 
-  constructor(private router:Router ,private service:ServerComms) { }
+  constructor(private router:Router ,private service:ServerComms,private render:Renderer2) { }
 
   labels:String[] = [];
   values:any[] = [];
@@ -54,6 +55,30 @@ export class LandingPageComponent implements OnInit {
     //   this.barChartData = [ { data: this.values ,label:'No. of views'}];
     //   console.log(this.labels , this.values); 
     // })
+    this.service.themeSwitch$.subscribe(theme => {
+      this.theme = theme;
+    })
+  }
+  ngAfterViewInit(): void {
+    this.service.themeSwitch$.subscribe(res => {
+      this.theme = res;
+      console.log("ress",this.theme);
+      let tab = this.render.selectRootElement('#mat-tab-label-0-0',true);
+      let tab2 = this.render.selectRootElement('#mat-tab-label-0-1',true);
+      
+      console.log('rendere',tab);
+      console.log('rendere2',tab2);
+      if(tab){
+        if(this.theme){
+          this.render.addClass(tab,'text-white');
+          this.render.addClass(tab2,'text-white');
+        }
+        else{
+          this.render.removeClass(tab,'text-white');
+          this.render.removeClass(tab2,'text-white');
+        }
+      }
+    })
   }
 
   route(str:String){

@@ -1,6 +1,7 @@
 import { Component, Inject, Input, OnInit, ViewChild , ElementRef, AfterViewInit, Output ,EventEmitter, OnChanges  } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { debounceTime, Subject } from 'rxjs';
+import { ServerComms } from '../Services/server-comms.component';
 
 
 @Component({
@@ -8,9 +9,10 @@ import { debounceTime, Subject } from 'rxjs';
   templateUrl: './advancelookup.component.html',
   styleUrls: ['./advancelookup.component.scss']
 })
-export class AdvancelookupComponent implements OnInit,OnChanges {
+export class AdvancelookupComponent implements OnInit,OnChanges,AfterViewInit {
+  theme!: boolean;
 
-  constructor(private dialog:MatDialog) { }
+  constructor(private dialog:MatDialog,private service:ServerComms) { }
 
   ngOnInit(): void {
     console.log(this.filteredOptions);
@@ -21,6 +23,11 @@ export class AdvancelookupComponent implements OnInit,OnChanges {
     //     selected : false
     //   }
     // })
+  }
+  ngAfterViewInit(): void {
+    this.service.themeSwitch$.subscribe(res => {
+      this.theme = res;
+    })
   }
   oldVal:any;
   @Output() changes = new EventEmitter<string>();

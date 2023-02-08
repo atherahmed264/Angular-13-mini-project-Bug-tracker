@@ -1,5 +1,5 @@
 <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark"  >
+    <nav class="navbar navbar-expand-lg" ngClass="{{ theme ? 'navbar-dark bg-dark' : 'navbar-light bg-light'}}" >
       <div class="container-fluid">
         <button
           class="navbar-toggler"
@@ -25,6 +25,9 @@
             </li>
             <li class="nav-item">
               <a routerLink="/home" class="nav-link">View Issues</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/landing" class="nav-link">My Info</a>
             </li>
           </ul>
         </div>

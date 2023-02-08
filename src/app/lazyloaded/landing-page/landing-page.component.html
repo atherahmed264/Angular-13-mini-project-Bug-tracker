@@ -72,17 +72,64 @@
     </div>
 </div> -->
 
-<div class="container d-flex justify-content-center align-items-center mt-5 mb-5">
-  <div class="card">
+<div class=" container d-flex justify-content-center align-items-center mt-5 mb-5" ngClass="{{ theme && 'darkTab'}}">
+  <div class="card" ngClass="{{ theme && 'darkTab'}}">
 
     <mat-tab-group>
       <mat-tab label="User Details">
-        <div class="d-flex flex-column justify-content-center align-items-center">
+        <div class=" container d-flex justify-content-start align-items-start">
           <img src="https://as2.ftcdn.net/v2/jpg/02/34/61/79/1000_F_234617921_p1AGQkGyEl8CSzwuUI74ljn6IZXqMUf2.jpg"
-            alt="image not found" height="150px" width="150px">
+          alt="image not found" height="150px" width="150px">
+        
+        
+        <div class="tab details">
+          <div class="d-flex justify-content-center align-items-center mt-3">
+            <p class="mx-2">
+              <mat-form-field appearance="outline">
+                <mat-label class="" ngClass="{{ theme && 'text-white'}}">First Name</mat-label>
+                <input matInput ngClass="{{ theme && 'dark'}}" placeholder="First Name" [(ngModel)]="firstName" [disabled]="!editable">
+              </mat-form-field>
+            </p>
+            <p class="mx-2">
+              <mat-form-field appearance="outline">
+                <mat-label class="" ngClass="{{ theme && 'text-white'}}">Last Name</mat-label>
+                <input matInput ngClass="{{ theme && 'dark'}}" placeholder="Last Name" [(ngModel)]="lastName" [disabled]="!editable">
+              </mat-form-field>
+            </p>
+          </div>
+          <div class="d-flex justify-content-center align-items-center mt-3">
+            <p class="mx-2">
+              <mat-form-field appearance="outline">
+                <mat-label class="" ngClass="{{ theme && 'text-white'}}">User Name</mat-label>
+                <input matInput ngClass="{{ theme && 'dark'}}" placeholder="User Name" [disabled]="!editable" [(ngModel)]="username">
+              </mat-form-field>
+            </p>
+            <p class="mx-2">
+              <mat-form-field appearance="outline">
+                <mat-label class="" ngClass="{{ theme && 'text-white'}}">Email</mat-label>
+                <input matInput ngClass="{{ theme && 'dark'}}" placeholder="Email" [(ngModel)]="email" [disabled]="!editable">
+              </mat-form-field>
+            </p>
+          </div>
+          <div class="d-flex justify-content-center align-items-center mt-3">
+            <p class="mx-2">
+              <mat-form-field appearance="outline">
+                <mat-label class="" ngClass="{{ theme && 'text-white'}}">Mobile</mat-label>
+                <input matInput ngClass="{{ theme && 'dark'}}" placeholder="Mobile" [(ngModel)]="phoneNum" [disabled]="!editable">
+              </mat-form-field>
+            </p>
+            <p class="mx-2">
+              <mat-form-field appearance="outline" >
+                <mat-label class="" ngClass="{{ theme && 'text-white'}}">Country</mat-label>
+                <input matInput ngClass="{{ theme && 'dark'}}" placeholder="Country" [(ngModel)]="country" [disabled]="!editable">
+              </mat-form-field>
+            </p>
+          </div>
+        </div>
+        <div class="d-flex flex-column justify-content-center align-items-center">
 
           <button *ngIf="!editable" (click)="editable = true" matTooltip="edit"
-            class="btn btn-sm btn-outline-dark d-flex justify-content-center align-items-center mt-3"><mat-icon>edit</mat-icon>
+            class="btn btn-sm  d-flex justify-content-center align-items-center mt-3" ngClass="{{ theme ? 'btn-outline-light' : 'btn-outline-dark'}}"><mat-icon>edit</mat-icon>
           </button>
 
         </div>
@@ -90,59 +137,16 @@
           <span class="d-flex justify-content-center align-items-center ">
 
             <button (click)="editable = false" matTooltip="cancel"
-              class="btn btn-sm btn-outline-dark mx-2 d-flex justify-content-center align-items-center mt-3"><mat-icon>cancel</mat-icon>
+              class="btn btn-sm mx-2 d-flex justify-content-center align-items-center mt-3" ngClass="{{ theme ? 'btn-outline-light' : 'btn-outline-dark'}}"><mat-icon>cancel</mat-icon>
             </button>
             <button (click)="editable = false" matTooltip="save"
-              class="btn btn-sm btn-outline-dark mx-2 d-flex justify-content-center align-items-center mt-3"><mat-icon>save</mat-icon>
+              class="btn btn-sm  mx-2 d-flex justify-content-center align-items-center mt-3" ngClass="{{ theme ? 'btn-outline-light' : 'btn-outline-dark'}}"><mat-icon>save</mat-icon>
             </button>
 
           </span>
 
         </ng-container>
-        <div class="tab details">
-          <div class="d-flex justify-content-center align-items-center mt-3">
-            <p class="mx-2">
-              <mat-form-field appearance="outline">
-                <mat-label>First Name</mat-label>
-                <input matInput placeholder="First Name" [(ngModel)]="firstName" [disabled]="!editable">
-              </mat-form-field>
-            </p>
-            <p class="mx-2">
-              <mat-form-field appearance="outline">
-                <mat-label>Last Name</mat-label>
-                <input matInput placeholder="Last Name" [(ngModel)]="lastName" [disabled]="!editable">
-              </mat-form-field>
-            </p>
-          </div>
-          <div class="d-flex justify-content-center align-items-center mt-3">
-            <p class="mx-2">
-              <mat-form-field appearance="outline">
-                <mat-label>User Name</mat-label>
-                <input matInput placeholder="User Name" [disabled]="!editable" [(ngModel)]="username">
-              </mat-form-field>
-            </p>
-            <p class="mx-2">
-              <mat-form-field appearance="outline">
-                <mat-label>Email</mat-label>
-                <input matInput placeholder="Email" [(ngModel)]="email" [disabled]="!editable">
-              </mat-form-field>
-            </p>
-          </div>
-          <div class="d-flex justify-content-center align-items-center mt-3">
-            <p class="mx-2">
-              <mat-form-field appearance="outline">
-                <mat-label>Mobile</mat-label>
-                <input matInput placeholder="Mobile" [(ngModel)]="phoneNum" [disabled]="!editable">
-              </mat-form-field>
-            </p>
-            <p class="mx-2">
-              <mat-form-field appearance="outline">
-                <mat-label>Country</mat-label>
-                <input matInput placeholder="Country" [(ngModel)]="country" [disabled]="!editable">
-              </mat-form-field>
-            </p>
-          </div>
-        </div>
+      </div>
       </mat-tab>
       <mat-tab label="My Records">
             <div class="container">

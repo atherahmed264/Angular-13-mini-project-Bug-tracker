@@ -15,4 +15,9 @@ export class AppComponent implements OnInit {
       this.loggedIn = !!res;
     });
   }
+  theme = false; // light by default
+  changeTheme(){
+    this.theme = !this.theme;
+    this.service.themeSwitch$.next(this.theme);
+  }
 }

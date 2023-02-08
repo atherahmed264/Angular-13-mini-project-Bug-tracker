@@ -11,6 +11,7 @@ import { ServerComms } from '../Services/server-comms.component';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  theme!: boolean;
 
   constructor(private route:Router, private service:ServerComms,private snackBar:MatSnackBar) { }
   form!:FormGroup;
@@ -23,6 +24,9 @@ export class LoginComponent implements OnInit {
       password:new FormControl('',[Validators.required])
     })
     this.service.getData();
+    this.service.themeSwitch$.subscribe(res => {
+      this.theme = res;
+    })
   }
 
   submitForm(){

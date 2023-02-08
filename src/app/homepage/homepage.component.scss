@@ -26,10 +26,7 @@ table{
     border-left: 1px solid #000;
     cursor: pointer !important;
 }
-thead{
-    background-color: black;
-    color: white;
-}
+
 .w-1000{
     width: 1200px;
 }
@@ -43,4 +40,15 @@ thead{
 
 .new{
     color: #0d6efd !important;
+}
+.darkTab{
+    background-color: #13131A;
+    color: #f5f5fa !important;
+}
+.input-dark{
+    background-color: black;
+    color: white;
+}
+.charcoal{
+    background-color: #353935;
 }

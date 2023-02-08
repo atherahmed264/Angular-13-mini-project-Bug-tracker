@@ -77,12 +77,16 @@
 
     <mat-tab-group>
       <mat-tab label="User Details">
-        <div class=" container d-flex justify-content-start align-items-start">
-          <img src="https://as2.ftcdn.net/v2/jpg/02/34/61/79/1000_F_234617921_p1AGQkGyEl8CSzwuUI74ljn6IZXqMUf2.jpg"
-          alt="image not found" height="150px" width="150px">
+        <div class=" container d-flex justify-content-start align-items-start my-5">
+          <div class="d-flex flex-column justify-content-center">
+            <img src="{{ imageUrl}}"
+            alt="image not found" class="mx-2 object-fit" height="150px" width="150px">
+            <button mat-raised-button color="primary" (click)="profilepic.click()">Upload New</button>
+            <input type="file" accept=".jpg, .jpeg, .png" class="hidden w-0" #profilepic (change)="uploadFile($event)">
+          </div>
         
         
-        <div class="tab details">
+        <div class="tab details mx-2">
           <div class="d-flex justify-content-center align-items-center mt-3">
             <p class="mx-2">
               <mat-form-field appearance="outline">

@@ -58,21 +58,11 @@ export class ViewComponentComponent implements OnInit,AfterViewInit {
     this.service.themeSwitch$.subscribe(res => {
       this.theme = res;
       console.log("ress",this.theme);
-      let tab = this.render.selectRootElement('#mat-tab-label-0-0',true);
-      let tab2 = this.render.selectRootElement('#mat-tab-label-0-1',true);
+      document.querySelectorAll('.mat-tab-label-content')?.forEach(el => {
+        if(res) el.classList.add("text-white");
+        else el.classList.remove("text-white");
+      })
       
-      console.log('rendere',tab);
-      console.log('rendere2',tab2);
-      if(tab){
-        if(this.theme){
-          this.render.addClass(tab,'text-white');
-          this.render.addClass(tab2,'text-white');
-        }
-        else{
-          this.render.removeClass(tab,'text-white');
-          this.render.removeClass(tab2,'text-white');
-        }
-      }
     })
   }
   // ngAfterViewInit(): void {
@@ -205,8 +195,10 @@ export class ViewComponentComponent implements OnInit,AfterViewInit {
         this.snack.open(res.message, "", { duration: 2000 });
         return;
       }
-
       this.bindRecordDetails(res);
+      if(res.data.Attachments && res.data.Attachments.length){
+        this.bindAttachMents(res.data.Attachments);
+      }
     }, err => {
       this.snack.open(err.error.message, "", { duration: 2000 });
     });
@@ -247,6 +239,21 @@ export class ViewComponentComponent implements OnInit,AfterViewInit {
     this.startDate = obj.StartDate as Date;
     this.endDate = obj.EndDate as Date;
   }
+  bindAttachMents(attachments:string[]){
+    debugger;
+    if(attachments.length && attachments.length > 0){
+      this.attachments = attachments.map((link:string) => {
+        let displayName = link.slice(0,link.lastIndexOf('-'));
+        let type = link.slice(link.lastIndexOf('.'),link.length);
+        let baseURL = this.service.baseUrl.replace('/api/v1','');
+        let url = `${baseURL}/img/${link}`;
+        return {
+          name:displayName+type,
+          url
+        };
+      });
+    }
+  }
 
   saveData() {
    
@@ -271,15 +278,16 @@ export class ViewComponentComponent implements OnInit,AfterViewInit {
     if(this.file){
       let fd = new FormData();
       //fd.append("document",this.file,this.file.name);
-      this.service.uploadFile(this.rcid,fd).subscribe({
-        next:(val:any) => {
-          this.snack.open("File Uploaded", "" , { duration :3000});
-        },
-        error:(err:any) => {
-          this.snack.open(`File Upload Failed ${err.error.message}`, "" , { duration :3000});
-        }
-      });
-      console.log(this.file);
+      // this.service.uploadFile(this.rcid,fd).subscribe({
+      //   next:(val:any) => {
+      //     this.snack.open("File Uploaded", "" , { duration :3000});
+      //     this.bindAttachMents(val.data);
+      //   },
+      //   error:(err:any) => {
+      //     this.snack.open(`File Upload Failed ${err.error.message}`, "" , { duration :3000});
+      //   }
+      // });
+      // console.log(this.file);
     }
     this.service.saveRecordDetails(payload).subscribe({
       next: (res: any) => {
@@ -326,7 +334,11 @@ export class ViewComponentComponent implements OnInit,AfterViewInit {
         next:(res:any) => {
           if(res.message.toLowerCase() === 'success')
             this.snack.open("File Uploaded Successfully","",{ duration:4000});
-            this.input.value = "";
+            this.bindAttachMents(res.data.Attachments);
+            this.input.nativeElement.value = null;
+        },
+        error:err => {
+          this.snack.open(err.error.message || 'Some Error Occurred',"",{ duration:3000});
         }
       })
     }).catch(err => {
@@ -407,8 +419,8 @@ export class ViewComponentComponent implements OnInit,AfterViewInit {
     })
   }
 
-  @ViewChild('fileInput') input!:any;
-  attachments = []
+  @ViewChild('fileInput') input!:ElementRef;
+  attachments:any
 }
 type Comment = {
   comment: string,

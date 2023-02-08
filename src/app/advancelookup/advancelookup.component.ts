@@ -30,6 +30,7 @@ export class AdvancelookupComponent implements OnInit,OnChanges,AfterViewInit {
     })
   }
   oldVal:any;
+  @Input() forview!:boolean;
   @Output() changes = new EventEmitter<string>();
   @Input() enableMultiInput!:boolean
   appendInput(val: string, id: string) {

@@ -34,3 +34,12 @@ input-dark{
 input.dark:disabled{
     color: gray;
 }
+.hidden{
+    visibility: hidden;
+}
+.w-0{
+    width: 1px;
+}
+.object-fit{
+    object-fit: contain;
+}

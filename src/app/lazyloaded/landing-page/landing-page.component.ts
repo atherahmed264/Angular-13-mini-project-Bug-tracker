@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, OnInit, Renderer2 } from '@angular/core';
+import { AfterViewInit, Component, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Chart } from 'chart.js';
 import { issue } from '../../Models/issues.model';
@@ -12,7 +13,7 @@ import { ServerComms } from '../../Services/server-comms.component';
 export class LandingPageComponent implements OnInit,AfterViewInit {
   theme!: boolean;
 
-  constructor(private router:Router ,private service:ServerComms,private render:Renderer2) { }
+  constructor(private router:Router ,private service:ServerComms,private render:Renderer2,private snack:MatSnackBar) { }
 
   labels:String[] = [];
   values:any[] = [];
@@ -63,23 +64,46 @@ export class LandingPageComponent implements OnInit,AfterViewInit {
     this.service.themeSwitch$.subscribe(res => {
       this.theme = res;
       console.log("ress",this.theme);
-      let tab = this.render.selectRootElement('#mat-tab-label-0-0',true);
-      let tab2 = this.render.selectRootElement('#mat-tab-label-0-1',true);
-      
-      console.log('rendere',tab);
-      console.log('rendere2',tab2);
-      if(tab){
-        if(this.theme){
-          this.render.addClass(tab,'text-white');
-          this.render.addClass(tab2,'text-white');
-        }
-        else{
-          this.render.removeClass(tab,'text-white');
-          this.render.removeClass(tab2,'text-white');
-        }
-      }
+      document.querySelectorAll('.mat-tab-label-content')?.forEach(el => {
+        if(res) el.classList.add("text-white");
+        else el.classList.remove("text-white");
+      })
     })
   }
+  uploadFile(ev:Event){
+    let e = ev.target as HTMLInputElement
+    let files = e.files;
+    let filetoupload = files?.item(0);
+    if(filetoupload){
+      filetoupload?.arrayBuffer().then(buffer => {
+        let blob = new Blob([new Uint8Array(buffer)]);
+        let fd = new FormData();
+        fd.append('document',blob,filetoupload?.name);
+        let userID = sessionStorage.getItem('userId') ? sessionStorage.getItem('userId') : ''
+        if(!userID){
+          this.snack.open("User Id not Found","",{ duration:4000});
+          return;
+        }
+
+        this.service.uploadDP(userID,fd).subscribe((res:any) => {
+          if(res.message?.toLowerCase() !== 'success'){
+            this.snack.open("Error While Uploading to the server");
+            return;
+          }
+
+          this.snack.open("File Uploaded Successfully","",{ duration:4000});
+          console.log('data',res);
+          this.imageUrl = 'data:image/jpeg;base64,' + res.base64String;
+        },err => {
+          this.snack.open(err.error.message || 'SomeThing Went Wrong',"",{ duration:4000});
+          
+        })
+      }).catch(err => {
+        console.log(err);
+      })
+    }
+  }
+  imageUrl = 'https://as2.ftcdn.net/v2/jpg/02/34/61/79/1000_F_234617921_p1AGQkGyEl8CSzwuUI74ljn6IZXqMUf2.jpg'
 
   route(str:String){
     this.router.navigate([`/${str}`]);

@@ -14,10 +14,13 @@ export class AppComponent implements OnInit {
     this.service.loggedin$.subscribe(res => {
       this.loggedIn = !!res;
     });
+   // this.service.checkPreferredTheme();
   }
-  theme = false; // light by default
+  theme = window.matchMedia('(prefers-color-scheme: dark)')?.matches || false; // light by default
   changeTheme(){
+    console.log(this.theme);
     this.theme = !this.theme;
     this.service.themeSwitch$.next(this.theme);
   }
+  
 }

@@ -136,7 +136,7 @@
                     <span *ngIf="showCount"> {{ showCount }} Chars Entered</span>
                 </div>
                 <div class="col-md-6 mb-5 mx-5">
-                    <mat-tab-group >
+                    <mat-tab-group [dynamicHeight]="true">
                         <mat-tab label="Efforts">
                             
                             <div class="col-md-12 mt-3">
@@ -144,7 +144,7 @@
                                 <app-advancelookup [advanceLookup]="false" [filteredOptions]="data"
                                     [headerObj]="headerObj" (loadPage)="loadMore($event)"
                                     (searchText)="searchApi($event)" [selectedObj]="selectedUsers"
-                                    [value]="selectedUsers.name" [pageNo]="1"
+                                    [value]="selectedUsers.name" [pageNo]="1" [forview]="true"
                                     [enableMultiInput]="true"></app-advancelookup>
                             </div>
                             <div class="d-flex justify-content-between mt-3">
@@ -201,7 +201,15 @@
                                 </div> -->
                                 <input #fileInput type="file" [ngClass]="theme ? 'dark-input' : ''" class="form-control mt-4" name="attachmenst" id="attachments" (change)="upload($event)" 
                                 accept=".jpg, .jpeg, .png" >
-                                <p class="mt-4">Allowed Files .jpg .jpeg .png</p>
+                                <p class="mt-4 text-end">Allowed Files .jpg .jpeg .png</p>
+                                
+                                    <div> Attached Files ({{ attachments?.length || '0' }}) </div>
+                                    <div>
+                                        <ng-container *ngFor="let link of attachments">
+                                            <a class="display-block" href="{{ link.url }}" target="_blank">{{ link.name }}</a>
+                                        </ng-container>
+                                    </div> 
+                                
                                 
                             </div>
                             

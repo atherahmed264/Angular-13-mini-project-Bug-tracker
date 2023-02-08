@@ -12,6 +12,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule} from '@angular/material/tooltip';
 import { MatExpansionModule } from "@angular/material/expansion";
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatButtonModule } from "@angular/material/button";
 
 @NgModule({
     declarations : [
@@ -32,7 +33,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
         MatIconModule,
         MatTooltipModule,
         MatExpansionModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        MatButtonModule
        
     ],
     exports : [

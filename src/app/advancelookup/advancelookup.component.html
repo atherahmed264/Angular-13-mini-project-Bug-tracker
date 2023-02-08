@@ -1,10 +1,11 @@
 
-    
-    <button class="advopen hide" (click)="checkPopup()" ></button>
-    <input type="text" id="advanceLookup"
-           placeholder="Pick one"
-           aria-label="Number"
-           ngClass="{{ theme && 'dark-input'}}"
+    <div *ngIf="forview; else popup">
+
+      <button class="advopen hide" (click)="checkPopup()" ></button>
+      <input type="text" id="advanceLookup"
+      placeholder="Pick one"
+      aria-label="Number"
+      ngClass="{{ theme && 'dark-input'}}"
            class="form-control mt-2"
            (click)="checkPopup()"
            [(ngModel)]="value"
@@ -12,11 +13,36 @@
            (blur)="value = selectedObj.name"
            [matAutocomplete]="auto"
            >
-    <mat-autocomplete #auto="matAutocomplete">
-
-      <mat-option *ngFor="let option of filteredOptions" [value]="option.Name" (click)="appendInput(option.Name,option._id)">
-        {{option.Name}} - {{ option.Email }} 
-      </mat-option>
-      <button *ngIf="advanceLookup" class="w-100 btn btn-sm btn-outline-primary" (click)="openLookup()">Advance lookup</button>
-    </mat-autocomplete>
-  
+           <mat-autocomplete #auto="matAutocomplete">
+             
+             <mat-option *ngFor="let option of filteredOptions" [value]="option.Name" (click)="appendInput(option.Name,option._id)">
+               {{option.Name}} - {{ option.Email }} 
+              </mat-option>
+              <button *ngIf="advanceLookup" class="w-100 btn btn-sm btn-outline-primary" (click)="openLookup()">Advance lookup</button>
+            </mat-autocomplete>
+            
+          </div>
+          
+          <ng-template #popup>
+              <mat-form-field appearance="fill" [style.width.%]='100'>
+             <mat-label>Assigned To</mat-label>
+              <input type="text" id="advanceLookup"
+              placeholder="Pick one"
+              aria-label="Number"
+           class="mt-2 col-md-10"
+           matInput
+           (click)="checkPopup()"
+           [(ngModel)]="value"
+           (change)="changes.emit('#')"
+           (blur)="value = selectedObj.name"
+           [matAutocomplete]="auto"
+           >
+           <mat-autocomplete #auto="matAutocomplete">
+             
+             <mat-option *ngFor="let option of filteredOptions" [value]="option.Name" (click)="appendInput(option.Name,option._id)">
+               {{option.Name}} - {{ option.Email }} 
+              </mat-option>
+              <button *ngIf="advanceLookup" class="w-100 btn btn-sm btn-outline-primary" (click)="openLookup()">Advance lookup</button>
+            </mat-autocomplete>
+          </mat-form-field>
+          </ng-template>

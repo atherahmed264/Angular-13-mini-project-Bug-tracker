@@ -61,9 +61,7 @@
           </tbody>
         </table>
         <p *ngIf="!issues || issues.length === 0" class="text-center mb-5">No Records Found</p>
-        <div class="d-flex justify-content-end" *ngIf="issues && issues.length > 10" >
-          <button class="btn btn-outline btn-dark mx-5 mb-3">Next Page</button>
-        </div>
+        
     </div>
     <ng-template #spinner >
         <div class="spinner-border d-flex justify-content-center" role="status">

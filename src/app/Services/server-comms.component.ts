@@ -19,17 +19,24 @@ export class ServerComms {
         getRecordDetails:'/record/details',
         savedetails:'/record/edit',
         advancelookupUser:'/user/advancelookup',
+        updateProfilePic:'/user/uploadpic/',
         addcomment:'/comment', // post method to add patch method to edit delete method to delete
         getComments:'/comment/list',
         advanceLookupRecord:'/record/advancelookup',
         uploadDoc:"/record/upload/"
     };
-
-    loggedin$ = new BehaviorSubject<String | undefined>('');
+    loggedIn = sessionStorage.getItem('userObj') || '';
+    loggedin$ = new BehaviorSubject<String | undefined>(this.loggedIn);
     data!: User[];
     users: string = 'http://localhost:3000/users';
     issue: string = 'http://localhost:3000/issues';
-    themeSwitch$ = new BehaviorSubject<boolean>(false); // true dark // false light
+    themeSwitch$ = new BehaviorSubject<boolean>(window.matchMedia('(prefers-color-scheme: dark)')?.matches ? true : false); // true dark // false light
+
+    // checkPreferredTheme(){
+    //     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',({matches}) => { this.themeSwitch$.next(matches)});
+    //     let usersTheme = window.matchMedia('(prefers-color-scheme: dark)')?.matches ? true : false;
+    //     this.themeSwitch$.next(usersTheme);
+    // }
 
     createAccount(body: User): Observable<any> {
         let url = this.baseUrl+this.routes.signup;
@@ -136,6 +143,10 @@ export class ServerComms {
         header.set("Content-Type","image/jpeg");
         let url = this.baseUrl+this.routes.uploadDoc+rcid;
         return this.http.post(url,formData,{headers:header});
+    }
+    uploadDP(userId:string,formData:FormData){
+        let url = this.baseUrl + this.routes.updateProfilePic+userId;
+        return this.http.post(url,formData);
     }
 }
 

@@ -10,7 +10,8 @@ import { User } from "../Models/usermodel";
 })
 export class ServerComms {
     constructor(private http: HttpClient) { }
-    baseUrl = "http://localhost:5000/api/v1";
+    prod = false;
+    baseUrl = this.prod ? 'https://bug-tracker-apis.onrender.com/api/v1' :"http://localhost:5000/api/v1";
     routes = {
         signup: "/user/signup",
         login:'/user/login',
@@ -23,7 +24,8 @@ export class ServerComms {
         addcomment:'/comment', // post method to add patch method to edit delete method to delete
         getComments:'/comment/list',
         advanceLookupRecord:'/record/advancelookup',
-        uploadDoc:"/record/upload/"
+        uploadDoc:"/record/upload/",
+        getDocument:'/user/getdocument'
     };
     loggedIn = sessionStorage.getItem('userObj') || '';
     loggedin$ = new BehaviorSubject<String | undefined>(this.loggedIn);
@@ -147,6 +149,12 @@ export class ServerComms {
     uploadDP(userId:string,formData:FormData){
         let url = this.baseUrl + this.routes.updateProfilePic+userId;
         return this.http.post(url,formData);
+    }
+
+    getDocument(DocumentName:string){
+        let url = this.baseUrl + this.routes.getDocument;
+        let body = { DocumentName };
+        return this.http.post(url,body);
     }
 }
 

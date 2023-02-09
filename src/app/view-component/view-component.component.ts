@@ -100,6 +100,7 @@ export class ViewComponentComponent implements OnInit,AfterViewInit {
   assignedTo: any;
   rcid: any
   checkMandatory(): boolean {
+    this.assignedTo = this.selectedUsers.id || undefined;
     let arr = [this.title, this.assignedTo, this.status, this.type, this.description];
     console.log(arr);
     let err = arr.some(el => !el);
@@ -137,6 +138,7 @@ export class ViewComponentComponent implements OnInit,AfterViewInit {
     this.service.createRec(payload).subscribe((res: any) => {
       console.log(res);
       this.bindRecordDetails(res);
+      this.new = false;
       this.snack.open(`${res.data.Type} Created Successfully Number - ${res.data.RecordNumber}`, "", { duration: 3000 });
     }, err => {
       this.snack.open(err.error.message, "", { duration: 2000 });

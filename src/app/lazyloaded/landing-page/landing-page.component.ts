@@ -45,6 +45,9 @@ export class LandingPageComponent implements OnInit,AfterViewInit {
       this.country = this.userDetails.data?.Country;
       this.email = this.userDetails.data?.Email;
       this.username = this.userDetails.data?.UserName;
+      if(this.userDetails.data?.ProfilePhoto){
+        this.getDP(this.userDetails.data?.ProfilePhoto)
+      }
     }
     // this.service.getissues().subscribe( res => {
     //   this.data = res ;
@@ -58,6 +61,18 @@ export class LandingPageComponent implements OnInit,AfterViewInit {
     // })
     this.service.themeSwitch$.subscribe(theme => {
       this.theme = theme;
+    })
+  }
+
+  getDP(str:string){
+    this.service.getDocument(str).subscribe({
+      next:(res:any) => {
+        if(res.base64String)
+          this.imageUrl = this.imageUrl = 'data:image/jpeg;base64,' + res.base64String;
+      },
+      error:err => {
+        this.snack.open("Unable To Fetch Profile Pic","",{ duration:4000});
+      }
     })
   }
   ngAfterViewInit(): void {
@@ -94,6 +109,11 @@ export class LandingPageComponent implements OnInit,AfterViewInit {
           this.snack.open("File Uploaded Successfully","",{ duration:4000});
           console.log('data',res);
           this.imageUrl = 'data:image/jpeg;base64,' + res.base64String;
+          let userObj =  JSON.parse(sessionStorage.getItem('userObj') as string);
+          if(userObj){
+            userObj.data.ProfilePhoto = res.name;
+            sessionStorage.setItem('userObj',userObj);
+          }
         },err => {
           this.snack.open(err.error.message || 'SomeThing Went Wrong',"",{ duration:4000});
           

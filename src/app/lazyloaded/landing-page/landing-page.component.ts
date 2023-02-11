@@ -36,19 +36,7 @@ export class LandingPageComponent implements OnInit,AfterViewInit {
   username!:string;
   ngOnInit(): void {
     this.service.loggedin$.subscribe( res => this.user = res);
-    this.userDetails = sessionStorage.getItem('userObj');
-    if(this.userDetails){
-      this.userDetails = JSON.parse(this.userDetails);
-      this.firstName = this.userDetails.data?.Name?.split(" ")[0];
-      this.lastName = this.userDetails.data?.Name?.split(" ")[1];
-      this.phoneNum = this.userDetails.data?.Mobile;
-      this.country = this.userDetails.data?.Country;
-      this.email = this.userDetails.data?.Email;
-      this.username = this.userDetails.data?.UserName;
-      if(this.userDetails.data?.ProfilePhoto){
-        this.getDP(this.userDetails.data?.ProfilePhoto)
-      }
-    }
+    this.bindUserData();
     // this.service.getissues().subscribe( res => {
     //   this.data = res ;
     //   this.data.forEach( el => {
@@ -62,6 +50,23 @@ export class LandingPageComponent implements OnInit,AfterViewInit {
     this.service.themeSwitch$.subscribe(theme => {
       this.theme = theme;
     })
+  }
+
+  bindUserData(flag?:boolean){
+    this.userDetails = sessionStorage.getItem('userObj');
+    if(this.userDetails){
+      this.userDetails = JSON.parse(this.userDetails);
+      this.firstName = this.userDetails.data?.Name?.split(" ")[0];
+      this.lastName = this.userDetails.data?.Name?.split(" ")[1];
+      this.phoneNum = this.userDetails.data?.Mobile;
+      this.country = this.userDetails.data?.Country;
+      this.email = this.userDetails.data?.Email;
+      this.username = this.userDetails.data?.UserName;
+      if(this.userDetails.data?.ProfilePhoto){
+        this.getDP(this.userDetails.data?.ProfilePhoto)
+      }
+      if(flag) this.snack.open("Details Saved Successfully","",{ duration:3000});
+    }
   }
 
   getDP(str:string){
@@ -127,6 +132,33 @@ export class LandingPageComponent implements OnInit,AfterViewInit {
 
   route(str:String){
     this.router.navigate([`/${str}`]);
+  }
+
+  updateUserInfo(){
+    let payload = {
+      "id":sessionStorage.getItem('userId'),
+      "UserName":this.username,
+      "Name":this.firstName + " " + this.lastName,
+      "Email":this.email,
+      "Mobile":this.phoneNum,
+      "Country":this.country
+    }
+    this.service.editUserDetails(payload).subscribe({
+      next:(res:any) => {
+        
+        if(!res.data || Object.keys(res.data).length <= 0){
+          this.snack.open('No data Found',"",{ duration:3000});
+          return;
+        }
+
+        let userObj = JSON.stringify(res);
+        sessionStorage.setItem('userObj',userObj);
+        this.bindUserData(true);
+      },
+      error:(err) => {
+        this.snack.open(err.error.message,"",{ duration:4000});
+      }
+    })
   }
 
 }

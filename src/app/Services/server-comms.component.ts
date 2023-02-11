@@ -25,7 +25,8 @@ export class ServerComms {
         getComments:'/comment/list',
         advanceLookupRecord:'/record/advancelookup',
         uploadDoc:"/record/upload/",
-        getDocument:'/user/getdocument'
+        getDocument:'/user/getdocument',
+        updateUser:'/user/update'
     };
     loggedIn = sessionStorage.getItem('userObj') || '';
     loggedin$ = new BehaviorSubject<String | undefined>(this.loggedIn);
@@ -155,6 +156,11 @@ export class ServerComms {
         let url = this.baseUrl + this.routes.getDocument;
         let body = { DocumentName };
         return this.http.post(url,body);
+    }
+
+    editUserDetails(body:any){
+        let url = this.baseUrl + this.routes.updateUser;
+        return this.http.patch(url,body);
     }
 }
 

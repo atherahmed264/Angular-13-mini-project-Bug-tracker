@@ -61,7 +61,6 @@ import { DatePipe } from '@angular/common';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    LazyLoad,
     NoopAnimationsModule,
     MatSnackBarModule,
     MatIconModule,

@@ -26,6 +26,8 @@ export class HeaderComponent implements OnInit {
   login!:boolean
 
   logout(){
+    sessionStorage.removeItem("userObj");
+    sessionStorage.removeItem("userId");
     this.service.loggedin$.next('');
   }
 }

@@ -13,7 +13,7 @@ import { ServerComms } from '../Services/server-comms.component';
 export class LoginComponent implements OnInit {
   theme!: boolean;
 
-  constructor(private route:Router, private service:ServerComms,private snackBar:MatSnackBar) { }
+  constructor(private route:Router, public service:ServerComms,private snackBar:MatSnackBar) { }
   form!:FormGroup;
   data!:User[];
   wrongcred:boolean = false;
@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
   }
 
   submitForm(){
+    this.service.loader = true;
     console.log(this.form);
     console.log(this.service.data);
     this.data = this.service.data
@@ -48,12 +49,13 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem("userId",val.data?._id);
           this.route.navigate(['/home']);
         }
-
+        this.service.loader = false;
       },
       error: err => {
         console.log(err.error.message);
         let msg = err.error?.message || "Something went wrong";
         this.snackBar.open(msg,"",{ duration : 1000});
+        this.service.loader = false;
       }
     })
   }

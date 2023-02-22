@@ -25,7 +25,7 @@
                             <div class="d-flex justify-content-center align-items-center ">
                                 <mat-icon class="">account_circle</mat-icon>
                                 
-                                    <input type="text" id="useremail" ngClass="{{ theme && 'input-dark'}}" class="form-control mx-3" formControlName="username" placeholder="Enter Your Email">
+                                    <input autocomplete="off" type="text" id="useremail" ngClass="{{ theme && 'input-dark'}}" class="form-control mx-3" formControlName="username" placeholder="Enter Your Email">
                                 </div>      
                                     <span class="p-0 text-center er"
                                         *ngIf="form.get('username')?.invalid && form.get('username')?.touched">Enter
@@ -60,7 +60,7 @@
 
                         </div>
                     </div>
-                    <div class="d-flex flex-column align-items-center mt-4">
+                    <div class="d-flex flex-column  mt-4" ngClass="{{ !service.mobile && 'align-items-center' }}">
                         <button class="btn btn-primary mx-4 col-md-10 my-2" type="submit">SIGN IN</button>
 
                         <button class="btn btn-success mx-4 col-md-10 my-2" type="button" (click)="signup()">SIGN UP</button>

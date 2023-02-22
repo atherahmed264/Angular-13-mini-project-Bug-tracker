@@ -17,7 +17,7 @@ import { DatePipe } from '@angular/common';
 export class HomepageComponent implements OnInit,OnChanges {
   theme!: boolean;
   
-  constructor(private service: ServerComms, public route: Router, private dialog: MatDialog , private snack:MatSnackBar) { }
+  constructor(public service: ServerComms, public route: Router, private dialog: MatDialog , private snack:MatSnackBar) { }
   
   searchText!: string;
   tableHeaders = ['Record Number', 'Title', 'Type', 'Status', 'Assigned To', 'Created At'];
@@ -125,7 +125,7 @@ export class HomepageComponent implements OnInit,OnChanges {
 
 export class FilterPopup implements OnInit {
   theme!: boolean;
-  constructor(private snack: MatSnackBar, public dialog: MatDialogRef<FilterPopup>, private service:ServerComms, private datePipe:DatePipe) { }
+  constructor(private snack: MatSnackBar, public dialog: MatDialogRef<FilterPopup>, public service:ServerComms, private datePipe:DatePipe) { }
 
   ngOnInit(): void {
     this.radio = sessionStorage.getItem('radio') || undefined;

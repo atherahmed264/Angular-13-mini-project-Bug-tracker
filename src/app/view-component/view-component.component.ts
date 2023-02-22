@@ -38,10 +38,12 @@ export class ViewComponentComponent implements OnInit,AfterViewInit {
   reply!: string
   comment!: string;
   new = false;
+  moblal!:boolean;
   @ViewChild('matoverview', { static: true }) matOverview!: MatExpansionPanel;
   @ViewChild('matcomment', { static: true }) matComment!: MatExpansionPanel;
 
   ngOnInit(): void {
+    this.moblal = this.service.mobile;
 
     this.activeRoute.paramMap.subscribe(res => {
       this.rcid = res.get("id");

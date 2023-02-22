@@ -69,12 +69,12 @@
         </div>
     </div>
 </div> -->
-<div class="d-flex justify-content-between mt-3">
+<div class="d-flex justify-content-between mt-3 " ngClass="{{ moblal && 'flex-column'}}">
     <div class="d-flex align-items-center justify-content-evenly mx-5 flex-wrap">
         <h2 class="ml-5">Ather Ahmed </h2>
         <mat-icon class="my-0 mx-2 py-0 mb-3">account_circle</mat-icon>
     </div>
-    <div>
+    <div ngClass="{{ moblal && 'd-flex'}}">
         <button class="btn btn-danger px-5 py-1 mx-3" matTooltip="click to go back" (click)="goBack()">Close</button>
         <button class="px-5 py-1 btn btn-primary mx-5" matTooltip="save details" (click)="saveOrCreate()">{{ new ?
             'Create' : 'Save'}}</button>
@@ -91,14 +91,14 @@
 
 
 
-            <div class="d-flex justify-content-start brdrD flex-wrap" [ngClass]="theme ? 'brdrD' : 'brdrL'">
-                <div class="col-md-5">
+            <div class="d-flex justify-content-start " [ngClass]="{ 'brdrD':theme, 'brdrL':!theme, 'flex-column':moblal}">
+                <div class="col-md-5" ngClass="{{ moblal && 'mx-3' }}">
                     <h3> Record Title </h3>
                     <input type="text" id="title" name="title" [ngClass]="theme ? 'dark-input' : ''" class=" form-control" placeholder="Enter Title"
                         [(ngModel)]="title">
                 </div>
                 <div class="col-md-2">
-                    <h3 class="mx-5"> Select Type </h3>
+                    <h3 ngClass="{{ moblal ? 'mx-3 mt-2':'mx-5' }}"> Select Type </h3>
                     <div class="d-flex justify-content-center align-items-center">
                         <mat-icon id="default_icon" class="mx-3" *ngIf="!icon">account_box</mat-icon>
                         <mat-icon id="bug_icon" class="mx-3" *ngIf="icon === 'Bug'">bug_report</mat-icon>
@@ -113,7 +113,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-2 mx-3">
+                <div class="col-md-2 mx-3" ngClass="{{ moblal && 'mt-2' }}">
                     <h3> Select Status</h3>
                     <select name="status" id="status" class="form-select" [ngClass]="theme ? 'dark-input' : ''" [(ngModel)]="status"
                         [ngClass]='status === "Invalid" ? "inv" : status === "New" ? "new": status === "Active" ? "act" : ""'>
@@ -128,14 +128,14 @@
                 </div>
                 
             </div>
-            <div class="d-flex justify-content-start my-4">
+            <div class="d-flex justify-content-start my-4"ngClass="{{ moblal && 'flex-column' }}">
                 <div class="col-md-5">
                     <h3 class="inline">Enter Description</h3> (Maximum 200 Characters)
                     <textarea name="desc" id="desc" cols="30" class="form-control" [ngClass]="theme ? 'dark-input' : ''" rows="10" (keyup)="count()"
                         [(ngModel)]="description"></textarea>
                     <span *ngIf="showCount"> {{ showCount }} Chars Entered</span>
                 </div>
-                <div class="col-md-6 mb-5 mx-5">
+                <div class="col-md-6 mb-5" ngClass="{{ !moblal && 'mx-5' }}">
                     <mat-tab-group [dynamicHeight]="true">
                         <mat-tab label="Efforts">
                             
@@ -168,13 +168,13 @@
                             </div>
                             <div class="d-flex justify-content-between mt-2 ">
                                 <div class="col-md-5">
-                                    <div class="mb-2"> Total </div>
+                                    <div class="mb-2"> Total Hours</div>
                                    
                                     <input type="number" placeholder="Total Efforts in Hours" [ngClass]="theme ? 'dark-input' : ''" class=" form-control mb-3"
                                         [(ngModel)]="efforts">
                                 </div>
                                 <div class="col-md-5">
-                                    <div class="mb-2"> Completed  </div>
+                                    <div class="mb-2"> Completed Hours  </div>
                                     <input type="number" placeholder="Completed Efforts" [ngClass]="theme ? 'dark-input' : ''" class="form-control"
                                         [(ngModel)]="effortsComp">
                                 </div>
@@ -231,7 +231,7 @@
             </mat-expansion-panel-header>
             <div class="custom-cont " [ngClass]="theme ? 'brdrD':'brdrL'">
 
-                <div class=" d-flex justify-content-center align-items-center flex-wrap">
+                <div class=" d-flex flex-column justify-content-center align-items-center flex-wrap">
                     <div class="mr-5">
                         <label for="commentBox" [ngClass]=" comment && 'btn btn-primary'" (click)="addComment()">{{
                             adding ? 'Adding...' : 'Add Comment'}}</label>
@@ -248,7 +248,7 @@
                 <div class="card shadow-sm bg-white-rounded mx-3 w-100 rounded-lg mb-5" ngClass="{{ theme && 'darkTab'}}">
                     <div class="container">
                         <div class="d-flex flex-column comment-whole mb-4" *ngFor="let comment of comments;let i=index">
-                            <div class="d-flex align-items-center justify-content-center mt-4">
+                            <div class="d-flex flex-column align-items-center justify-content-center mt-4">
                                 <div class="d-flex flex-column justify-content-center align-items-center mt-3">
                                     <img src="https://as2.ftcdn.net/v2/jpg/02/34/61/79/1000_F_234617921_p1AGQkGyEl8CSzwuUI74ljn6IZXqMUf2.jpg"
                                         alt="#img" height="50px" width="50px">
@@ -261,15 +261,15 @@
                                 <div class="d-flex justify-content-start flex-wrap">
                                     <span class="px-5 py-5 mx-4"></span>
                                     <mat-accordion class="col-md-9">
-                                        <mat-expansion-panel class="" ngClass="{{ theme && 'dark-input'}}" >
+                                        <mat-expansion-panel ngClass="{{ theme && 'dark-input'}}" >
                                             <mat-expansion-panel-header>
-                                                <mat-panel-title class="" ngClass="{{ theme && 'text-white'}}">
-                                                    <span class=""> Replies ({{ comment.replies.length }}) </span>
+                                                <mat-panel-title  ngClass="{{ theme && 'text-white'}}">
+                                                    <span > Replies ({{ comment.replies.length }}) </span>
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
                                             <ng-container *ngIf="comment.replies.length > 0">
                                                 <div *ngFor="let rep of comment.replies;"
-                                                    class="d-flex justify-content-start align-items-center my-2 ">
+                                                    class="d-flex flex-column justify-content-start align-items-center my-2 ">
                                                     <div
                                                         class="d-flex flex-column justify-content-center align-items-center ">
                                                         <mat-icon>account_circle</mat-icon>

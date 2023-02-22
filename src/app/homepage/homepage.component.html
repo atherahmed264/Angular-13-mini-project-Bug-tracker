@@ -39,14 +39,14 @@
                 </div>
             </div>
         </div> -->
-        <table class=" table mb-5 "  ngClass="{{ theme ? 'table-dark' : 'table-light'}}">
-          <thead>
+        <table class="text-sm table mb-5 "  ngClass="{{ theme ? 'table-dark' : 'table-light'}}">
+          <thead ngClass="{{ service.mobile && 'text-sm'}}">
             <tr>
               <th *ngFor="let head of tableHeaders">{{ head }}</th>
             </tr>
           </thead>
           
-          <tbody>
+          <tbody ngClass="{{ service.mobile && 'text-sm'}}">
             <tr *ngFor="let item of issues;let i = index" class="mouse-pointer" (click)="route.navigate(['view',item._id])">
               <td>{{item.RecordNumber}}</td>
               <td>{{item.Title}}</td>

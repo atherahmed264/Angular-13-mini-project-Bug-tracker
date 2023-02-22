@@ -7,7 +7,7 @@ import { ServerComms } from './Services/server-comms.component';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(private service:ServerComms){}
+  constructor(public service:ServerComms){}
 
   loggedIn!:boolean
   ngOnInit(){

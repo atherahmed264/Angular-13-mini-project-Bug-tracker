@@ -13,7 +13,7 @@ import { ServerComms } from '../../Services/server-comms.component';
 export class LandingPageComponent implements OnInit,AfterViewInit {
   theme!: boolean;
 
-  constructor(private router:Router ,private service:ServerComms,private render:Renderer2,private snack:MatSnackBar) { }
+  constructor(private router:Router ,public service:ServerComms,private render:Renderer2,private snack:MatSnackBar) { }
 
   labels:String[] = [];
   values:any[] = [];

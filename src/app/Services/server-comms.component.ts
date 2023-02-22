@@ -10,7 +10,9 @@ import { User } from "../Models/usermodel";
 })
 export class ServerComms {
     constructor(private http: HttpClient) { }
-    prod = false;
+    device = window.innerWidth > 600 ? 'deskTop' : 'mobile';
+    mobile = this.device === 'mobile';
+    prod = true;
     baseUrl = this.prod ? 'https://bug-tracker-apis.onrender.com/api/v1' :"http://localhost:5000/api/v1";
     routes = {
         signup: "/user/signup",
@@ -34,7 +36,7 @@ export class ServerComms {
     users: string = 'http://localhost:3000/users';
     issue: string = 'http://localhost:3000/issues';
     themeSwitch$ = new BehaviorSubject<boolean>(window.matchMedia('(prefers-color-scheme: dark)')?.matches ? true : false); // true dark // false light
-
+    loader = false;
     // checkPreferredTheme(){
     //     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',({matches}) => { this.themeSwitch$.next(matches)});
     //     let usersTheme = window.matchMedia('(prefers-color-scheme: dark)')?.matches ? true : false;

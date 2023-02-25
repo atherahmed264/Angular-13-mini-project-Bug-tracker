@@ -231,7 +231,7 @@
             </mat-expansion-panel-header>
             <div class="custom-cont " [ngClass]="theme ? 'brdrD':'brdrL'">
 
-                <div class=" d-flex flex-column justify-content-center align-items-center flex-wrap">
+                <div class=" d-flex justify-content-center align-items-center flex-wrap">
                     <div class="mr-5">
                         <label for="commentBox" [ngClass]=" comment && 'btn btn-primary'" (click)="addComment()">{{
                             adding ? 'Adding...' : 'Add Comment'}}</label>
@@ -248,7 +248,7 @@
                 <div class="card shadow-sm bg-white-rounded mx-3 w-100 rounded-lg mb-5" ngClass="{{ theme && 'darkTab'}}">
                     <div class="container">
                         <div class="d-flex flex-column comment-whole mb-4" *ngFor="let comment of comments;let i=index">
-                            <div class="d-flex flex-column align-items-center justify-content-center mt-4">
+                            <div class="d-flex align-items-center justify-content-center mt-4">
                                 <div class="d-flex flex-column justify-content-center align-items-center mt-3">
                                     <img src="https://as2.ftcdn.net/v2/jpg/02/34/61/79/1000_F_234617921_p1AGQkGyEl8CSzwuUI74ljn6IZXqMUf2.jpg"
                                         alt="#img" height="50px" width="50px">
@@ -269,7 +269,7 @@
                                             </mat-expansion-panel-header>
                                             <ng-container *ngIf="comment.replies.length > 0">
                                                 <div *ngFor="let rep of comment.replies;"
-                                                    class="d-flex flex-column justify-content-start align-items-center my-2 ">
+                                                    class="d-flex justify-content-start align-items-center my-2 ">
                                                     <div
                                                         class="d-flex flex-column justify-content-center align-items-center ">
                                                         <mat-icon>account_circle</mat-icon>
